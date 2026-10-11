@@ -1,0 +1,3554 @@
+{
+  "schemaVersion": 1,
+  "parameters": [
+    {
+      "name": "AA_InputFile",
+      "description": "气动声学输入文件路径；CompAA=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "ADBlFile(1)",
+      "description": "1 号叶片 AeroDyn 几何/气动节点输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "ADBlFile(2)",
+      "description": "2 号叶片 AeroDyn 几何/气动节点输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "ADBlFile(3)",
+      "description": "3 号叶片 AeroDyn 几何/气动节点输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "AFAeroMod",
+      "description": "翼型气动模型选择：1=定常，2=非定常（常见模板）；按版本核对。",
+      "module": "通用"
+    },
+    {
+      "name": "AFNames",
+      "description": "翼型数据文件路径列表；顺序对应叶片节点使用的翼型编号。",
+      "module": "通用"
+    },
+    {
+      "name": "AIDrag",
+      "description": "轴向诱导计算是否包含阻力项。",
+      "module": "通用"
+    },
+    {
+      "name": "AMMod",
+      "description": "分布附加质量作用范围：0=按未位移位置静水面以下节点，2=扩展至瞬时自由面；SeaState WaveStMod=0 等条件会强制为 0。",
+      "module": "通用"
+    },
+    {
+      "name": "AbortLevel",
+      "description": "终止仿真的错误等级：WARNING=警告即终止，SEVERE=严重错误即终止，FATAL=致命错误才终止。",
+      "module": "通用"
+    },
+    {
+      "name": "AddBLin",
+      "description": "平台附加线性阻尼矩阵第一行；单刚体 6×6，六自由度顺序同 AddCLin；通过 -B·速度产生阻尼载荷。",
+      "module": "通用"
+    },
+    {
+      "name": "AddBQuad",
+      "description": "平台附加二次阻尼矩阵第一行；单刚体 6×6，六自由度顺序同 AddCLin；以速度与其绝对值的乘积形成阻力项。",
+      "module": "通用"
+    },
+    {
+      "name": "AddCLin",
+      "description": "平台附加线性刚度矩阵第一行；单刚体 6×6，行/列顺序为纵荡、横荡、垂荡、横摇、纵摇、艏摇；通过 -K·q 产生恢复载荷。",
+      "module": "通用"
+    },
+    {
+      "name": "AddF0",
+      "description": "平台附加恒定预载荷向量；单刚体顺序为 Fx/Fy/Fz/Mx/My/Mz，力单位 N、力矩单位 N·m；以下五行延续同一向量。",
+      "module": "通用"
+    },
+    {
+      "name": "AeroFile",
+      "description": "AeroDyn 气动输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "AfC_Amp",
+      "description": "气动控制余弦信号幅值，无量纲；信号为 Amp·cos(Azimuth+phase)+Mean，仅 AfCmode=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "AfC_Mean",
+      "description": "气动流动控制信号平均值/稳态值，无量纲；仅 AfCmode=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "AfC_phase",
+      "description": "气动控制信号相对叶片方位角的相位，单位 °，0 对应竖直叶片；仅 AfCmode=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "AfCmode",
+      "description": "翼型气动流动控制模式：0=关闭，1=余弦周期，4=Simulink/LabVIEW，5=Bladed DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "AirDens",
+      "description": "空气密度，单位 kg/m³；影响气动力大小，主文件环境量可由使用 DEFAULT 的模块继承。",
+      "module": "通用"
+    },
+    {
+      "name": "AzimB1Up",
+      "description": "1 号叶片竖直向上时用于输入/输出的方位角，单位 °；确定报告方位角的基准。",
+      "module": "通用"
+    },
+    {
+      "name": "Azimuth",
+      "description": "1 号叶片初始风轮方位角，单位 °；方位零点与 AzimB1Up 定义配合。",
+      "module": "通用"
+    },
+    {
+      "name": "BDBldFile",
+      "description": "对应叶片的 BeamDyn 输入文件路径；仅 CompElast=2 时启用。",
+      "module": "通用"
+    },
+    {
+      "name": "BEM_Mod",
+      "description": "BEM 模型选择：1=旧式 NoSweepPitchTwist，2=极坐标模型；同时影响相关输出坐标系。",
+      "module": "通用"
+    },
+    {
+      "name": "BPCutoff",
+      "description": "DLL 桨距命令低通滤波截止频率，单位 Hz。",
+      "module": "通用"
+    },
+    {
+      "name": "BStCfiles",
+      "description": "叶片结构控制器文件路径列表；数量应对应 NumBStC。",
+      "module": "通用"
+    },
+    {
+      "name": "BlPitch",
+      "description": "对应叶片初始桨距角，单位 °；后续桨距由 ServoDyn 控制与变桨执行策略决定。",
+      "module": "通用"
+    },
+    {
+      "name": "BlPitchF",
+      "description": "对应叶片强制变桨操作的最终目标角，单位 °。",
+      "module": "通用"
+    },
+    {
+      "name": "BldEdDmp(1)",
+      "description": "叶片第一摆振模态结构阻尼，通常为临界阻尼百分比（%）。",
+      "module": "通用"
+    },
+    {
+      "name": "BldFile1",
+      "description": "1 号叶片结构属性文件路径，包含分布质量、刚度、模态等。",
+      "module": "通用"
+    },
+    {
+      "name": "BldFile2",
+      "description": "2 号叶片结构属性文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "BldFile3",
+      "description": "3 号叶片结构属性文件路径；两叶片机组不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "BldFlDmp(1)",
+      "description": "叶片第一挥舞模态结构阻尼，通常为临界阻尼百分比（%），以原文件单位为准。",
+      "module": "通用"
+    },
+    {
+      "name": "BldFlDmp(2)",
+      "description": "叶片第二挥舞模态结构阻尼，通常为临界阻尼百分比（%）。",
+      "module": "通用"
+    },
+    {
+      "name": "BldGagNd",
+      "description": "叶片测点节点编号列表；数量对应 NBlGages，索引范围 1–BldNodes。",
+      "module": "通用"
+    },
+    {
+      "name": "BldNodes",
+      "description": "每片叶片结构分析节点数。",
+      "module": "通用"
+    },
+    {
+      "name": "Bld_Kdmp",
+      "description": "稳态搜索附加叶片阻尼系数，单位 N/(m/s)；用于辅助收敛，仅 CalcSteady=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "Buoyancy",
+      "description": "是否包含相关气动/水下构件模型的浮力贡献。",
+      "module": "通用"
+    },
+    {
+      "name": "CCmode",
+      "description": "缆索控制模式：0=关闭，4=Simulink/LabVIEW，5=Bladed DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "CalcSteady",
+      "description": "线性化前是否搜索周期稳态运行点；仅 Linearize=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CavitCheck",
+      "description": "是否进行空化检查；水动力能机组相关模型需核对环境压力。",
+      "module": "通用"
+    },
+    {
+      "name": "CdScaleIC",
+      "description": "动态松弛阶段的拖曳系数放大倍数，无量纲。",
+      "module": "通用"
+    },
+    {
+      "name": "ChkptTime",
+      "description": "重启检查点的保存间隔，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "CompAA",
+      "description": "是否计算气动声学；需相应声学输入文件及兼容尾流模型。",
+      "module": "通用"
+    },
+    {
+      "name": "CompAero",
+      "description": "气动力模块选择：0=关闭，1=AeroDyn v14，2=AeroDyn v15；按所用 OpenFAST 版本确认选项。",
+      "module": "通用"
+    },
+    {
+      "name": "CompElast",
+      "description": "结构模块选择：1=ElastoDyn，2=ElastoDyn 加叶片 BeamDyn；仅模式 2 使用 BDBldFile。",
+      "module": "通用"
+    },
+    {
+      "name": "CompHydro",
+      "description": "水动力模块：0=关闭，1=HydroDyn。",
+      "module": "通用"
+    },
+    {
+      "name": "CompIce",
+      "description": "冰载荷模块：0=关闭，1=IceFloe，2=IceDyn。",
+      "module": "通用"
+    },
+    {
+      "name": "CompInflow",
+      "description": "风场模块：0=静止空气，1=InflowWind，2=OpenFOAM 外部风场。",
+      "module": "通用"
+    },
+    {
+      "name": "CompMooring",
+      "description": "系泊模块：0=关闭，1=MAP++，2=FEAMooring，3=MoorDyn，4=OrcaFlex。",
+      "module": "通用"
+    },
+    {
+      "name": "CompSeaSt",
+      "description": "海况模块：0=关闭，1=SeaState。",
+      "module": "通用"
+    },
+    {
+      "name": "CompServo",
+      "description": "控制与发电传动模块：0=关闭，1=ServoDyn。",
+      "module": "通用"
+    },
+    {
+      "name": "CompSub",
+      "description": "子结构模块：0=关闭，1=SubDyn，2=外部平台质量/阻尼/刚度/载荷模型。",
+      "module": "通用"
+    },
+    {
+      "name": "ConsiderHubMotion",
+      "description": "是否考虑轮毂运动对雷达测量的影响。",
+      "module": "通用"
+    },
+    {
+      "name": "ConstWaveMod",
+      "description": "约束极端波模型：0=关闭，1=指定波峰高 α，2=保证指定峰谷高度 HCrest。",
+      "module": "通用"
+    },
+    {
+      "name": "CrestHmax",
+      "description": "约束波的高度目标，单位 m；模式 1 为 2α，模式 2 为 HCrest，启用时必须大于 WaveHs。",
+      "module": "通用"
+    },
+    {
+      "name": "CrestTime",
+      "description": "约束波峰出现时刻，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "CrestXi",
+      "description": "约束波峰出现位置的 X 坐标，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "CrestYi",
+      "description": "约束波峰出现位置的 Y 坐标，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrDIDir",
+      "description": "沿水深不变的海流方向，单位 °；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrDIV",
+      "description": "沿水深不变的海流速度分量，单位 m/s；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrMod",
+      "description": "海流剖面模型：0=无海流，1=标准组合剖面，2=用户函数。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrNSDir",
+      "description": "近表层海流方向，单位 °；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrNSRef",
+      "description": "近表层海流的参考深度，单位 m；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrNSV0",
+      "description": "近表层海流在静水面处的速度，单位 m/s；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrSSDir",
+      "description": "次表层海流传播方向，单位 °，可用 DEFAULT；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "CurrSSV0",
+      "description": "次表层海流在静水面处的速度，单位 m/s；仅 CurrMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_DT",
+      "description": "控制动态库调用时间间隔，单位 s；DEFAULT 使用默认通信步长，仅 Bladed DLL 接口启用时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_FileName",
+      "description": "Bladed 风格控制器动态库路径；Windows 使用 .dll。",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_InFile",
+      "description": "传给控制 DLL 的参数输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_NumTrq",
+      "description": "Bladed 接口记录 26，转速–转矩查询表点数；0=无表、使用最佳模式参数，非零时按接口规则不用最佳模式增益。",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_ProcName",
+      "description": "控制动态库入口函数名称，区分大小写。",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_Ramp",
+      "description": "是否在两次 DLL 更新之间对控制量做线性斜坡插值；True 引入时间偏移。",
+      "module": "通用"
+    },
+    {
+      "name": "DT",
+      "description": "仿真或模块时间步长，单位 s；DEFAULT 使用耦合驱动提供的默认值。",
+      "module": "通用"
+    },
+    {
+      "name": "DTAero",
+      "description": "AeroDyn 气动力计算时间间隔，s；DEFAULT 使用驱动提供的默认值。",
+      "module": "通用"
+    },
+    {
+      "name": "DTTorDmp",
+      "description": "传动链扭转阻尼，单位 N·m/(rad/s)；DrTrDOF=True 时阻碍相对扭转速度。",
+      "module": "通用"
+    },
+    {
+      "name": "DTTorSpr",
+      "description": "传动链扭转弹簧刚度，单位 N·m/rad；DrTrDOF=True 时决定相对扭转的恢复力矩。",
+      "module": "通用"
+    },
+    {
+      "name": "DT_Out",
+      "description": "主程序时序结果采样间隔，单位 s；采样频率为其倒数，区别于积分步长 DT。",
+      "module": "通用"
+    },
+    {
+      "name": "DT_UJac",
+      "description": "更新耦合求解器 Jacobian 矩阵的时间间隔，单位 s；用于耦合数值求解。",
+      "module": "通用"
+    },
+    {
+      "name": "DecFact",
+      "description": "模块输出抽取倍率；1 表示每个模块步输出一次；原文件标为 currently unused，以主程序输出控制为准。",
+      "module": "通用"
+    },
+    {
+      "name": "Delta3",
+      "description": "两叶片跷跷板机构 Delta-3 耦合角，单位 °；三叶片机组不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "DiffQTF",
+      "description": "完整二阶差频平台载荷选择：0=关闭，10/11/12=使用对应 WAMIT 差频文件；例如 11 关联 .11d，与 MnDrift、NewmanApp 互斥。",
+      "module": "通用"
+    },
+    {
+      "name": "DrTrDOF",
+      "description": "传动链弹性扭转自由度；True 允许低速端和发电机端的相对弹性扭转，由 DTTorSpr、DTTorDmp 决定恢复力和阻尼。",
+      "module": "通用"
+    },
+    {
+      "name": "EDFile",
+      "description": "ElastoDyn 主输入文件路径；相对路径以引用它的主文件目录为基准。",
+      "module": "通用"
+    },
+    {
+      "name": "Echo",
+      "description": "输入回显开关：True 将读取到的输入写入回显文件，便于检查解析；False 不回显。不会改变物理模型。",
+      "module": "通用"
+    },
+    {
+      "name": "EdgeDOF",
+      "description": "叶片一阶摆振（面内）弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "ExctnCutOff",
+      "description": "ExctnDisp=2 时平台位置低通滤波截止频率，单位 Hz且大于 0。",
+      "module": "通用"
+    },
+    {
+      "name": "ExctnDisp",
+      "description": "计算势流波激励时的平台位置：0=未位移参考位置，1=瞬时位移位置，2=低通过滤后的位移位置。",
+      "module": "通用"
+    },
+    {
+      "name": "ExctnMod",
+      "description": "一阶波浪激励模型：0=关闭，1=离散傅里叶变换 DFT，2=状态空间；仅 PotMod=1 使用，模式 2 需 .ssexctn 文件。",
+      "module": "通用"
+    },
+    {
+      "name": "F_LPFType",
+      "description": "ROSCO 低通滤波器阶次：1=一阶，2=二阶。",
+      "module": "通用"
+    },
+    {
+      "name": "F_NotchType",
+      "description": "ROSCO 陷波对象：0=关闭，1=发电机转速，2=塔顶前后运动，3=两者。",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_BTS",
+      "description": "TurbSim 全场二进制 .bts 风场文件路径；仅 WindType=3 使用，相对路径以所属输入文件目录为基准。",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_u",
+      "description": "HAWC 格式 u 方向脉动风二进制文件路径；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_v",
+      "description": "HAWC 格式 v 方向脉动风二进制文件路径；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_w",
+      "description": "HAWC 格式 w 方向脉动风二进制文件路径；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "FilenameRoot",
+      "description": "Bladed 风场文件根名，关联 .wnd/.sum 等文件；仅相应 Bladed 风场类型使用。",
+      "module": "通用"
+    },
+    {
+      "name": "Filename_Uni",
+      "description": "均匀风时序文件路径；仅 WindType=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "Fl_Mode",
+      "description": "ROSCO 浮式机组运动反馈：0=关闭，1=平移速度反馈，2=转动速度反馈。",
+      "module": "通用"
+    },
+    {
+      "name": "FlapDOF1",
+      "description": "叶片一阶挥舞（面外）弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "FlapDOF2",
+      "description": "叶片二阶挥舞（面外）弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "FocalDistanceX",
+      "description": "雷达焦点相对轮毂的 X 向坐标，单位 m；连续/脉冲雷达只使用第一个坐标。",
+      "module": "通用"
+    },
+    {
+      "name": "FocalDistanceY",
+      "description": "雷达焦点相对轮毂的 Y 向坐标，单位 m；连续/脉冲雷达只用第一个坐标。",
+      "module": "通用"
+    },
+    {
+      "name": "FocalDistanceZ",
+      "description": "雷达焦点相对轮毂的 Z 向坐标，单位 m；连续/脉冲雷达只用第一个坐标。",
+      "module": "通用"
+    },
+    {
+      "name": "FurlFile",
+      "description": "侧偏/折尾结构属性文件路径；Furling=False 时不使用，none 为占位值。",
+      "module": "通用"
+    },
+    {
+      "name": "Furling",
+      "description": "是否读取侧偏/折尾式风机附加结构属性；原文件说明。",
+      "module": "通用"
+    },
+    {
+      "name": "GBRatio",
+      "description": "高速轴转速与低速轴转速之比，无量纲。",
+      "module": "通用"
+    },
+    {
+      "name": "GBoxEff",
+      "description": "齿轮箱效率，单位 %。",
+      "module": "通用"
+    },
+    {
+      "name": "Gain_OM",
+      "description": "Bladed 接口记录 16，最佳运行模式转矩增益，单位 N·m/(rad/s)²；在接口规定的最佳转矩模式下使用。",
+      "module": "通用"
+    },
+    {
+      "name": "GenDOF",
+      "description": "发电机/风轮整体转动自由度；True 时转速由动力学与控制响应决定，RotSpeed 是初值而非全程强制恒定转速。",
+      "module": "通用"
+    },
+    {
+      "name": "GenEff",
+      "description": "发电机效率，单位 %；影响机械功率至电功率换算，戴维南及用户发电机模型按原注释忽略此字段。",
+      "module": "通用"
+    },
+    {
+      "name": "GenIner",
+      "description": "发电机绕高速轴的转动惯量，单位 kg·m²；与齿轮箱速比共同影响传动链转动动力学。",
+      "module": "通用"
+    },
+    {
+      "name": "GenModel",
+      "description": "发电机模型：1=简单感应机，2=戴维南等效，3=用户模型；仅 VSContrl=0 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "GenPwr_Dem",
+      "description": "Bladed 接口记录 13，目标发电功率，单位 W。",
+      "module": "通用"
+    },
+    {
+      "name": "GenSpd_Dem",
+      "description": "Bladed 接口记录 19，额定以上目标发电机转速，单位 rpm；实际使用取决于 DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "GenSpd_MaxOM",
+      "description": "Bladed 接口记录 18，最佳运行模式最高发电机转速，单位 rpm。",
+      "module": "通用"
+    },
+    {
+      "name": "GenSpd_MinOM",
+      "description": "Bladed 接口记录 17，最佳运行模式最低发电机转速，单位 rpm。",
+      "module": "通用"
+    },
+    {
+      "name": "GenTiStp",
+      "description": "发电机停机判据：True=按 TimGenOf 时间停机，False=发电机功率降到 0 时停机。",
+      "module": "通用"
+    },
+    {
+      "name": "GenTiStr",
+      "description": "发电机启动判据：True=按 TimGenOn 时间启动，False=按 SpdGenOn 高速轴转速启动。",
+      "module": "通用"
+    },
+    {
+      "name": "GenTrq_Dem",
+      "description": "Bladed 接口记录 22，额定以上目标发电机转矩，单位 N·m。",
+      "module": "通用"
+    },
+    {
+      "name": "Gravity",
+      "description": "重力加速度，单位 m/s²；用于结构重力及水动力等耦合计算。",
+      "module": "通用"
+    },
+    {
+      "name": "HDSum",
+      "description": "HydroDyn 摘要文件输出开关。",
+      "module": "通用"
+    },
+    {
+      "name": "HSSBrDT",
+      "description": "高速轴制动器从投入到完全制动的时间，单位 s；仅 HSSBrMode=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "HSSBrMode",
+      "description": "高速轴制动器模式：0=关闭，1=简单模型，3=用户函数，4=Simulink/LabVIEW，5=Bladed DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "HSSBrTqF",
+      "description": "高速轴制动器完全投入后的制动力矩，单位 N·m。",
+      "module": "通用"
+    },
+    {
+      "name": "HWindSpeed",
+      "description": "稳态风的参考水平风速，单位 m/s；仅 WindType=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "HubCM",
+      "description": "轮毂质心相对风轮顶点沿轴向距离，单位 m，下风方向为正。",
+      "module": "通用"
+    },
+    {
+      "name": "HubIner",
+      "description": "轮毂绕风轮轴（三叶片）或跷跷板轴（两叶片）的转动惯量，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "HubLoss",
+      "description": "是否启用 Prandtl 轮毂损失修正。",
+      "module": "通用"
+    },
+    {
+      "name": "HubMass",
+      "description": "轮毂质量，单位 kg；与叶片、机舱等质量分别输入。",
+      "module": "通用"
+    },
+    {
+      "name": "HubRad",
+      "description": "风轮顶点至叶根的距离，单位 m；与 TipRad 一起确定叶片有效径向跨度。",
+      "module": "通用"
+    },
+    {
+      "name": "HydroFile",
+      "description": "HydroDyn 水动力输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "IPC_ControlMode",
+      "description": "ROSCO 独立变桨减载模式：0=关闭，1=1P，2=1P+2P。",
+      "module": "通用"
+    },
+    {
+      "name": "IPDefl",
+      "description": "叶尖初始面内位移，单位 m；设置叶片弹性初始状态。",
+      "module": "通用"
+    },
+    {
+      "name": "IceFile",
+      "description": "冰载荷输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "IndToler",
+      "description": "诱导求解收敛容差，无量纲；DEFAULT 使用默认精度。",
+      "module": "通用"
+    },
+    {
+      "name": "InflowFile",
+      "description": "InflowWind 风场输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "InterpOrder",
+      "description": "模块耦合时输入/输出时序插值阶数：1=线性，2=二次；阶数影响模块之间的数据交换。",
+      "module": "通用"
+    },
+    {
+      "name": "JOutLst",
+      "description": "请求输出的水动力节点 ID 列表；数量对应 NJOutputs。",
+      "module": "通用"
+    },
+    {
+      "name": "KinVisc",
+      "description": "工作流体运动黏度，单位 m²/s；气动计算中用于雷诺数等量的确定。",
+      "module": "通用"
+    },
+    {
+      "name": "LidRadialVel",
+      "description": "雷达输出量选择：True=光束径向速度，False=X 方向风速估计。",
+      "module": "通用"
+    },
+    {
+      "name": "LinInputs",
+      "description": "线性化输入集合：0=无输入，1=标准输入，2=全部模块输入用于调试；仅线性化开启时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "LinOutJac",
+      "description": "是否输出完整 Jacobian；仅线性化开启且 LinInputs=LinOutputs=2 时有意义。",
+      "module": "通用"
+    },
+    {
+      "name": "LinOutMod",
+      "description": "是否额外输出各模块自己的线性化文件。",
+      "module": "通用"
+    },
+    {
+      "name": "LinOutputs",
+      "description": "线性化输出集合：0=无输出，1=各模块 OutList 请求通道，2=全部模块输出用于调试。",
+      "module": "通用"
+    },
+    {
+      "name": "LinTimes",
+      "description": "线性化时刻列表，单位 s，元素数量对应 NLinTimes；仅 Linearize=True 且 CalcSteady=False 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "Linearize",
+      "description": "线性化总开关；True 生成运行点附近的小扰动线性模型，False 关闭。",
+      "module": "通用"
+    },
+    {
+      "name": "LoggingLevel",
+      "description": "ROSCO 日志等级：0=不写，1=标准 .dbg，2=附加局部变量 .dbg2，3=附加完整 avrSWAP .dbg3。",
+      "module": "通用"
+    },
+    {
+      "name": "MCFD",
+      "description": "MacCamy–Fuchs 绕射修正采用的构件半径，单位 m；小于等于 0 时不启用。",
+      "module": "通用"
+    },
+    {
+      "name": "MHK",
+      "description": "海洋水动力能机组类型：0=非 MHK 风机，1=固定式 MHK，2=浮式 MHK。",
+      "module": "通用"
+    },
+    {
+      "name": "MSL2SWL",
+      "description": "静水面 SWL 相对平均海平面 MSL 的高程偏移，单位 m，向上为正；使用势流模型时须为 0。",
+      "module": "通用"
+    },
+    {
+      "name": "M_CD",
+      "description": "动库仑摩擦项；模式 1 直接作为力矩 N·m，模式 2 在 Fz<0 时乘 |Fz|。",
+      "module": "通用"
+    },
+    {
+      "name": "M_CSmax",
+      "description": "最大静库仑摩擦项；模式 1 直接作为力矩 N·m，模式 2 在 Fz<0 时乘 |Fz|；具体系数量纲按所选模式确定。",
+      "module": "通用"
+    },
+    {
+      "name": "M_FCD",
+      "description": "动摩擦中随偏航轴承剪力变化的系数；仅模式 2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "M_FCSmax",
+      "description": "最大静摩擦中随轴承剪力变化的系数；模式 2 乘 sqrt(Fx²+Fy²) 得到力矩。",
+      "module": "通用"
+    },
+    {
+      "name": "M_MCD",
+      "description": "动摩擦中随偏航轴承弯矩变化的系数；仅模式 2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "M_MCSmax",
+      "description": "最大静摩擦中随轴承弯矩变化的系数；模式 2 乘 sqrt(Mx²+My²)。",
+      "module": "通用"
+    },
+    {
+      "name": "MaxIter",
+      "description": "诱导/迭代求解最大迭代次数，整数。",
+      "module": "通用"
+    },
+    {
+      "name": "MeasurementInterval",
+      "description": "雷达测量时间间隔，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "Method",
+      "description": "ElastoDyn 时间积分方法：1=四阶 Runge–Kutta，2=四阶 Adams–Bashforth，3=四阶 Adams–Bashforth–Moulton。",
+      "module": "通用"
+    },
+    {
+      "name": "MnDrift",
+      "description": "平均漂移二阶载荷选择：0=关闭，7/8/9/10/11/12=选用相应 WAMIT 文件；与 NewmanApp、DiffQTF 互斥。",
+      "module": "通用"
+    },
+    {
+      "name": "MooringFile",
+      "description": "系泊输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "NAxCoef",
+      "description": "构件端部轴向水动力系数组数。",
+      "module": "通用"
+    },
+    {
+      "name": "NBlGages",
+      "description": "叶片载荷/应变输出测点数量，允许 0–9。",
+      "module": "通用"
+    },
+    {
+      "name": "NBlInpSt",
+      "description": "叶片结构分布属性输入站位数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NBody",
+      "description": "WAMIT 势流刚体数量，至少 1。",
+      "module": "通用"
+    },
+    {
+      "name": "NBodyMod",
+      "description": "多刚体势流耦合：1=保留体间耦合，2=不耦合且 WAMIT XBODY=0，3=不耦合且 XBODY非0。",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefDpthCyl",
+      "description": "随水深变化的圆柱水动力系数表行数；仅 MCoefMod=2 的对应构件使用。",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefDpthRec",
+      "description": "随水深变化的矩形水动力系数表行数。",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefMembersCyl",
+      "description": "按圆柱构件分别定义水动力系数的组数；仅 MCoefMod=3 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefMembersRec",
+      "description": "按矩形构件分别定义水动力系数的组数。",
+      "module": "通用"
+    },
+    {
+      "name": "NExctnHdg",
+      "description": "动态参考偏航下预计算波浪激励的等间隔航向数量，覆盖 [-180,180)°；仅 PtfmYMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "NFillGroups",
+      "description": "内部填充构件组数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NJOutputs",
+      "description": "水动力节点输出数量，须小于 10。",
+      "module": "通用"
+    },
+    {
+      "name": "NJoints",
+      "description": "水动力构件节点数量；必须为 0 或至少 2。",
+      "module": "通用"
+    },
+    {
+      "name": "NLinTimes",
+      "description": "线性化时刻数量，整数且不小于 1。",
+      "module": "通用"
+    },
+    {
+      "name": "NMGDepths",
+      "description": "海生物附着层的深度记录数。",
+      "module": "通用"
+    },
+    {
+      "name": "NMOutputs",
+      "description": "构件内部输出位置组数，须小于 10。",
+      "module": "通用"
+    },
+    {
+      "name": "NMembers",
+      "description": "水动力构件数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NPropSetsCyl",
+      "description": "圆柱构件截面属性组数。",
+      "module": "通用"
+    },
+    {
+      "name": "NPropSetsRec",
+      "description": "矩形构件截面属性组数。",
+      "module": "通用"
+    },
+    {
+      "name": "NStCfiles",
+      "description": "机舱结构控制器文件路径列表；数量对应 NumNStC。",
+      "module": "通用"
+    },
+    {
+      "name": "NTwGages",
+      "description": "塔架载荷/应变输出测点数量，允许 0–9。",
+      "module": "通用"
+    },
+    {
+      "name": "NTwInpSt",
+      "description": "塔架结构分布属性输入站位数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NWaveElev",
+      "description": "波面高程输出点数量，最多 9。",
+      "module": "通用"
+    },
+    {
+      "name": "NWaveKin",
+      "description": "波运动学可输出观测点数量，最多 9。",
+      "module": "通用"
+    },
+    {
+      "name": "NWindVel",
+      "description": "风速输出观测点数量，允许 0–9。",
+      "module": "通用"
+    },
+    {
+      "name": "NX",
+      "description": "X 向半域节点数量，至少 2；完整 X 方向共有 2·NX-1 个节点。",
+      "module": "通用"
+    },
+    {
+      "name": "NY",
+      "description": "Y 向半域节点数量，至少 2；完整 Y 方向共有 2·NY-1 个节点。",
+      "module": "通用"
+    },
+    {
+      "name": "NZ",
+      "description": "竖直方向节点数量，至少 2。",
+      "module": "通用"
+    },
+    {
+      "name": "NacCMxn",
+      "description": "机舱质心相对塔顶沿机舱下风方向的位置，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "NacCMyn",
+      "description": "机舱质心相对塔顶的横向位置，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "NacCMzn",
+      "description": "机舱质心相对塔顶的竖直位置，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "NacMass",
+      "description": "机舱质量，单位 kg；质心位置由 NacCMxn/yn/zn 定义。",
+      "module": "通用"
+    },
+    {
+      "name": "NacYIner",
+      "description": "机舱绕偏航轴的转动惯量，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "NacYaw",
+      "description": "机舱初始或固定偏航角，单位 °。",
+      "module": "通用"
+    },
+    {
+      "name": "NacYawF",
+      "description": "强制偏航操作最终机舱角度，单位 °。",
+      "module": "通用"
+    },
+    {
+      "name": "NacYaw_North",
+      "description": "风轮上风端正指向地理北方时的机舱参考偏航角，单位 °；用于 DLL 坐标基准。",
+      "module": "通用"
+    },
+    {
+      "name": "NacelleDrag",
+      "description": "是否计算机舱拖曳力。",
+      "module": "通用"
+    },
+    {
+      "name": "NcIMUxn",
+      "description": "机舱惯性测量单元 IMU 相对塔顶的下风向位置，单位 m；影响该测点加速度输出。",
+      "module": "通用"
+    },
+    {
+      "name": "NcIMUyn",
+      "description": "机舱 IMU 相对塔顶的横向位置，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "NcIMUzn",
+      "description": "机舱 IMU 相对塔顶的竖直位置，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "NewmanApp",
+      "description": "Newman 近似平均与慢漂二阶载荷：0=关闭，非零选择 WAMIT 文件；与 MnDrift、DiffQTF 互斥且仅单向波使用。",
+      "module": "通用"
+    },
+    {
+      "name": "NumAFfiles",
+      "description": "翼型气动数据文件数量；后续 AFNames 列表长度应匹配。",
+      "module": "通用"
+    },
+    {
+      "name": "NumBStC",
+      "description": "叶片结构控制器/调谐质量阻尼器配置文件数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NumBeam",
+      "description": "单点雷达光束数量，允许 0–5；仅 SensorType=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "NumBl",
+      "description": "叶片数量，无量纲整数。",
+      "module": "通用"
+    },
+    {
+      "name": "NumCrctn",
+      "description": "每个耦合时间步的修正迭代次数；0 为显式推进、不做修正。",
+      "module": "通用"
+    },
+    {
+      "name": "NumNStC",
+      "description": "机舱结构控制器配置文件数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NumPulseGate",
+      "description": "脉冲雷达距离门数量；仅 SensorType=3 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "NumSStC",
+      "description": "子结构结构控制器配置文件数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NumTStC",
+      "description": "塔架结构控制器配置文件数量。",
+      "module": "通用"
+    },
+    {
+      "name": "NumTwrNds",
+      "description": "塔架气动节点数，后续表格定义高度、直径、拖曳系数等。",
+      "module": "通用"
+    },
+    {
+      "name": "OmgCut",
+      "description": "偏航黏性摩擦在低角速度区线性化的阈值，单位 rad/s。",
+      "module": "通用"
+    },
+    {
+      "name": "OoPDefl",
+      "description": "叶尖初始面外位移，单位 m；设置叶片弹性初始状态，不代表运行时强制位移。",
+      "module": "通用"
+    },
+    {
+      "name": "OutAll",
+      "description": "是否输出所有用户指定构件端部和节点载荷；不包含构件内部任意位置。",
+      "module": "通用"
+    },
+    {
+      "name": "OutFile",
+      "description": "模块结果去向：1=仅模块文件，2=仅 OpenFAST 主结果，3=两者；原英文标注 currently unused 时该字段不控制实际去向。",
+      "module": "通用"
+    },
+    {
+      "name": "OutFileFmt",
+      "description": "主程序结果格式：1=文本 .out，2=二进制 .outb，3=两者。",
+      "module": "通用"
+    },
+    {
+      "name": "OutFmt",
+      "description": "数值输出的 Fortran 格式字符串，决定科学计数法、字段宽度及有效数字；不改变内部计算精度，通常不包含时间列。",
+      "module": "通用"
+    },
+    {
+      "name": "OutList",
+      "description": "输出通道列表起始标记；后续每行指定需记录的变量，直到 END；请求通道不等于开启对应物理模型。",
+      "module": "通用"
+    },
+    {
+      "name": "OutSFmt",
+      "description": "输出表头字符串的 Fortran 格式，如 A11 表示字符串字段宽度 11；不控制数值精度。",
+      "module": "通用"
+    },
+    {
+      "name": "OutSwtch",
+      "description": "模块输出去向：1=模块自身 .out，2=OpenFAST 主 .out，3=两者；SeaState 和 HydroDyn。",
+      "module": "通用"
+    },
+    {
+      "name": "OverHang",
+      "description": "偏航轴至风轮顶点（三叶片）或跷跷板销轴（两叶片）的轴向悬伸距离，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "PCMode",
+      "description": "变桨控制模式：0=无，3=用户子程序，4=Simulink/LabVIEW，5=Bladed 风格 DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_ControlMode",
+      "description": "ROSCO 变桨模式：0=固定细桨距，1=主动 PI 变桨。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_GS_angles",
+      "description": "ROSCO 变桨增益调度角度数组，rad；与调度增益数组长度一致。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_GS_n",
+      "description": "ROSCO 变桨增益调度节点数量。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_KI",
+      "description": "ROSCO 变桨 PI 控制器积分增益数组；与增益调度桨距节点对应。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_KP",
+      "description": "ROSCO 变桨 PI 控制器比例增益数组；与增益调度桨距节点对应，量纲以控制器接口为准。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MaxPit",
+      "description": "ROSCO 最大桨距角，rad。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MaxRat",
+      "description": "ROSCO 最大正向变桨速率，rad/s。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MinPit",
+      "description": "ROSCO 最小桨距角，rad。",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MinRat",
+      "description": "ROSCO 最小负向变桨速率，rad/s。",
+      "module": "通用"
+    },
+    {
+      "name": "PLExp_Hawc",
+      "description": "HAWC 幂律平均风廓线指数，无量纲；仅 WindType=5 且 WindProfile=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "PLexp",
+      "description": "稳态风幂律切变指数，无量纲；U(z)=Uref·(z/RefHt)^PLexp，仅 WindType=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "PS_Mode",
+      "description": "ROSCO 桨距饱和策略：0=关闭，1=启用。",
+      "module": "通用"
+    },
+    {
+      "name": "Patm",
+      "description": "大气绝对压力，单位 Pa；原模板说明仅用于 MHK 机组空化检查。",
+      "module": "通用"
+    },
+    {
+      "name": "PitManRat",
+      "description": "对应叶片强制变桨到目标角的速率，单位 °/s；与 TPitManS 和 BlPitchF 配合。",
+      "module": "通用"
+    },
+    {
+      "name": "PotFile",
+      "description": "势流数据根路径，不带扩展名；关联 .hst/.1/.3 及所选择的二阶 QTF 文件。",
+      "module": "通用"
+    },
+    {
+      "name": "PotMod",
+      "description": "势流水动力模型：0=关闭，1=由 WAMIT 频域数据转换至时域，2=流体冲量理论 FIT。",
+      "module": "通用"
+    },
+    {
+      "name": "PreCone",
+      "description": "对应叶片预锥角，单位 °；符号服从 ElastoDyn 坐标约定，不应直接用绝对值替代。",
+      "module": "通用"
+    },
+    {
+      "name": "PropagationDir",
+      "description": "风传播方向角，单位 °；从与惯性 +X 对齐开始，正角转向 -Y，按气象旋转约定。",
+      "module": "通用"
+    },
+    {
+      "name": "PtchRate_Max",
+      "description": "Bladed 接口记录 9，最大允许桨距速率，单位 °/s；实际控制器处理见 DLL 配置。",
+      "module": "通用"
+    },
+    {
+      "name": "PtchRate_Min",
+      "description": "Bladed 接口记录 8，最小允许桨距速率（负方向），单位 °/s；实际控制器处理见 DLL 配置。",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_Cntrl",
+      "description": "Bladed 接口记录 28 的桨距控制形式：0=统一变桨，1=独立变桨。",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_Max",
+      "description": "Bladed 接口记录 7，传给控制器的最大桨距，单位 °；实际限幅应结合 DISCON.IN 与控制器实现。",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_Min",
+      "description": "Bladed 接口记录 6，传给控制器的最小桨距，单位 °；不能只据此推断 DLL 内部最终限幅。",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_SetPnt",
+      "description": "Bladed 接口记录 5，额定以下桨距设定值，单位 °；为接口传值，实际执行取决于控制 DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCMxt",
+      "description": "平台质心相对地面/MSL 基准的下风向坐标，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCMyt",
+      "description": "平台质心相对地面/MSL 基准的横向坐标，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCMzt",
+      "description": "平台质心相对地面/MSL 基准的竖直坐标，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCOBxt",
+      "description": "浮心相对平台参考点的 xt 偏移，单位 m；仅 PotMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCOByt",
+      "description": "浮心相对平台参考点的 yt 偏移，单位 m；仅 PotMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmHeave",
+      "description": "平台初始或固定垂荡状态，单位 m；对应自由度开启时作为初始条件，关闭时受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmHvDOF",
+      "description": "平台垂荡（Z 向竖直平移）自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmMass",
+      "description": "平台质量，单位 kg；不应理解为自动包含所有风机部件的整机总质量。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmPDOF",
+      "description": "平台纵摇/俯仰（绕 Y 转动）自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmPIner",
+      "description": "平台绕其质心俯仰轴的转动惯量，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmPitch",
+      "description": "平台初始或固定纵摇状态，单位 °；对应自由度开启时作为初始条件，关闭时受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRDOF",
+      "description": "平台横摇（绕 X 转动）自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRIner",
+      "description": "平台绕其质心滚转轴的转动惯量，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefY",
+      "description": "固定参考偏航角（模式 0）或初始参考偏航角（模式 1），单位 °。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefxt",
+      "description": "势流刚体参考点 xt 方向位置偏移，单位 m；元素数量对应 NBody。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefyt",
+      "description": "势流刚体参考点 yt 方向位置偏移，单位 m；元素数量对应 NBody。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefzt",
+      "description": "平台参考点竖直位置，单位 m；ElastoDyn 中相对地面/MSL，HydroDyn 中为势流刚体参考点的 zt 偏移，应保持坐标基准一致。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefztRot",
+      "description": "势流刚体参考坐标系绕 zt 的转角，单位 °；元素数量对应 NBody。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRoll",
+      "description": "平台初始或固定横摇状态，单位 °；对应自由度开启时作为初始条件，关闭时受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSgDOF",
+      "description": "平台纵荡（X 向水平平移）自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSurge",
+      "description": "平台初始或固定纵荡状态，单位 m；对应自由度开启时作为初始条件，关闭时受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSwDOF",
+      "description": "平台横荡（Y 向水平平移）自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSway",
+      "description": "平台初始或固定横荡状态，单位 m；对应自由度开启时作为初始条件，关闭时受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmVol0",
+      "description": "未位移平台排水体积，单位 m³；应与 WAMIT 输出一致。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmXYIner",
+      "description": "平台质心处 xy 惯性矩阵非对角项，定义为 -∫xy dm，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmXZIner",
+      "description": "平台质心处 xz 惯性矩阵非对角项，定义为 -∫xz dm，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYCutOff",
+      "description": "平台参考偏航低通滤波截止频率，单位 Hz；仅 PtfmYMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYDOF",
+      "description": "平台艏摇/偏航（绕 Z 转动）自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYIner",
+      "description": "平台绕其质心偏航轴的转动惯量，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYMod",
+      "description": "大幅慢变平台偏航的参考模型：0=固定参考偏航，1=对平台偏航低通滤波后动态更新。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYZIner",
+      "description": "平台质心处 yz 惯性矩阵非对角项，定义为 -∫yz dm，单位 kg·m²。",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYaw",
+      "description": "平台初始或固定艏摇状态，单位 °；对应自由度开启时作为初始条件，关闭时受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "PulseSpacing",
+      "description": "相邻脉冲距离门的间距，单位 m；仅 SensorType=3 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "Pvap",
+      "description": "工作流体饱和蒸气压，单位 Pa；原模板说明仅用于 MHK 空化检查。",
+      "module": "通用"
+    },
+    {
+      "name": "RdtnDT",
+      "description": "辐射响应核采样步长，单位 s；DEFAULT 由程序默认规则确定，不应直接把该字符串当数值；频率上限与 π/RdtnDT 对应。",
+      "module": "通用"
+    },
+    {
+      "name": "RdtnMod",
+      "description": "辐射记忆效应模型：0=关闭记忆效应，1=时域卷积，2=状态空间；仅 PotMod=1 使用，模式 2 需 .ss 文件。",
+      "module": "通用"
+    },
+    {
+      "name": "RdtnTMax",
+      "description": "辐射脉冲响应核的分析/截断时长，单位 s；应足够长使核衰减，频率分辨率 π/RdtnTMax。",
+      "module": "通用"
+    },
+    {
+      "name": "RefHt",
+      "description": "稳态幂律风参考高度，单位 m；仅 WindType=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "RefHt_Hawc",
+      "description": "HAWC 风场网格竖直中心的参考高度，单位 m；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "RefHt_Uni",
+      "description": "均匀风文件中水平风速的参考高度，单位 m；仅 WindType=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "RefLength",
+      "description": "均匀风线性水平/竖直切变的参考长度，单位 m；仅 WindType=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "RotSpeed",
+      "description": "风轮初始或固定转速，单位 rpm；GenDOF=True 时为初始转速，False 时转动自由度受约束。",
+      "module": "通用"
+    },
+    {
+      "name": "RotorApexOffsetPos",
+      "description": "雷达安装位置相对风轮顶点的三分量偏移，单位 m，按 X/Y/Z 顺序。",
+      "module": "通用"
+    },
+    {
+      "name": "SD_Mode",
+      "description": "ROSCO 停机策略：0=关闭，1=变桨至最大角。",
+      "module": "通用"
+    },
+    {
+      "name": "SFx",
+      "description": "HAWC X 方向脉动风直接缩放系数，无量纲；仅 WindType=5 且 ScaleMethod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SFy",
+      "description": "HAWC Y 方向脉动风直接缩放系数，无量纲；仅 WindType=5 且 ScaleMethod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SFz",
+      "description": "HAWC Z 方向脉动风直接缩放系数，无量纲；仅 WindType=5 且 ScaleMethod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_PORt",
+      "description": "简单感应发电机最大转矩/额定转矩比，无量纲；仅 VSContrl=0 且 GenModel=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_RtTq",
+      "description": "简单感应发电机额定转矩，单位 N·m；仅 VSContrl=0 且 GenModel=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_SlPc",
+      "description": "简单感应发电机额定滑差，单位 %；仅 VSContrl=0 且 GenModel=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_SySp",
+      "description": "简单感应发电机零转矩同步转速，单位 rpm；仅 VSContrl=0 且 GenModel=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SS_Mode",
+      "description": "ROSCO 设定点平滑开关：0=关闭，1=启用。",
+      "module": "通用"
+    },
+    {
+      "name": "SStCfiles",
+      "description": "子结构结构控制器文件路径列表；数量对应 NumSStC。",
+      "module": "通用"
+    },
+    {
+      "name": "ScaleMethod",
+      "description": "HAWC 湍流缩放方式：0=不缩放，1=直接指定比例，2=按目标标准差计算比例；此段属于 HAWC 格式。",
+      "module": "通用"
+    },
+    {
+      "name": "SeaStFile",
+      "description": "SeaState 海况输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "SeaStSum",
+      "description": "SeaState 摘要输出开关。",
+      "module": "通用"
+    },
+    {
+      "name": "SensorType",
+      "description": "激光雷达配置：0=关闭，1=单点光束，2=连续式，3=脉冲式。",
+      "module": "通用"
+    },
+    {
+      "name": "ServoFile",
+      "description": "ServoDyn 控制输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "ShftGagL",
+      "description": "风轮顶点/跷跷板销轴至轴应变测点的距离，单位 m；上风风轮按原定义取正。",
+      "module": "通用"
+    },
+    {
+      "name": "ShftTilt",
+      "description": "风轮轴倾角，单位 °；使用 ElastoDyn 符号约定，负号需原样保留。",
+      "module": "通用"
+    },
+    {
+      "name": "SigmaFx",
+      "description": "HAWC X 方向目标湍流标准差，单位 m/s；仅 WindType=5 且 ScaleMethod=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SigmaFy",
+      "description": "HAWC Y 方向目标湍流标准差，单位 m/s；仅 WindType=5 且 ScaleMethod=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SigmaFz",
+      "description": "HAWC Z 方向目标湍流标准差，单位 m/s；仅 WindType=5 且 ScaleMethod=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SkewMomCorr",
+      "description": "是否启用斜尾流动量修正；通常仅 Skew_Mod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SkewRedistrFactor",
+      "description": "Pitt/Peters 斜尾流修正因子，无量纲；DEFAULT 使用程序默认值。",
+      "module": "通用"
+    },
+    {
+      "name": "SkewRedistr_Mod",
+      "description": "斜尾流诱导速度再分布模型：0=关闭，1=Glauert/Pitt/Peters；DEFAULT 按模块规则。",
+      "module": "通用"
+    },
+    {
+      "name": "Skew_Mod",
+      "description": "斜尾流模型选择：0=关闭，-1=线性化时移除非垂直分量，1=启用；按版本核对。",
+      "module": "通用"
+    },
+    {
+      "name": "SpdGenOn",
+      "description": "按转速启动时的高速轴转速阈值，单位 rpm；仅 GenTiStr=False 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "SpdSound",
+      "description": "工作流体声速，单位 m/s；用于相关气动/流体模型的可压缩性参数。",
+      "module": "通用"
+    },
+    {
+      "name": "SttsTime",
+      "description": "屏幕运行状态信息的输出时间间隔，单位 s；不影响数据文件采样间隔。",
+      "module": "通用"
+    },
+    {
+      "name": "SubFile",
+      "description": "子结构输入文件路径。",
+      "module": "通用"
+    },
+    {
+      "name": "SumPrint",
+      "description": "模块/主程序摘要输出开关；True 生成相应摘要，False 不生成；若原英文标注 currently unused，该版本此字段不生效。",
+      "module": "通用"
+    },
+    {
+      "name": "SumQTF",
+      "description": "完整二阶和频平台载荷选择：0=关闭，10/11/12=使用对应 WAMIT 和频文件；例如 11 关联 .11s，区别于 SeaState 二阶波运动学。",
+      "module": "通用"
+    },
+    {
+      "name": "TD_Mode",
+      "description": "ROSCO 塔架阻尼反馈：0=关闭，1=机舱平移加速度反馈至桨距。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_Freq",
+      "description": "戴维南等效感应机电网频率，单位 Hz，通常 50 或 60；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_MR",
+      "description": "戴维南等效感应机励磁电抗，单位 Ω；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_NPol",
+      "description": "戴维南等效感应机极数，启用时须为大于 0 的偶数。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_RLR",
+      "description": "戴维南等效感应机转子漏抗，单位 Ω；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_RRes",
+      "description": "戴维南等效感应机转子电阻，单位 Ω；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_SLR",
+      "description": "戴维南等效感应机定子漏抗，单位 Ω；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_SRes",
+      "description": "戴维南等效感应机定子电阻，单位 Ω；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_VLL",
+      "description": "戴维南等效感应机线电压有效值，单位 V；仅 VSContrl=0 且 GenModel=2 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "THSSBrDp",
+      "description": "高速轴制动器开始投入时刻，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "TIDrag",
+      "description": "切向诱导计算是否包含阻力项。",
+      "module": "通用"
+    },
+    {
+      "name": "TMax",
+      "description": "仿真终止时间，单位 s；应大于输出开始时间 TStart。",
+      "module": "通用"
+    },
+    {
+      "name": "TPCOn",
+      "description": "主动变桨控制启用时刻，单位 s；PCMode=0 时不用。",
+      "module": "通用"
+    },
+    {
+      "name": "TPitManS",
+      "description": "对应叶片强制变桨操作开始时刻，单位 s；开始后覆盖标准变桨控制。",
+      "module": "通用"
+    },
+    {
+      "name": "TStCfiles",
+      "description": "塔架结构控制器文件路径列表；数量对应 NumTStC。",
+      "module": "通用"
+    },
+    {
+      "name": "TStart",
+      "description": "时序结果开始输出的时间，单位 s；与 TMax 的差值决定输出时段。部分模块模板中的此字段标为 currently unused，应以主文件为准。",
+      "module": "通用"
+    },
+    {
+      "name": "TTDspFA",
+      "description": "塔顶初始前后向位移，单位 m；对应塔架前后弯曲模态的初始形变。",
+      "module": "通用"
+    },
+    {
+      "name": "TTDspSS",
+      "description": "塔顶初始侧向位移，单位 m；对应塔架侧向弯曲模态的初始形变。",
+      "module": "通用"
+    },
+    {
+      "name": "TYCOn",
+      "description": "主动偏航控制启用时刻，单位 s；YCMode=0 时不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TYawManS",
+      "description": "强制偏航操作开始时刻，单位 s；随后覆盖标准偏航控制。",
+      "module": "通用"
+    },
+    {
+      "name": "TabDelim",
+      "description": "文本结果列分隔方式：True=制表符，False=空格；若模块原注释标为 currently unused，以主文件设置为准。",
+      "module": "通用"
+    },
+    {
+      "name": "TanInd",
+      "description": "是否计算切向诱导速度。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetCDmp",
+      "description": "跷跷板与速度无关的库仑阻尼力矩，单位 N·m；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDOF",
+      "description": "两叶片风轮跷跷板自由度开关；三叶片机组不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDefl",
+      "description": "风轮初始或固定跷跷板角，单位 °；只适用于两叶片机组。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDmp",
+      "description": "跷跷板黏性阻尼系数，单位 N·m/(rad/s)；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDmpP",
+      "description": "跷跷板阻尼器开始作用的角位置，单位 °；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetHSSp",
+      "description": "跷跷板硬限位线性弹簧刚度，单位 N·m/rad；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetHStP",
+      "description": "跷跷板硬限位角位置，单位 °；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetMod",
+      "description": "跷跷板弹簧/阻尼模型：0=无，1=标准，2=用户函数；仅两叶片机组使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetSSSp",
+      "description": "跷跷板软限位线性弹簧刚度，单位 N·m/rad；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TeetSStP",
+      "description": "跷跷板软限位角位置，单位 °；仅两叶片且 TeetMod=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TimGenOf",
+      "description": "按时间停止发电的时刻，单位 s；GenTiStp=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TimGenOn",
+      "description": "按时间启动时的启动时刻，单位 s；GenTiStr=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TipLoss",
+      "description": "是否启用 Prandtl 叶尖损失修正。",
+      "module": "通用"
+    },
+    {
+      "name": "TipMass",
+      "description": "对应叶片叶尖制动装置集中质量，单位 kg。",
+      "module": "通用"
+    },
+    {
+      "name": "TipRad",
+      "description": "风轮顶点至叶尖的距离，单位 m；为风轮几何半径，不是扣除轮毂半径后的叶片长度。",
+      "module": "通用"
+    },
+    {
+      "name": "TmaxIC",
+      "description": "系泊初始条件动态松弛最大时长，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "TowerBsHt",
+      "description": "塔底相对陆上地面或海上 MSL 的高度，单位 m；塔架长度与 TowerHt-TowerBsHt 对应。",
+      "module": "通用"
+    },
+    {
+      "name": "TowerFile",
+      "description": "Bladed 风场是否包含塔架 .twr 风速文件；属于 WindType=4 配置。",
+      "module": "通用"
+    },
+    {
+      "name": "TowerHt",
+      "description": "塔顶相对陆上地面或海上平均海平面 MSL 的高度，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "TrimCase",
+      "description": "稳态配平所调整的控制量：1=偏航，2=转矩，3=桨距；仅 CalcSteady=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TrimGain",
+      "description": "稳态搜索的转速误差比例增益，需大于 0；偏航/桨距用 rad/(rad/s)，转矩用 N·m/(rad/s)，仅 CalcSteady=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TrimTol",
+      "description": "稳态搜索中转速收敛判据的容差，无量纲；仅 CalcSteady=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "TwFADOF1",
+      "description": "塔架一阶前后向弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "TwFADOF2",
+      "description": "塔架二阶前后向弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "TwSSDOF1",
+      "description": "塔架一阶侧向弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "TwSSDOF2",
+      "description": "塔架二阶侧向弯曲模态自由度开关；True 参与耦合动力学响应，False 约束该自由度。",
+      "module": "通用"
+    },
+    {
+      "name": "Twr2Shft",
+      "description": "塔顶至风轮轴的竖直距离，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrAero",
+      "description": "是否计算塔架气动载荷。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrFADmp(1)",
+      "description": "塔架第一前后弯曲模态结构阻尼，通常为临界阻尼百分比（%）。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrFADmp(2)",
+      "description": "塔架第二前后弯曲模态结构阻尼，通常为临界阻尼百分比（%）。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrFile",
+      "description": "塔架分布结构属性文件路径，包含质量、刚度、模态等。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrGagNd",
+      "description": "塔架测点节点编号列表；数量对应 NTwGages，索引范围 1–TwrNodes；第 i 个列表元素对应第 i 组测点通道。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrNodes",
+      "description": "塔架结构分析节点数量。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrPotent",
+      "description": "塔架势流对入流的影响：0=无，1=基本势流，2=带 Bak 修正。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrSSDmp(1)",
+      "description": "塔架第一侧向弯曲模态结构阻尼，通常为临界阻尼百分比（%）。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrSSDmp(2)",
+      "description": "塔架第二侧向弯曲模态结构阻尼，通常为临界阻尼百分比（%）。",
+      "module": "通用"
+    },
+    {
+      "name": "TwrShadow",
+      "description": "塔影模型：0=关闭，1=Powles，2=Eames。",
+      "module": "通用"
+    },
+    {
+      "name": "Twr_Kdmp",
+      "description": "稳态搜索附加塔架阻尼系数，单位 N/(m/s)；用于辅助收敛，仅 CalcSteady=True 时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "UA_Mod",
+      "description": "非定常气动模型选择，0 通常为关闭；具体可用模型随 AeroDyn 版本变化，参照原说明。",
+      "module": "通用"
+    },
+    {
+      "name": "UJacSclFact",
+      "description": "耦合 Jacobian 求解采用的缩放系数，无量纲；用于改善数值尺度，并非物理载荷放大系数。",
+      "module": "通用"
+    },
+    {
+      "name": "URef",
+      "description": "叠加至 HAWC 脉动风的参考平均 u 风速，单位 m/s。",
+      "module": "通用"
+    },
+    {
+      "name": "URefLid",
+      "description": "雷达参考平均风速，单位 m/s。",
+      "module": "通用"
+    },
+    {
+      "name": "UndSling",
+      "description": "两叶片风轮跷跷板销轴至风轮顶点的悬挂距离，单位 m；三叶片机组不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "VFlowAng",
+      "description": "风的向上倾斜角，单位 °；WindType=7 时不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "VSContrl",
+      "description": "变速/发电机转矩控制模式：0=无主动变速控制，1=简化变速控制，3=用户函数，4=Simulink/LabVIEW，5=Bladed DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "VS_ControlMode",
+      "description": "ROSCO 额定以上转矩控制模式：0=恒转矩，1=恒功率，2=TSR PI 跟踪加恒转矩，3=TSR PI 跟踪加恒功率。",
+      "module": "通用"
+    },
+    {
+      "name": "VS_Rgn2K",
+      "description": "简化变速区域 2 转矩系数 K，单位 N·m/rpm²，按 T=K·n²；仅 VSContrl=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "VS_RtGnSp",
+      "description": "简化变速控制的额定发电机高速轴转速，单位 rpm；仅 VSContrl=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "VS_RtTq",
+      "description": "简化变速控制额定高速轴转矩，N·m；仅 VSContrl=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "VS_SlPc",
+      "description": "简化变速区域 2½ 的额定滑差百分比，单位 %；仅 VSContrl=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "VTK_fields",
+      "description": "是否将网格物理场随 VTK 一起写出；WrVTK=0 时忽略。",
+      "module": "通用"
+    },
+    {
+      "name": "VTK_fps",
+      "description": "VTK 动画帧率，单位 帧/s；仅 WrVTK=2 时使用，程序匹配积分步长的整数倍输出间隔。",
+      "module": "通用"
+    },
+    {
+      "name": "VTK_type",
+      "description": "VTK 内容：1=表面，2=基本线/点网格，3=所有网格用于调试；WrVTK=0 时忽略。",
+      "module": "通用"
+    },
+    {
+      "name": "VelInterpCubic",
+      "description": "风速时间插值：False=线性，True=三次；用于 WindType=2/3/4/5/7。",
+      "module": "通用"
+    },
+    {
+      "name": "WAMITULEN",
+      "description": "WAMIT 无量纲数据恢复量纲的特征长度，单位 m；应与生成该势流数据时的长度尺度一致。",
+      "module": "通用"
+    },
+    {
+      "name": "WE_Mode",
+      "description": "ROSCO 风速估计模式：0=轮毂风低通，1=浸入与不变估计，2=扩展卡尔曼滤波。",
+      "module": "通用"
+    },
+    {
+      "name": "WakeMod",
+      "description": "尾流/诱导模型选择；旧版本字段，含义与有效选项以原文件及版本文档为准。",
+      "module": "通用"
+    },
+    {
+      "name": "Wake_Mod",
+      "description": "尾流/诱导模型：0=无，1=BEMT，3=OLAF；选项随版本变化，结合原文件说明使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDT",
+      "description": "波浪生成时间步长，单位 s；对应最高角频率 π/WaveDT。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDir",
+      "description": "入射波传播方向角，单位 °；0 对应 +X，按 SeaState 方向约定使用，不能与风的气象角符号直接混同。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDirMod",
+      "description": "波向分布模型：0=单一波向，1=COS2S 方向扩散；仅 WaveMod=2/3/4 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDirRange",
+      "description": "波向总覆盖范围，单位 °；范围为 WaveDir±WaveDirRange/2，仅方向扩散开启时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDirSpread",
+      "description": "COS2S 波向扩散系数，无量纲且大于 0；仅 WaveDirMod=1 且 WaveMod=2/3/4 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDisp",
+      "description": "条带理论波运动学取样位置：0=未位移位置，1=已位移位置。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveElevxi",
+      "description": "波面高程输出点 X 坐标列表，单位 m，数量对应 NWaveElev。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveElevyi",
+      "description": "波面高程输出点 Y 坐标列表，单位 m，数量对应 NWaveElev。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveHs",
+      "description": "不规则波有效波高 Hs，单位 m；规则波模式下为规则波高度，适用于 WaveMod=1/2/3。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveKinxi",
+      "description": "波运动学输出点 X 坐标列表，单位 m；按相同索引与 Y/Z 组成观测点。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveKinyi",
+      "description": "波运动学输出点 Y 坐标列表，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveKinzi",
+      "description": "波运动学输出点 Z 坐标列表，单位 m。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveMod",
+      "description": "入射波模型：0=静水，1=规则波（1P# 可指定相位），2=JONSWAP/PM 不规则波，3=白噪声谱，4=用户谱，5=外部波面时序，6=外部完整运动学。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveNDAmp",
+      "description": "随机谱分量是否采用正态分布幅值处理；True 启用，False 采用另一幅值处理方式；仅 WaveMod=2/3/4 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveNDir",
+      "description": "离散波向数量，必须为奇数；仅开启方向扩散时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WavePkShp",
+      "description": "JONSWAP 谱峰增强因子 γ，无量纲；仅 WaveMod=2 使用，1 对应 PM 谱，DEFAULT 按程序规则计算。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveSeed(1)",
+      "description": "波浪随机数第一种子，32 位有符号整数；用于不规则波可复现生成。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveSeed(2)",
+      "description": "第二随机种子或随机数生成器名称。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveStMod",
+      "description": "波运动学向瞬时自由面延伸方式：0=不延伸，1=竖直延伸，2=外推，3=Wheeler；WaveMod=0 或启用势流时不使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveTMax",
+      "description": "波浪生成的分析时长，单位 s；频率分辨率 Δω=2π/WaveTMax。",
+      "module": "通用"
+    },
+    {
+      "name": "WaveTp",
+      "description": "谱峰周期 Tp，单位 s；规则波模式下为规则波周期，适用于 WaveMod=1/2；谱峰频率 fp=1/Tp。",
+      "module": "通用"
+    },
+    {
+      "name": "WindProfile",
+      "description": "HAWC 平均风廓线：0=常值，1=对数律，2=幂律。",
+      "module": "通用"
+    },
+    {
+      "name": "WindType",
+      "description": "风场类型：1=稳态，2=均匀时序，3=TurbSim 全场二进制，4=Bladed 风场，5=HAWC，6=用户函数，7=原生 Bladed。",
+      "module": "通用"
+    },
+    {
+      "name": "WindVxiList",
+      "description": "各风速观测点惯性系 X 坐标，单位 m；数量与 NWindVel 一致。",
+      "module": "通用"
+    },
+    {
+      "name": "WindVyiList",
+      "description": "各风速观测点惯性系 Y 坐标，单位 m；数量与 NWindVel 一致。",
+      "module": "通用"
+    },
+    {
+      "name": "WindVziList",
+      "description": "风速观测点惯性系 Z 坐标列表，单位 m；点数对应 NWindVel，不会修改风场本身的参考高度。",
+      "module": "通用"
+    },
+    {
+      "name": "WrVTK",
+      "description": "VTK 可视化输出：0=关闭，1=仅初始化几何，2=动画。",
+      "module": "通用"
+    },
+    {
+      "name": "WtrDens",
+      "description": "水密度，单位 kg/m³；影响浮力、水动力及波浪计算。",
+      "module": "通用"
+    },
+    {
+      "name": "WtrDpth",
+      "description": "以平均海平面为基准的水深，单位 m；应与海况、海底及几何定义一致。",
+      "module": "通用"
+    },
+    {
+      "name": "WvDiffQTF",
+      "description": "是否生成二阶差频入射波运动学；区别于 HydroDyn 的二阶差频平台载荷 DiffQTF。",
+      "module": "通用"
+    },
+    {
+      "name": "WvHiCOff",
+      "description": "入射波谱高频截止角频率，单位 rad/s；以上频率能量置零。",
+      "module": "通用"
+    },
+    {
+      "name": "WvHiCOffD",
+      "description": "二阶差频波运动学的高截止角频率，单位 rad/s。",
+      "module": "通用"
+    },
+    {
+      "name": "WvHiCOffS",
+      "description": "二阶和频波运动学的高截止角频率，单位 rad/s。",
+      "module": "通用"
+    },
+    {
+      "name": "WvKinFile",
+      "description": "外部波面/完整波运动学数据文件根名；仅 WaveMod=5/6 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WvLowCOff",
+      "description": "入射波谱低频截止角频率，单位 rad/s；以下频率能量置零。",
+      "module": "通用"
+    },
+    {
+      "name": "WvLowCOffD",
+      "description": "二阶差频波运动学的低截止角频率，单位 rad/s；仅启用相应差频方法时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WvLowCOffS",
+      "description": "二阶和频波运动学的低截止角频率，单位 rad/s；仅启用相应和频方法时使用。",
+      "module": "通用"
+    },
+    {
+      "name": "WvSumQTF",
+      "description": "是否生成二阶和频入射波运动学；区别于 HydroDyn 的二阶和频平台载荷 SumQTF。",
+      "module": "通用"
+    },
+    {
+      "name": "XOffset",
+      "description": "HAWC 风盒沿 +X 的初始位置偏移，单位 m；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "X_HalfWidth",
+      "description": "SeaState 波运动学插值域 X 向半宽，单位 m；网格间距为 X_HalfWidth/(NX-1)。",
+      "module": "通用"
+    },
+    {
+      "name": "YCMode",
+      "description": "机舱主动偏航控制模式：0=无，3=用户函数，4=Simulink/LabVIEW，5=Bladed DLL。",
+      "module": "通用"
+    },
+    {
+      "name": "Y_ControlMode",
+      "description": "ROSCO 偏航控制模式：0=关闭，1=偏航速率控制，2=基于独立变桨的偏航控制。",
+      "module": "通用"
+    },
+    {
+      "name": "Y_HalfWidth",
+      "description": "SeaState 波运动学插值域 Y 向半宽，单位 m；网格间距为 Y_HalfWidth/(NY-1)。",
+      "module": "通用"
+    },
+    {
+      "name": "YawBrMass",
+      "description": "偏航轴承质量，单位 kg。",
+      "module": "通用"
+    },
+    {
+      "name": "YawDOF",
+      "description": "机舱相对塔顶的偏航自由度；True 允许偏航动力学，区别于平台绕竖直轴的 PtfmYDOF。",
+      "module": "通用"
+    },
+    {
+      "name": "YawDamp",
+      "description": "机舱偏航阻尼系数，单位 N·m/(rad/s)；抑制机舱相对塔顶偏航速度。",
+      "module": "通用"
+    },
+    {
+      "name": "YawFrctMod",
+      "description": "偏航摩擦模型：0=关闭，1=不依赖轴承载荷，2=库仑项随轴承力/弯矩变化，3=用户模型。",
+      "module": "通用"
+    },
+    {
+      "name": "YawManRat",
+      "description": "强制偏航角速度绝对值，单位 °/s；与 TYawManS、NacYawF 配合。",
+      "module": "通用"
+    },
+    {
+      "name": "YawNeut",
+      "description": "偏航弹簧零恢复力矩对应的中性角，单位 °；与 YawSpr 共同定义偏航恢复力矩。",
+      "module": "通用"
+    },
+    {
+      "name": "YawSpr",
+      "description": "机舱偏航弹簧刚度，单位 N·m/rad；与机舱偏离 YawNeut 的角度配合。",
+      "module": "通用"
+    },
+    {
+      "name": "Z0",
+      "description": "HAWC 对数律风廓线的地表粗糙度长度，单位 m；仅 WindType=5 且 WindProfile=1 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "Z_Depth",
+      "description": "波运动学域相对静水面的向下深度，单位 m，须大于 0 且不超过 WtrDpth+MSL2SWL；采用竖直余弦分布节点。",
+      "module": "通用"
+    },
+    {
+      "name": "cbot",
+      "description": "海底接触阻尼，单位 Pa·s/m；耗散接触过程的竖向运动能量。",
+      "module": "通用"
+    },
+    {
+      "name": "dtIC",
+      "description": "系泊初始条件动态松弛中检查收敛的时间间隔，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "dtM",
+      "description": "MoorDyn 内部积分步长，单位 s。",
+      "module": "通用"
+    },
+    {
+      "name": "dx",
+      "description": "HAWC 二进制风场 X 向网格间距，单位 m；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "dy",
+      "description": "HAWC 二进制风场 Y 向网格间距，单位 m；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "dz",
+      "description": "HAWC 二进制风场 Z 向网格间距，单位 m；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "kbot",
+      "description": "海底接触刚度，单位 Pa/m；控制系泊线穿入海底时的恢复作用，数值越大接触越硬。",
+      "module": "通用"
+    },
+    {
+      "name": "nx",
+      "description": "HAWC 二进制风场 X 向网格点数，整数；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "ny",
+      "description": "HAWC 二进制风场 Y 向网格点数，整数；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "nz",
+      "description": "HAWC 二进制风场 Z 向网格点数，整数；仅 WindType=5 使用。",
+      "module": "通用"
+    },
+    {
+      "name": "sig_v",
+      "description": "偏航线性黏性摩擦系数，单位 N·m/(rad/s)。",
+      "module": "通用"
+    },
+    {
+      "name": "sig_v2",
+      "description": "偏航二次黏性摩擦系数，单位 N·m/(rad/s)²。",
+      "module": "通用"
+    },
+    {
+      "name": "threshIC",
+      "description": "系泊初始条件收敛阈值，无量纲。",
+      "module": "通用"
+    },
+    {
+      "name": "DT",
+      "module": "ElastoDyn",
+      "description": "结构动力学积分步长，单位 s；DEFAULT 继承耦合驱动步长。"
+    },
+    {
+      "name": "DT",
+      "module": "ServoDyn",
+      "description": "控制器通信间隔，单位 s；DEFAULT 使用驱动默认值，DLL 调用间隔另由 DLL_DT 设置。"
+    },
+    {
+      "name": "Echo",
+      "module": "ROSCO",
+      "description": "ROSCO 输入回显：0=不回显，1=将控制器参数写入 .echo。"
+    },
+    {
+      "name": "VS_RtTq",
+      "module": "ROSCO",
+      "description": "ROSCO 额定发电机转矩，N·m；用于 ROSCO 转矩控制。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "ModCoupling",
+      "description": "模块耦合方法；5.0 起：1=松耦合，2=固定 Jacobian 更新的紧耦合，3=自动 Jacobian 更新的紧耦合。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "RhoInf",
+      "description": "紧耦合 generalized-alpha 积分器的数值阻尼参数，范围 0 到 1。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "ConvTol",
+      "description": "紧耦合 generalized-alpha 积分器的收敛误差容限。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "MaxConvIter",
+      "description": "紧耦合求解的最大收敛迭代次数。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "NRotors",
+      "description": "风轮数量；5.0 起支持同一机组的多个风轮。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "CompSoil",
+      "description": "土壤结构模块开关：0=关闭，1=SoilDyn。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "MirrorRotor",
+      "description": "是否反转风轮旋转方向；首个风轮保持常规方向。"
+    },
+    {
+      "module": "OpenFAST",
+      "name": "SoilFile",
+      "description": "SoilDyn 土壤结构输入文件。"
+    },
+    {
+      "module": "SeaState",
+      "name": "WvCrntMod",
+      "description": "波浪与海流组合模型：0=简单叠加，1=加入 Doppler 效应，2=同时进行波幅/波谱缩放。"
+    },
+    {
+      "name": "BldNd_BladesOut",
+      "module": "ElastoDyn",
+      "description": "请求叶片节点输出的叶片数；节点 OutList 使用独立的输出族。"
+    },
+    {
+      "name": "BldNd_BlOutNd",
+      "module": "ElastoDyn",
+      "description": "叶片节点输出位置字符串；已核验的 ElastoDyn 格式中此字段尚未使用，请核对所用版本。"
+    },
+    {
+      "name": "BldNd_BlOutNd_Str",
+      "module": "ElastoDyn",
+      "description": "叶片节点输出位置字符串；已核验格式中尚未使用。"
+    },
+    {
+      "name": "NBlOuts",
+      "module": "AeroDyn",
+      "description": "叶片气动输出测点数量，0–9；下一行 BlOutNd 按此数量填写。"
+    },
+    {
+      "name": "NTwOuts",
+      "module": "AeroDyn",
+      "description": "塔架气动输出测点数量，0–9；下一行 TwOutNd 按此数量填写。"
+    },
+    {
+      "name": "BlOutNd",
+      "module": "AeroDyn",
+      "description": "叶片气动输出节点编号列表；数量对应 NBlOuts，节点上限需查所用叶片文件 NumBlNds。"
+    },
+    {
+      "name": "TwOutNd",
+      "module": "AeroDyn",
+      "description": "塔架气动输出节点编号列表；数量对应 NTwOuts，索引范围 1–NumTwrNds。"
+    }
+  ],
+  "tables": [
+    {
+      "name": "AttachA",
+      "description": "线 A 端连接点 ID。"
+    },
+    {
+      "name": "AttachB",
+      "description": "线 B 端连接点 ID。"
+    },
+    {
+      "name": "Attachment",
+      "description": "连接类型：fixed 为固定锚点，vessel 为随平台运动的导缆点；fixed 坐标为全局位置，vessel 坐标为平台参考系位置。"
+    },
+    {
+      "name": "AxCa",
+      "description": "端部轴向附加质量系数，无量纲。"
+    },
+    {
+      "name": "AxCd",
+      "description": "端部轴向拖曳系数，无量纲。"
+    },
+    {
+      "name": "AxCoefID",
+      "description": "轴向水动力系数组编号；由 JointAxID 引用。"
+    },
+    {
+      "name": "AxCp",
+      "description": "端部轴向动压系数，无量纲。"
+    },
+    {
+      "name": "BA/-zeta",
+      "description": "轴向内部阻尼 BA，N·s；若为负值则其绝对值为目标临界阻尼比，由程序反算阻尼。"
+    },
+    {
+      "name": "BlAFID",
+      "description": "叶片节点对应翼型数据文件编号。"
+    },
+    {
+      "name": "BlChord",
+      "description": "叶片局部弦长，m。"
+    },
+    {
+      "name": "BlSpn",
+      "description": "叶片气动节点径向/跨度位置，m。"
+    },
+    {
+      "name": "BlTwist",
+      "description": "叶片局部气动扭角，°。"
+    },
+    {
+      "name": "CA",
+      "description": "连接点附加质量系数，无量纲。"
+    },
+    {
+      "name": "Ca",
+      "description": "横向附加质量系数，无量纲。"
+    },
+    {
+      "name": "CaAx",
+      "description": "轴向/切向附加质量系数，无量纲。"
+    },
+    {
+      "name": "Cd",
+      "description": "横向拖曳系数，无量纲。"
+    },
+    {
+      "name": "CdA",
+      "description": "连接点拖曳系数与参考面积乘积，m²。"
+    },
+    {
+      "name": "CdAx",
+      "description": "轴向/切向拖曳系数，无量纲。"
+    },
+    {
+      "name": "Diam",
+      "description": "等体积直径，m；用于排水体积及水动力面积。"
+    },
+    {
+      "name": "Dpth",
+      "description": "水深系数表的深度，m；表按深度递增排序，对应全局 Z 坐标递减。"
+    },
+    {
+      "name": "DpthAxCa",
+      "description": "随深度变化模型的轴向附加质量系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthAxCaMG",
+      "description": "随深度变化模型的轴向附加质量系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "DpthAxCd",
+      "description": "随深度变化模型的轴向拖曳系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthAxCdMG",
+      "description": "随深度变化模型的轴向拖曳系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "DpthAxCp",
+      "description": "随深度变化模型的轴向动压系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthAxCpMG",
+      "description": "随深度变化模型的轴向动压系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "DpthCa",
+      "description": "随深度变化模型的横向附加质量系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthCaA",
+      "description": "随深度变化模型的横向附加质量系数，无量纲，矩形 A 方向，无海生物附着层。"
+    },
+    {
+      "name": "DpthCaAMG",
+      "description": "随深度变化模型的横向附加质量系数，无量纲，矩形 A 方向，带海生物附着层。"
+    },
+    {
+      "name": "DpthCaB",
+      "description": "随深度变化模型的横向附加质量系数，无量纲，矩形 B 方向，无海生物附着层。"
+    },
+    {
+      "name": "DpthCaBMG",
+      "description": "随深度变化模型的横向附加质量系数，无量纲，矩形 B 方向，带海生物附着层。"
+    },
+    {
+      "name": "DpthCaMG",
+      "description": "随深度变化模型的横向附加质量系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "DpthCb",
+      "description": "随深度变化模型的静水浮力系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthCbMG",
+      "description": "随深度变化模型的静水浮力系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "DpthCd",
+      "description": "随深度变化模型的横向拖曳系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthCdA",
+      "description": "随深度变化模型的横向拖曳系数，无量纲，矩形 A 方向，无海生物附着层。"
+    },
+    {
+      "name": "DpthCdAMG",
+      "description": "随深度变化模型的横向拖曳系数，无量纲，矩形 A 方向，带海生物附着层。"
+    },
+    {
+      "name": "DpthCdB",
+      "description": "随深度变化模型的横向拖曳系数，无量纲，矩形 B 方向，无海生物附着层。"
+    },
+    {
+      "name": "DpthCdBMG",
+      "description": "随深度变化模型的横向拖曳系数，无量纲，矩形 B 方向，带海生物附着层。"
+    },
+    {
+      "name": "DpthCdMG",
+      "description": "随深度变化模型的横向拖曳系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "DpthCp",
+      "description": "随深度变化模型的横向动压系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "DpthCpMG",
+      "description": "随深度变化模型的横向动压系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "EA",
+      "description": "轴向拉伸刚度 E·A，N。"
+    },
+    {
+      "name": "EI",
+      "description": "弯曲刚度 E·I，N·m²；原单位行标为 (-)，此处按物理定义解释。"
+    },
+    {
+      "name": "FillDens",
+      "description": "填充液体密度，kg/m³；DEFAULT 采用 WtrDens。"
+    },
+    {
+      "name": "FillFSLoc",
+      "description": "构件内部填充液体自由面高度，m，与 MSL2SWL 参考有关。"
+    },
+    {
+      "name": "FillMList",
+      "description": "该填充组构件 ID 列表。"
+    },
+    {
+      "name": "FillNumM",
+      "description": "该填充组包含的构件数量。"
+    },
+    {
+      "name": "GenSpd_TLU",
+      "description": "DLL 转矩查询表的发电机转速列，rpm。"
+    },
+    {
+      "name": "GenTrq_TLU",
+      "description": "DLL 转矩查询表的发电机转矩列，N·m。"
+    },
+    {
+      "name": "ID",
+      "description": "连接点编号；供 AttachA/AttachB 引用。"
+    },
+    {
+      "name": "JointAxID",
+      "description": "节点端部轴向系数组 ID。"
+    },
+    {
+      "name": "JointID",
+      "description": "水动力几何节点编号；由构件端点字段引用。"
+    },
+    {
+      "name": "JointOvrlp",
+      "description": "节点重叠处理：0=不处理，1=通过超级构件计算消除重叠。"
+    },
+    {
+      "name": "Jointxi",
+      "description": "节点惯性系 X 坐标，m。"
+    },
+    {
+      "name": "Jointyi",
+      "description": "节点惯性系 Y 坐标，m。"
+    },
+    {
+      "name": "Jointzi",
+      "description": "节点惯性系 Z 坐标，m；相对模型海平面参考。"
+    },
+    {
+      "name": "Line",
+      "description": "系泊线编号；用于 FairTen#/AnchTen# 等输出。"
+    },
+    {
+      "name": "LineType",
+      "description": "系泊线属性类型名，引用 LINE TYPES。"
+    },
+    {
+      "name": "M",
+      "description": "连接点集中质量，kg。"
+    },
+    {
+      "name": "MCoefMod",
+      "description": "水动力系数模型：1=统一简单系数，2=随深度变化，3=按构件指定。"
+    },
+    {
+      "name": "MDivSize",
+      "description": "构件水动力离散目标段长，m。"
+    },
+    {
+      "name": "MGDens",
+      "description": "附着层密度，kg/m³。"
+    },
+    {
+      "name": "MGDpth",
+      "description": "海生物附着层定义的深度/竖直位置，m。"
+    },
+    {
+      "name": "MGThck",
+      "description": "附着层厚度，m。"
+    },
+    {
+      "name": "MHstLMod",
+      "description": "构件静水载荷模型：0=关闭，1=解析，2=半数值；矩形截面只支持 0/2，PropPot=True 时避免重复计算。"
+    },
+    {
+      "name": "MJointID1",
+      "description": "构件第一端节点 ID。"
+    },
+    {
+      "name": "MJointID2",
+      "description": "构件第二端节点 ID。"
+    },
+    {
+      "name": "MPropSetID",
+      "description": "矩形截面属性组编号。"
+    },
+    {
+      "name": "MPropSetID1",
+      "description": "构件第一端截面属性组编号。"
+    },
+    {
+      "name": "MPropSetID2",
+      "description": "构件第二端截面属性组编号；两端可不同形成渐变截面。"
+    },
+    {
+      "name": "MSecGeom",
+      "description": "截面几何类型：1=圆柱，2=矩形。"
+    },
+    {
+      "name": "MSpinOrient",
+      "description": "构件截面绕自身轴的旋转取向，°；用于矩形截面方向。"
+    },
+    {
+      "name": "MassDen",
+      "description": "单位长度质量，kg/m。"
+    },
+    {
+      "name": "MemberAxCa1",
+      "description": "按构件指定模型的轴向附加质量系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberAxCa2",
+      "description": "按构件指定模型的轴向附加质量系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberAxCaMG1",
+      "description": "按构件指定模型的轴向附加质量系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberAxCaMG2",
+      "description": "按构件指定模型的轴向附加质量系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberAxCd1",
+      "description": "按构件指定模型的轴向拖曳系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberAxCd2",
+      "description": "按构件指定模型的轴向拖曳系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberAxCdMG1",
+      "description": "按构件指定模型的轴向拖曳系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberAxCdMG2",
+      "description": "按构件指定模型的轴向拖曳系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberAxCp1",
+      "description": "按构件指定模型的轴向动压系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberAxCp2",
+      "description": "按构件指定模型的轴向动压系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberAxCpMG1",
+      "description": "按构件指定模型的轴向动压系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberAxCpMG2",
+      "description": "按构件指定模型的轴向动压系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCa1",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCa2",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCaA1",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 A 方向，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCaA2",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 A 方向，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCaAMG1",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 A 方向，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCaAMG2",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 A 方向，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCaB1",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 B 方向，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCaB2",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 B 方向，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCaBMG1",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 B 方向，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCaBMG2",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，矩形 B 方向，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCaMG1",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCaMG2",
+      "description": "按构件指定模型的横向附加质量系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCb1",
+      "description": "按构件指定模型的静水浮力系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCb2",
+      "description": "按构件指定模型的静水浮力系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCbMG1",
+      "description": "按构件指定模型的静水浮力系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCbMG2",
+      "description": "按构件指定模型的静水浮力系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCd1",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCd2",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCdA1",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 A 方向，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCdA2",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 A 方向，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCdAMG1",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 A 方向，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCdAMG2",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 A 方向，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCdB1",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 B 方向，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCdB2",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 B 方向，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCdBMG1",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 B 方向，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCdBMG2",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，矩形 B 方向，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCdMG1",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCdMG2",
+      "description": "按构件指定模型的横向拖曳系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCp1",
+      "description": "按构件指定模型的横向动压系数，无量纲，无海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCp2",
+      "description": "按构件指定模型的横向动压系数，无量纲，无海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberCpMG1",
+      "description": "按构件指定模型的横向动压系数，无量纲，带海生物附着层，构件第 1 端。"
+    },
+    {
+      "name": "MemberCpMG2",
+      "description": "按构件指定模型的横向动压系数，无量纲，带海生物附着层，构件第 2 端。"
+    },
+    {
+      "name": "MemberID",
+      "description": "水动力构件编号；用于关联端点、几何及按构件定义的系数。"
+    },
+    {
+      "name": "MemberID_out",
+      "description": "请求内部测点输出的构件 ID。"
+    },
+    {
+      "name": "NOutLoc",
+      "description": "该构件输出位置数量。"
+    },
+    {
+      "name": "Name",
+      "description": "系泊线类型名称；与 LINES 表的 LineType 对应。"
+    },
+    {
+      "name": "NodeLocs",
+      "description": "输出点沿构件从第一端到第二端的归一化位置，0–1，无量纲。"
+    },
+    {
+      "name": "NumSegs",
+      "description": "离散线段数量。"
+    },
+    {
+      "name": "Outputs",
+      "description": "该线单独结果文件的输出标志。"
+    },
+    {
+      "name": "PropA",
+      "description": "矩形截面 A 方向外部尺寸，m。"
+    },
+    {
+      "name": "PropB",
+      "description": "矩形截面 B 方向外部尺寸，m。"
+    },
+    {
+      "name": "PropD",
+      "description": "圆柱外径，m。"
+    },
+    {
+      "name": "PropPot",
+      "description": "是否已由势流数据覆盖该构件：True 时避免相应势流与条带理论惯性/静水贡献重复计入，黏性拖曳仍可由条带理论计算。"
+    },
+    {
+      "name": "PropSetID",
+      "description": "圆柱截面属性组编号。"
+    },
+    {
+      "name": "PropThck",
+      "description": "截面壁厚，m。"
+    },
+    {
+      "name": "SimplAxCa",
+      "description": "统一简单模型的轴向附加质量系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplAxCaMG",
+      "description": "统一简单模型的轴向附加质量系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "SimplAxCd",
+      "description": "统一简单模型的轴向拖曳系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplAxCdMG",
+      "description": "统一简单模型的轴向拖曳系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "SimplAxCp",
+      "description": "统一简单模型的轴向动压系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplAxCpMG",
+      "description": "统一简单模型的轴向动压系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "SimplCa",
+      "description": "统一简单模型的横向附加质量系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplCaA",
+      "description": "统一简单模型的横向附加质量系数，无量纲，矩形 A 方向，无海生物附着层。"
+    },
+    {
+      "name": "SimplCaAMG",
+      "description": "统一简单模型的横向附加质量系数，无量纲，矩形 A 方向，带海生物附着层。"
+    },
+    {
+      "name": "SimplCaB",
+      "description": "统一简单模型的横向附加质量系数，无量纲，矩形 B 方向，无海生物附着层。"
+    },
+    {
+      "name": "SimplCaBMG",
+      "description": "统一简单模型的横向附加质量系数，无量纲，矩形 B 方向，带海生物附着层。"
+    },
+    {
+      "name": "SimplCaMG",
+      "description": "统一简单模型的横向附加质量系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "SimplCb",
+      "description": "统一简单模型的静水浮力系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplCbMG",
+      "description": "统一简单模型的静水浮力系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "SimplCd",
+      "description": "统一简单模型的横向拖曳系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplCdA",
+      "description": "统一简单模型的横向拖曳系数，无量纲，矩形 A 方向，无海生物附着层。"
+    },
+    {
+      "name": "SimplCdAMG",
+      "description": "统一简单模型的横向拖曳系数，无量纲，矩形 A 方向，带海生物附着层。"
+    },
+    {
+      "name": "SimplCdB",
+      "description": "统一简单模型的横向拖曳系数，无量纲，矩形 B 方向，无海生物附着层。"
+    },
+    {
+      "name": "SimplCdBMG",
+      "description": "统一简单模型的横向拖曳系数，无量纲，矩形 B 方向，带海生物附着层。"
+    },
+    {
+      "name": "SimplCdMG",
+      "description": "统一简单模型的横向拖曳系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "SimplCp",
+      "description": "统一简单模型的横向动压系数，无量纲，无海生物附着层。"
+    },
+    {
+      "name": "SimplCpMG",
+      "description": "统一简单模型的横向动压系数，无量纲，带海生物附着层。"
+    },
+    {
+      "name": "TwrCd",
+      "description": "塔架气动拖曳系数，无量纲。"
+    },
+    {
+      "name": "TwrDiam",
+      "description": "塔架气动节点直径，m。"
+    },
+    {
+      "name": "TwrElev",
+      "description": "塔架气动节点高度，m。"
+    },
+    {
+      "name": "UnstrLen",
+      "description": "未拉伸线长，m。"
+    },
+    {
+      "name": "V",
+      "description": "连接点排水体积，m³。"
+    },
+    {
+      "name": "X",
+      "description": "连接点 X 坐标，m。"
+    },
+    {
+      "name": "Y",
+      "description": "连接点 Y 坐标，m。"
+    },
+    {
+      "name": "Z",
+      "description": "连接点 Z 坐标，m，竖直向上为正。"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "AnchTen1",
+      "description": "1 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen10",
+      "description": "10 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen11",
+      "description": "11 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen12",
+      "description": "12 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen2",
+      "description": "2 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen3",
+      "description": "3 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen4",
+      "description": "4 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen5",
+      "description": "5 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen6",
+      "description": "6 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen7",
+      "description": "7 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen8",
+      "description": "8 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "AnchTen9",
+      "description": "9 号系泊线锚固端张力，N。"
+    },
+    {
+      "name": "Azimuth",
+      "description": "风轮方位角，°。"
+    },
+    {
+      "name": "BldPitch1",
+      "description": "1 号叶片实际桨距角，°。"
+    },
+    {
+      "name": "BldPitch2",
+      "description": "2 号叶片实际桨距角，°。"
+    },
+    {
+      "name": "BldPitch3",
+      "description": "3 号叶片实际桨距角，°。"
+    },
+    {
+      "name": "FairTen1",
+      "description": "1 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen10",
+      "description": "10 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen11",
+      "description": "11 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen12",
+      "description": "12 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen2",
+      "description": "2 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen3",
+      "description": "3 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen4",
+      "description": "4 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen5",
+      "description": "5 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen6",
+      "description": "6 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen7",
+      "description": "7 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen8",
+      "description": "8 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "FairTen9",
+      "description": "9 号系泊线导缆端张力，N。"
+    },
+    {
+      "name": "GenPwr",
+      "description": "发电机电功率，kW。"
+    },
+    {
+      "name": "GenSpeed",
+      "description": "发电机高速轴转速，rpm。"
+    },
+    {
+      "name": "GenTq",
+      "description": "发电机转矩，kN·m。"
+    },
+    {
+      "name": "HydroFxi",
+      "description": "平台水动力合力的惯性系 X 分量，N。"
+    },
+    {
+      "name": "HydroFyi",
+      "description": "平台水动力合力的惯性系 Y 分量，N。"
+    },
+    {
+      "name": "HydroFzi",
+      "description": "平台水动力合力的惯性系 Z 分量，N。"
+    },
+    {
+      "name": "HydroMxi",
+      "description": "平台水动力合力矩的惯性系 X 分量，N·m，关于水动力参考点。"
+    },
+    {
+      "name": "HydroMyi",
+      "description": "平台水动力合力矩的惯性系 Y 分量，N·m，关于水动力参考点。"
+    },
+    {
+      "name": "HydroMzi",
+      "description": "平台水动力合力矩的惯性系 Z 分量，N·m，关于水动力参考点。"
+    },
+    {
+      "name": "IPDefl1",
+      "description": "1 号叶片叶尖面内弹性挠度，m。"
+    },
+    {
+      "name": "IPDefl2",
+      "description": "2 号叶片叶尖面内弹性挠度，m。"
+    },
+    {
+      "name": "IPDefl3",
+      "description": "3 号叶片叶尖面内弹性挠度，m。"
+    },
+    {
+      "name": "LSSGagMya",
+      "description": "低速轴应变测点绕 ya 轴弯矩，kN·m，a 表示相应轴坐标系。"
+    },
+    {
+      "name": "LSSGagMza",
+      "description": "低速轴应变测点绕 za 轴弯矩，kN·m。"
+    },
+    {
+      "name": "LSSTipMys",
+      "description": "低速轴端绕 ys 轴弯矩，kN·m，s 为相应轴坐标系。"
+    },
+    {
+      "name": "LSSTipMzs",
+      "description": "低速轴端绕 zs 轴弯矩，kN·m。"
+    },
+    {
+      "name": "LSShftFys",
+      "description": "低速轴 ys 方向剪力，kN。"
+    },
+    {
+      "name": "LSShftFzs",
+      "description": "低速轴 zs 方向剪力，kN。"
+    },
+    {
+      "name": "NacYaw",
+      "description": "机舱偏航角，°。"
+    },
+    {
+      "name": "NcIMUTAxs",
+      "description": "机舱 IMU 在 s 坐标系 x 方向平移加速度，m/s²；具体惯性/重力处理以该版本输出定义为准。"
+    },
+    {
+      "name": "NcIMUTAys",
+      "description": "机舱 IMU 在 s 坐标系 y 方向平移加速度，m/s²；具体惯性/重力处理以该版本输出定义为准。"
+    },
+    {
+      "name": "NcIMUTAzs",
+      "description": "机舱 IMU 在 s 坐标系 z 方向平移加速度，m/s²；具体惯性/重力处理以该版本输出定义为准。"
+    },
+    {
+      "name": "OoPDefl1",
+      "description": "1 号叶片叶尖面外弹性挠度，m。"
+    },
+    {
+      "name": "OoPDefl2",
+      "description": "2 号叶片叶尖面外弹性挠度，m。"
+    },
+    {
+      "name": "OoPDefl3",
+      "description": "3 号叶片叶尖面外弹性挠度，m。"
+    },
+    {
+      "name": "PtfmHeave",
+      "description": "平台垂荡位移，m。"
+    },
+    {
+      "name": "PtfmPitch",
+      "description": "平台纵摇/俯仰角，°。"
+    },
+    {
+      "name": "PtfmRoll",
+      "description": "平台横摇角，°。"
+    },
+    {
+      "name": "PtfmSurge",
+      "description": "平台纵荡位移，m。"
+    },
+    {
+      "name": "PtfmSway",
+      "description": "平台横荡位移，m。"
+    },
+    {
+      "name": "PtfmYaw",
+      "description": "平台艏摇角，°。"
+    },
+    {
+      "name": "RotSpeed",
+      "description": "风轮转速，rpm；可用于核对实际运行转速及共振频率关系。"
+    },
+    {
+      "name": "RotThrust",
+      "description": "风轮低速轴轴向推力，kN。"
+    },
+    {
+      "name": "RotTorq",
+      "description": "风轮低速轴转矩，kN·m。"
+    },
+    {
+      "name": "TTDspFA",
+      "description": "塔顶前后向位移，m。"
+    },
+    {
+      "name": "TTDspSS",
+      "description": "塔顶侧向位移，m。"
+    },
+    {
+      "name": "TwHt1TPxi",
+      "description": "第 1 个塔架测点惯性系 X 方向总位置，m；对应 TwrGagNd 的第一个节点（节点 2）。"
+    },
+    {
+      "name": "TwHt1TPyi",
+      "description": "第 1 个塔架测点惯性系 Y 方向总位置，m；对应 TwrGagNd 的第一个节点（节点 2）。"
+    },
+    {
+      "name": "TwrBsFxt",
+      "description": "塔底在塔架 t 坐标系 x 方向的力，kN。"
+    },
+    {
+      "name": "TwrBsFyt",
+      "description": "塔底在塔架 t 坐标系 y 方向的力，kN。"
+    },
+    {
+      "name": "TwrBsFzt",
+      "description": "塔底在塔架 t 坐标系 z 方向的力，kN。"
+    },
+    {
+      "name": "TwrBsMxt",
+      "description": "塔底绕塔架 t 坐标系 x 轴的力矩，kN·m。"
+    },
+    {
+      "name": "TwrBsMyt",
+      "description": "塔底绕塔架 t 坐标系 y 轴的力矩，kN·m。"
+    },
+    {
+      "name": "TwrBsMzt",
+      "description": "塔底绕塔架 t 坐标系 z 轴的力矩，kN·m。"
+    },
+    {
+      "name": "TwstDefl1",
+      "description": "1 号叶片叶尖扭转变形，°；是否非零取决于结构模型支持的扭转响应。"
+    },
+    {
+      "name": "TwstDefl2",
+      "description": "2 号叶片叶尖扭转变形，°；是否非零取决于结构模型支持的扭转响应。"
+    },
+    {
+      "name": "TwstDefl3",
+      "description": "3 号叶片叶尖扭转变形，°；是否非零取决于结构模型支持的扭转响应。"
+    },
+    {
+      "name": "Wave1Elev",
+      "description": "第 1 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave2Elev",
+      "description": "第 2 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave3Elev",
+      "description": "第 3 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave4Elev",
+      "description": "第 4 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave5Elev",
+      "description": "第 5 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave6Elev",
+      "description": "第 6 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave7Elev",
+      "description": "第 7 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave8Elev",
+      "description": "第 8 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wave9Elev",
+      "description": "第 9 个波面观测点入射波高程，m；位置由 WaveElevxi/yi 定义。"
+    },
+    {
+      "name": "Wind1VelX",
+      "description": "第 1 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind1VelY",
+      "description": "第 1 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind1VelZ",
+      "description": "第 1 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind2VelX",
+      "description": "第 2 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind2VelY",
+      "description": "第 2 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind2VelZ",
+      "description": "第 2 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind3VelX",
+      "description": "第 3 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind3VelY",
+      "description": "第 3 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind3VelZ",
+      "description": "第 3 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind4VelX",
+      "description": "第 4 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind4VelY",
+      "description": "第 4 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind4VelZ",
+      "description": "第 4 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind5VelX",
+      "description": "第 5 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind5VelY",
+      "description": "第 5 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind5VelZ",
+      "description": "第 5 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind6VelX",
+      "description": "第 6 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind6VelY",
+      "description": "第 6 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind6VelZ",
+      "description": "第 6 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind7VelX",
+      "description": "第 7 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind7VelY",
+      "description": "第 7 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind7VelZ",
+      "description": "第 7 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind8VelX",
+      "description": "第 8 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind8VelY",
+      "description": "第 8 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind8VelZ",
+      "description": "第 8 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind9VelX",
+      "description": "第 9 个风速观测点惯性系 X 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind9VelY",
+      "description": "第 9 个风速观测点惯性系 Y 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "Wind9VelZ",
+      "description": "第 9 个风速观测点惯性系 Z 分量，m/s；位置由 WindVxiList/yiList/ziList 定义。"
+    },
+    {
+      "name": "YawBrFxp",
+      "description": "偏航轴承在 p 坐标系 x 方向的力，kN。"
+    },
+    {
+      "name": "YawBrFyp",
+      "description": "偏航轴承在 p 坐标系 y 方向的力，kN。"
+    },
+    {
+      "name": "YawBrFzp",
+      "description": "偏航轴承在 p 坐标系 z 方向的力，kN。"
+    },
+    {
+      "name": "YawBrMxp",
+      "description": "偏航轴承绕 p 坐标系 x 轴的力矩，kN·m。"
+    },
+    {
+      "name": "YawBrMyp",
+      "description": "偏航轴承绕 p 坐标系 y 轴的力矩，kN·m。"
+    },
+    {
+      "name": "YawBrMzp",
+      "description": "偏航轴承绕 p 坐标系 z 轴的力矩，kN·m。"
+    },
+    {
+      "name": "YawBrTDxt",
+      "description": "偏航轴承/塔顶相对未变形位置的前后向挠度，沿塔架 xt 方向，m；为 TTDspFA 的别名。"
+    },
+    {
+      "name": "YawBrTDyt",
+      "description": "偏航轴承/塔顶相对未变形位置的侧向挠度，沿塔架 yt 方向，m；为 TTDspSS 的别名。"
+    }
+  ],
+  "sources": {
+    "OpenFAST": "https://openfast.readthedocs.io/en/main/source/user/index.html",
+    "MoorDyn": "https://moordyn.readthedocs.io/en/latest/inputs.html",
+    "ROSCO": "https://rosco.readthedocs.io/en/latest/source/rosco.html"
+  }
+}

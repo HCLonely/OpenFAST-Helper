@@ -1,0 +1,176 @@
+{
+  "module": "ElastoDyn",
+  "source": "https://github.com/OpenFAST/openfast/blob/main/modules/elastodyn/src/ElastoDyn_AllBldNdOuts_IO.f90",
+  "sourceSha256": "990b457083aeb6a279e0359ebdc5b3c6ae27b6ea3e27bacb3e42527f0bc461a1",
+  "verified": "2026-10-10",
+  "channels": [
+    {
+      "name": "ALX",
+      "unit": "(m/s^2)"
+    },
+    {
+      "name": "ALY",
+      "unit": "(m/s^2)"
+    },
+    {
+      "name": "ALZ",
+      "unit": "(m/s^2)"
+    },
+    {
+      "name": "AX",
+      "unit": "(m/s^2)"
+    },
+    {
+      "name": "AY",
+      "unit": "(m/s^2)"
+    },
+    {
+      "name": "AZ",
+      "unit": "(m/s^2)"
+    },
+    {
+      "name": "FLX",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FLXNT",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FLY",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FLYNT",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FLZ",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FLZNT",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FX",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FXL",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FY",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FYL",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FZ",
+      "unit": "(kN)"
+    },
+    {
+      "name": "FZL",
+      "unit": "(kN)"
+    },
+    {
+      "name": "MLX",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MLXNT",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MLY",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MLYNT",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MLZ",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MLZNT",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MX",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MXL",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MY",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MYL",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MZ",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "MZL",
+      "unit": "(kN-m)"
+    },
+    {
+      "name": "RDX",
+      "unit": "(deg)"
+    },
+    {
+      "name": "RDY",
+      "unit": "(deg)"
+    },
+    {
+      "name": "RDZ",
+      "unit": "(deg)"
+    },
+    {
+      "name": "RX",
+      "unit": "(deg)"
+    },
+    {
+      "name": "RY",
+      "unit": "(deg)"
+    },
+    {
+      "name": "RZ",
+      "unit": "(deg)"
+    },
+    {
+      "name": "TDX",
+      "unit": "(m)"
+    },
+    {
+      "name": "TDY",
+      "unit": "(m)"
+    },
+    {
+      "name": "TDZ",
+      "unit": "(m)"
+    },
+    {
+      "name": "UXB",
+      "unit": "(m)"
+    },
+    {
+      "name": "UYB",
+      "unit": "(m)"
+    },
+    {
+      "name": "UZB",
+      "unit": "(m)"
+    }
+  ]
+}

@@ -1,0 +1,788 @@
+{
+  "name": "openfast-helper",
+  "displayName": "OpenFAST Helper",
+  "description": "%description%",
+  "version": "1.0.0",
+  "publisher": "HCLonely",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "OpenFAST",
+    "HydroDyn",
+    "MoorDyn",
+    "ElastoDyn",
+    "中文"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:openfast"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "openfast",
+        "aliases": [
+          "OpenFAST",
+          "openfast"
+        ],
+        "extensions": [
+          ".fst",
+          ".fstf"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "openfast",
+        "scopeName": "source.openfast",
+        "path": "./syntaxes/openfast.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "openfast.enableFileIcons",
+        "title": "%openfast.enableFileIcons.title%"
+      },
+      {
+        "command": "openfast.setLanguage",
+        "title": "%openfast.setLanguage.title%"
+      },
+      {
+        "command": "openfast.lookupParameter",
+        "title": "%openfast.lookupParameter.title%"
+      },
+      {
+        "command": "openfast.chooseParameterValue",
+        "title": "%openfast.chooseParameterValue.title%"
+      },
+      {
+        "command": "openfast.checkCase",
+        "title": "%openfast.checkCase.title%",
+        "icon": "$(check)"
+      },
+      {
+        "command": "openfast.compareCases",
+        "title": "%openfast.compareCases.title%",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "openfast.exportComparison",
+        "title": "%openfast.exportComparison.title%"
+      },
+      {
+        "command": "openfast.refreshTree",
+        "title": "%openfast.refreshTree.title%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "openfast.selectVersion",
+        "title": "%openfast.selectVersion.title%"
+      },
+      {
+        "command": "openfast.outputSuggestionSettings",
+        "title": "%openfast.outputSuggestionSettings.title%"
+      },
+      {
+        "command": "openfast.configureExecutable",
+        "title": "%openfast.configureExecutable.title%"
+      },
+      {
+        "command": "openfast.runFst",
+        "title": "%openfast.runFst.title%",
+        "icon": "$(play)"
+      },
+      {
+        "command": "openfast.openSettings",
+        "title": "%openfast.openSettings.title%",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "openfast.selectLanguage",
+        "title": "%openfast.selectLanguage.title%"
+      },
+      {
+        "command": "openfast.runBatch",
+        "title": "%openfast.runBatch.title%",
+        "icon": "$(run-all)"
+      },
+      {
+        "command": "openfast.cancelRun",
+        "title": "%openfast.cancelRun.title%",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "openfast.retryRun",
+        "title": "%openfast.retryRun.title%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "openfast.cancelAllRuns",
+        "title": "%openfast.cancelAllRuns.title%",
+        "icon": "$(stop-circle)"
+      },
+      {
+        "command": "openfast.openRunDirectory",
+        "title": "%openfast.openRunDirectory.title%",
+        "icon": "$(folder-open)"
+      },
+      {
+        "command": "openfast.createSweep",
+        "title": "%openfast.createSweep.title%",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "openfast.previewResults",
+        "title": "%openfast.previewResults.title%",
+        "icon": "$(graph-line)"
+      },
+      {
+        "command": "openfast.showRunMonitor",
+        "title": "%monitor.title%",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "openfast.revealRunMonitorIcon",
+        "title": "%monitor.revealIcon%",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "openfast.showRunMonitorPanel",
+        "title": "%monitor.editorTitle%",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "openfast.insertTableRow",
+        "title": "%openfast.insertTableRow.title%"
+      },
+      {
+        "command": "openfast.previewTableCounts",
+        "title": "%openfast.previewTableCounts.title%"
+      },
+      {
+        "command": "openfast.applyTableCounts",
+        "title": "%openfast.applyTableCounts.title%"
+      },
+      {
+        "command": "openfast.insertOutputGroup",
+        "title": "%openfast.insertOutputGroup.title%"
+      },
+      {
+        "command": "openfast.insertArrayValues",
+        "title": "%openfast.insertArrayValues.title%"
+      },
+      {
+        "command": "openfast.previewHighlighting",
+        "title": "%openfast.previewHighlighting.title%"
+      },
+      {
+        "command": "openfast.browseOutputChannels",
+        "title": "%openfast.browseOutputChannels.title%"
+      },
+      {
+        "command": "openfast.applyDisplayPreset",
+        "title": "%openfast.applyDisplayPreset.title%"
+      },
+      {
+        "command": "openfast.nextIncompleteField",
+        "title": "%openfast.nextIncompleteField.title%"
+      },
+      {
+        "command": "openfast.repairMissingPath",
+        "title": "%openfast.repairMissingPath.title%"
+      },
+      {
+        "command": "openfast.showEditorPerformance",
+        "title": "%openfast.showEditorPerformance.title%"
+      },
+      {
+        "command": "openfast.explainSuggestions",
+        "title": "%openfast.explainSuggestions.title%"
+      },
+      {
+        "command": "openfast.suggestWithExplanation",
+        "title": "%openfast.suggestWithExplanation.title%"
+      }
+    ],
+    "configuration": {
+      "title": "%configuration.title%",
+      "properties": {
+        "openfast.autoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.autoDetect.description%",
+          "scope": "resource"
+        },
+        "openfast.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableHover.description%",
+          "scope": "resource"
+        },
+        "openfast.showOriginalDescription": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.showOriginalDescription.description%",
+          "scope": "resource"
+        },
+        "openfast.enableValueSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableValueSuggestions.description%",
+          "scope": "resource"
+        },
+        "openfast.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableDiagnostics.description%",
+          "scope": "resource"
+        },
+        "openfast.dimInactiveParameters": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.dimInactiveParameters.description%",
+          "scope": "resource"
+        },
+        "openfast.enableCrossFileChecks": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableCrossFileChecks.description%",
+          "scope": "resource"
+        },
+        "openfast.enableOutputSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableOutputSuggestions.description%",
+          "scope": "resource"
+        },
+        "openfast.enableTableHints": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableTableHints.description%",
+          "scope": "resource"
+        },
+        "openfast.version": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "3.5",
+            "4.0",
+            "4.1",
+            "4.2",
+            "5.0",
+            "main"
+          ],
+          "default": "auto",
+          "description": "%openfast.version.description%",
+          "scope": "resource",
+          "enumDescriptions": [
+            "%version.enum.auto%",
+            "%version.enum.3_5%",
+            "%version.enum.4_0%",
+            "%version.enum.4_1%",
+            "%version.enum.4_2%",
+            "%version.enum.5_0%",
+            "%version.enum.main%"
+          ]
+        },
+        "openfast.maxReferencedFiles": {
+          "type": "integer",
+          "default": 300,
+          "minimum": 10,
+          "maximum": 1000,
+          "description": "%openfast.maxReferencedFiles.description%",
+          "scope": "resource"
+        },
+        "openfast.executablePath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "%openfast.executablePath.description%"
+        },
+        "openfast.language": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "zh-CN",
+            "en"
+          ],
+          "default": "auto",
+          "scope": "window",
+          "description": "%openfast.language.description%",
+          "enumDescriptions": [
+            "%language.enum.auto%",
+            "%language.enum.chinese%",
+            "%language.enum.english%"
+          ]
+        },
+        "openfast.runConcurrency": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 16,
+          "scope": "window",
+          "description": "%openfast.runConcurrency.description%"
+        },
+        "openfast.inactiveParameterOpacity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1,
+          "default": 0.48,
+          "description": "%openfast.inactiveParameterOpacity.description%",
+          "scope": "resource"
+        },
+        "openfast.highlightActiveTableColumn": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.highlightActiveTableColumn.description%",
+          "scope": "resource"
+        },
+        "openfast.enablePathSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enablePathSuggestions.description%",
+          "scope": "resource"
+        },
+        "openfast.enableTableSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableTableSuggestions.description%",
+          "scope": "resource"
+        },
+        "openfast.enableParameterNameSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableParameterNameSuggestions.description%",
+          "scope": "resource"
+        },
+        "openfast.showCurrentValueHint": {
+          "type": "boolean",
+          "default": false,
+          "description": "%openfast.showCurrentValueHint.description%",
+          "scope": "resource"
+        },
+        "openfast.hintDensity": {
+          "type": "string",
+          "enum": [
+            "compact",
+            "standard",
+            "detailed"
+          ],
+          "default": "standard",
+          "description": "%openfast.hintDensity.description%",
+          "scope": "resource"
+        },
+        "openfast.highlightArrayMatrix": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.highlightArrayMatrix.description%",
+          "scope": "resource"
+        },
+        "openfast.enableNumericAssistance": {
+          "type": "boolean",
+          "default": true,
+          "description": "%openfast.enableNumericAssistance.description%",
+          "scope": "resource"
+        },
+        "openfast.dictionary": {
+          "type": "array",
+          "default": [],
+          "scope": "resource",
+          "maxItems": 500,
+          "description": "%openfast.dictionary.description%",
+          "items": {
+            "type": "object",
+            "required": [
+              "module",
+              "kind",
+              "name",
+              "description"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "parameter",
+                  "output"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "pattern": "^[A-Za-z]\\w*(?:\\(\\d+\\))?$"
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 4000
+              },
+              "unit": {
+                "type": "string",
+                "maxLength": 80
+              },
+              "versions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 20
+                }
+              },
+              "valueType": {
+                "type": "string",
+                "enum": [
+                  "number",
+                  "integer",
+                  "boolean",
+                  "string"
+                ]
+              },
+              "options": {
+                "type": "array",
+                "maxItems": 50,
+                "items": {
+                  "type": "string",
+                  "maxLength": 80,
+                  "pattern": "^[A-Za-z0-9_+./-]+$"
+                }
+              },
+              "specialValues": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 80,
+                  "pattern": "^[A-Za-z0-9_+./-]+$"
+                }
+              }
+            }
+          }
+        },
+        "openfast.highlightSymbolRoles": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "%openfast.highlightSymbolRoles.description%"
+        },
+        "openfast.highlightNumericParts": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "%openfast.highlightNumericParts.description%"
+        },
+        "openfast.compactTableSignatures": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "%openfast.compactTableSignatures.description%"
+        },
+        "openfast.enableTableFieldDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "%openfast.enableTableFieldDiagnostics.description%"
+        },
+        "openfast.highlightTableFieldGroups": {
+          "type": "boolean",
+          "default": false,
+          "description": "%openfast.highlightTableFieldGroups.description%",
+          "scope": "resource"
+        }
+      }
+    },
+    "semanticTokenScopes": [
+      {
+        "language": "openfast",
+        "scopes": {
+          "parameter": [
+            "variable.parameter.openfast"
+          ],
+          "property": [
+            "variable.other.member.openfast"
+          ],
+          "enumMember": [
+            "support.constant.output.openfast"
+          ],
+          "number": [
+            "constant.numeric.openfast"
+          ],
+          "string": [
+            "string.quoted.double.openfast"
+          ],
+          "keyword": [
+            "keyword.control.openfast"
+          ],
+          "openfastPath": [
+            "string.other.link.openfast"
+          ],
+          "openfastDefinition": [
+            "entity.name.type.openfast"
+          ],
+          "openfastReference": [
+            "variable.other.openfast"
+          ],
+          "openfastUnresolved": [
+            "invalid.deprecated.openfast"
+          ],
+          "openfastNumericSign": [
+            "keyword.operator.arithmetic.openfast"
+          ],
+          "openfastNumericExponent": [
+            "constant.numeric.exponent.openfast"
+          ]
+        }
+      }
+    ],
+    "configurationDefaults": {
+      "[openfast]": {
+        "editor.semanticHighlighting.enabled": true,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+          "other": "on",
+          "comments": "off",
+          "strings": "on"
+        },
+        "editor.suggest.insertMode": "replace"
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "openfast.configurationTree",
+          "name": "%tree.name%"
+        },
+        {
+          "id": "openfast.runQueue",
+          "name": "%queue.name%"
+        }
+      ],
+      "openfast-monitor": [
+        {
+          "type": "webview",
+          "id": "openfast.monitorView",
+          "name": "%monitor.container%",
+          "contextualTitle": "%monitor.container%",
+          "visibility": "visible"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "openfast.refreshTree",
+          "when": "view == openfast.configurationTree",
+          "group": "navigation"
+        },
+        {
+          "command": "openfast.runBatch",
+          "when": "view == openfast.runQueue && isWorkspaceTrusted",
+          "group": "navigation"
+        },
+        {
+          "command": "openfast.cancelAllRuns",
+          "when": "view == openfast.runQueue && isWorkspaceTrusted",
+          "group": "navigation"
+        },
+        {
+          "command": "openfast.showRunMonitor",
+          "when": "view == openfast.runQueue",
+          "group": "navigation@1"
+        },
+        {
+          "command": "openfast.createSweep",
+          "when": "view == openfast.configurationTree",
+          "group": "navigation@5"
+        },
+        {
+          "command": "openfast.previewResults",
+          "when": "view == openfast.configurationTree",
+          "group": "navigation@5"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "openfast.checkCase",
+          "when": "view == openfast.configurationTree && viewItem == openfastRoot",
+          "group": "inline"
+        },
+        {
+          "command": "openfast.runFst",
+          "when": "view == openfast.configurationTree && viewItem == openfastRoot && isWorkspaceTrusted",
+          "group": "inline"
+        },
+        {
+          "command": "openfast.cancelRun",
+          "when": "view == openfast.runQueue && viewItem =~ /^openfastRun-(waiting|running)$/",
+          "group": "inline"
+        },
+        {
+          "command": "openfast.retryRun",
+          "when": "view == openfast.runQueue && viewItem =~ /^openfastRun-(failed|cancelled)$/",
+          "group": "inline"
+        },
+        {
+          "command": "openfast.openRunDirectory",
+          "when": "view == openfast.runQueue && viewItem =~ /^openfastRun-/",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "openfast.runFst",
+          "when": "resourceExtname =~ /\\.(fst|fstf)$/i && isWorkspaceTrusted",
+          "group": "navigation@1"
+        },
+        {
+          "command": "openfast.checkCase",
+          "when": "editorLangId == openfast",
+          "group": "navigation@10"
+        },
+        {
+          "command": "openfast.compareCases",
+          "when": "editorLangId == openfast",
+          "group": "navigation@11"
+        },
+        {
+          "command": "openfast.previewResults",
+          "when": "resourceExtname =~ /\\.(out|outb)$/i",
+          "group": "navigation@12"
+        },
+        {
+          "command": "openfast.showRunMonitor",
+          "when": "editorLangId == openfast",
+          "group": "navigation@2"
+        },
+        {
+          "command": "openfast.createSweep",
+          "when": "resourceExtname =~ /\\.(fst|fstf)$/i && isWorkspaceTrusted",
+          "group": "navigation@3"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "openfast.runFst",
+          "when": "resourceExtname =~ /\\.(fst|fstf)$/i && isWorkspaceTrusted",
+          "group": "navigation@10"
+        },
+        {
+          "command": "openfast.runBatch",
+          "when": "resourceExtname =~ /\\.(fst|fstf)$/i && isWorkspaceTrusted",
+          "group": "navigation@11"
+        },
+        {
+          "command": "openfast.createSweep",
+          "when": "resourceExtname =~ /\\.(fst|fstf)$/i && isWorkspaceTrusted",
+          "group": "navigation@12"
+        },
+        {
+          "command": "openfast.previewResults",
+          "when": "resourceExtname =~ /\\.(out|outb)$/i",
+          "group": "navigation@12"
+        }
+      ]
+    },
+    "taskDefinitions": [
+      {
+        "type": "openfast",
+        "required": [
+          "input"
+        ],
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "%task.input%"
+          }
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "openfast-monitor",
+          "title": "%monitor.container%",
+          "icon": "icons/monitor.svg"
+        }
+      ]
+    },
+    "semanticTokenTypes": [
+      {
+        "id": "openfastPath",
+        "superType": "string",
+        "description": "OpenFAST input file reference"
+      },
+      {
+        "id": "openfastDefinition",
+        "superType": "variable",
+        "description": "Proven OpenFAST table definition"
+      },
+      {
+        "id": "openfastReference",
+        "superType": "variable",
+        "description": "Resolved OpenFAST table reference"
+      },
+      {
+        "id": "openfastUnresolved",
+        "superType": "variable",
+        "description": "Unresolved OpenFAST table reference"
+      },
+      {
+        "id": "openfastNumericSign",
+        "superType": "number",
+        "description": "OpenFAST numeric sign"
+      },
+      {
+        "id": "openfastNumericExponent",
+        "superType": "number",
+        "description": "OpenFAST numeric exponent"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -p . --watch",
+    "check": "tsc -p . --noEmit && tsc -p tsconfig.core.json",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.js\"",
+    "test": "npm run compile && node --test test/*.test.js",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.0.0.vsix",
+    "build:doc-links": "node scripts/build-doc-links.mjs",
+    "benchmark:editor": "npm run compile && node scripts/editor-benchmark.cjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "4.0.0",
+    "parse5": "8.0.1",
+    "prettier": "^3.9.9",
+    "typescript": "5.9.3",
+    "vscode-oniguruma": "2.0.1",
+    "vscode-textmate": "9.3.2"
+  },
+  "author": "HCLonely",
+  "icon": "icons/extension-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HCLonely/OpenFAST-Helper.git"
+  },
+  "homepage": "https://github.com/HCLonely/OpenFAST-Helper#readme",
+  "bugs": {
+    "url": "https://github.com/HCLonely/OpenFAST-Helper/issues"
+  }
+}

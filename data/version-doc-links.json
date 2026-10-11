@@ -1,0 +1,38 @@
+{
+  "OpenFAST:modcoupling": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:rhoinf": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:convtol": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:maxconviter": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:nrotors": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:compsoil": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:mirrorrotor": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "OpenFAST:soilfile": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  },
+  "SeaState:wvcrntmod": {
+    "url": "https://openfast.readthedocs.io/en/main/source/user/api_change.html#openfast-v4-2-x-to-openfast-v5-0-0",
+    "section": "OpenFAST v4.2.x to v5.0.0：新增字段及官方示例说明"
+  }
+}

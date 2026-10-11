@@ -1,0 +1,47 @@
+[
+  {
+    "module": "OpenFAST",
+    "name": "ModCoupling",
+    "description": "模块耦合方法；5.0 起：1=松耦合，2=固定 Jacobian 更新的紧耦合，3=自动 Jacobian 更新的紧耦合。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "RhoInf",
+    "description": "紧耦合 generalized-alpha 积分器的数值阻尼参数，范围 0 到 1。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "ConvTol",
+    "description": "紧耦合 generalized-alpha 积分器的收敛误差容限。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "MaxConvIter",
+    "description": "紧耦合求解的最大收敛迭代次数。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "NRotors",
+    "description": "风轮数量；5.0 起支持同一机组的多个风轮。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "CompSoil",
+    "description": "土壤结构模块开关：0=关闭，1=SoilDyn。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "MirrorRotor",
+    "description": "是否反转风轮旋转方向；首个风轮保持常规方向。"
+  },
+  {
+    "module": "OpenFAST",
+    "name": "SoilFile",
+    "description": "SoilDyn 土壤结构输入文件。"
+  },
+  {
+    "module": "SeaState",
+    "name": "WvCrntMod",
+    "description": "波浪与海流组合模型：0=简单叠加，1=加入 Doppler 效应，2=同时进行波幅/波谱缩放。"
+  }
+]

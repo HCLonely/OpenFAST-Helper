@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noEmit": true
+  },
+  "include": ["src/case-graph-cache.ts", "src/directory-cache.ts", "src/run-queue.ts"]
+}

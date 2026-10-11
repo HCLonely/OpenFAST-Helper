@@ -1,0 +1,76 @@
+name: Build VSIX
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Windows x64 extension
+    runs-on: windows-2022
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Check TypeScript
+        run: npm run check
+
+      - name: Set up Rust for Windows x64
+        run: rustup default stable-x86_64-pc-windows-msvc
+
+      - name: Test and build native probe
+        run: ./scripts/build-process-probe.ps1 -Test
+
+      - name: Package extension
+        env:
+          CONTENT_BASE_URL: ${{ github.server_url }}/${{ github.repository }}/blob/${{ github.sha }}/
+        run: |
+          New-Item -ItemType Directory -Path dist -Force | Out-Null
+          npm run package -- --baseContentUrl "$env:CONTENT_BASE_URL"
+
+      - name: Verify packaged runtime files
+        run: |
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $package = Get-ChildItem -Path dist/*.vsix
+          if (@($package).Count -ne 1) { throw 'Expected exactly one VSIX package' }
+          $archive = [System.IO.Compression.ZipFile]::OpenRead($package.FullName)
+          try {
+            foreach ($path in @('extension/package.json', 'extension/out/extension.js', 'extension/bin/openfast-probe.exe', 'extension/data/catalog.json')) {
+              if ($null -eq $archive.GetEntry($path)) { throw "Missing runtime file: $path" }
+            }
+          } finally {
+            $archive.Dispose()
+          }
+
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v7
+        with:
+          name: openfast-helper-windows-x64-${{ github.run_number }}
+          path: dist/*.vsix
+          if-no-files-found: error
+          retention-days: 30

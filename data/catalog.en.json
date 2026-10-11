@@ -1,0 +1,3554 @@
+{
+  "schemaVersion": 1,
+  "parameters": [
+    {
+      "name": "AA_InputFile",
+      "description": "AeroAcoustics input file [used only when CompAA=true]",
+      "module": "通用"
+    },
+    {
+      "name": "ADBlFile(1)",
+      "description": "Name of file containing distributed aerodynamic properties for Blade #1 (-)",
+      "module": "通用"
+    },
+    {
+      "name": "ADBlFile(2)",
+      "description": "Name of file containing distributed aerodynamic properties for Blade #2 (-) [unused if NumBl < 2]",
+      "module": "通用"
+    },
+    {
+      "name": "ADBlFile(3)",
+      "description": "Name of file containing distributed aerodynamic properties for Blade #3 (-) [unused if NumBl < 3]",
+      "module": "通用"
+    },
+    {
+      "name": "AFAeroMod",
+      "description": "Airfoil aerodynamic model: 1=steady, 2=unsteady in common templates. Check the supported options for your version.",
+      "module": "通用"
+    },
+    {
+      "name": "AFNames",
+      "description": "Airfoil file names (NumAFfiles lines) (quoted strings)",
+      "module": "通用"
+    },
+    {
+      "name": "AIDrag",
+      "description": "Include the drag term in the axial-induction calculation? (flag) [unused when WakeMod=0 or 3]",
+      "module": "通用"
+    },
+    {
+      "name": "AMMod",
+      "description": "Method of computing distributed added-mass force. (0: Only and always on nodes below SWL at the undisplaced position. 2: Up to the instantaneous free surface) [overwrite to 0 when WaveMod = 0 or 6 or when WaveStMod = 0 in SeaState]",
+      "module": "通用"
+    },
+    {
+      "name": "AbortLevel",
+      "description": "Error level when simulation should abort (string) {\"WARNING\", \"SEVERE\", \"FATAL\"}",
+      "module": "通用"
+    },
+    {
+      "name": "AddBLin",
+      "description": "Additional linear damping(N/(m/s), N/(rad/s), N-m/(m/s), N-m/(rad/s))",
+      "module": "通用"
+    },
+    {
+      "name": "AddBQuad",
+      "description": "Additional quadratic drag(N/(m/s)^2, N/(rad/s)^2, N-m(m/s)^2, N-m/(rad/s)^2)",
+      "module": "通用"
+    },
+    {
+      "name": "AddCLin",
+      "description": "Additional linear stiffness (N/m, N/rad, N-m/m, N-m/rad)",
+      "module": "通用"
+    },
+    {
+      "name": "AddF0",
+      "description": "Additional preload (N, N-m) [If NBodyMod=1, one size 6*NBody x 1 vector; if NBodyMod>1, NBody size 6 x 1 vectors]",
+      "module": "通用"
+    },
+    {
+      "name": "AeroFile",
+      "description": "Name of file containing aerodynamic input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "AfC_Amp",
+      "description": "Amplitude for for cosine cycling of flap signal (AfC = AfC_Amp*cos(Azimuth+phase)+AfC_mean) (-) [used only with AfCmode==1]",
+      "module": "通用"
+    },
+    {
+      "name": "AfC_Mean",
+      "description": "Mean level for sinusoidal cycling or steady value (-) [used only with AfCmode==1]",
+      "module": "通用"
+    },
+    {
+      "name": "AfC_phase",
+      "description": "Phase relative to the blade azimuth (0 is vertical) for for cosine cycling of flap signal (deg) [used only with AfCmode==1]",
+      "module": "通用"
+    },
+    {
+      "name": "AfCmode",
+      "description": "Airfoil control mode {0- none, 1- cosine wave cycle, 4- user-defined from Simulink/Labview, 5- user-defined from Bladed-style DLL}",
+      "module": "通用"
+    },
+    {
+      "name": "AirDens",
+      "description": "Air density (kg/m^3)",
+      "module": "通用"
+    },
+    {
+      "name": "AzimB1Up",
+      "description": "Azimuth value to use for I/O when blade 1 points up (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "Azimuth",
+      "description": "Initial azimuth angle for blade 1 (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "BDBldFile",
+      "description": "BeamDyn input file for the corresponding blade; active only when CompElast=2.",
+      "module": "通用"
+    },
+    {
+      "name": "BEM_Mod",
+      "description": "BEM model {1=legacy NoSweepPitchTwist, 2=polar} (switch) [used for all Wake_Mod to determine output coordinate system]",
+      "module": "通用"
+    },
+    {
+      "name": "BPCutoff",
+      "description": "Cuttoff frequency for low-pass filter on blade pitch from DLL (Hz) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "BStCfiles",
+      "description": "Name of the file for blade tuned mass damper (quoted string) [unused when CompNTMD is false]",
+      "module": "通用"
+    },
+    {
+      "name": "BlPitch",
+      "description": "Initial pitch angle of the corresponding blade, deg. Subsequent pitch motion is controlled by ServoDyn and its actuator settings.",
+      "module": "通用"
+    },
+    {
+      "name": "BlPitchF",
+      "description": "Final target pitch angle of the corresponding blade pitch maneuver, deg.",
+      "module": "通用"
+    },
+    {
+      "name": "BldEdDmp(1)",
+      "description": "Structural damping for the first blade edgewise mode, usually percent of critical damping.",
+      "module": "通用"
+    },
+    {
+      "name": "BldFile1",
+      "description": "Name of file containing properties for blade 1 (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "BldFile2",
+      "description": "Name of file containing properties for blade 2 (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "BldFile3",
+      "description": "Name of file containing properties for blade 3 (quoted string) [unused for 2 blades]",
+      "module": "通用"
+    },
+    {
+      "name": "BldFlDmp(1)",
+      "description": "Structural damping for the first blade flapwise mode, usually percent of critical damping; check the input units.",
+      "module": "通用"
+    },
+    {
+      "name": "BldFlDmp(2)",
+      "description": "Structural damping for the second blade flapwise mode, usually percent of critical damping.",
+      "module": "通用"
+    },
+    {
+      "name": "BldGagNd",
+      "description": "List of blade nodes that have strain gages [1 to BldNodes] (-) [unused if NBlGages=0]",
+      "module": "通用"
+    },
+    {
+      "name": "BldNodes",
+      "description": "Number of blade nodes (per blade) used for analysis (-)",
+      "module": "通用"
+    },
+    {
+      "name": "Bld_Kdmp",
+      "description": "Damping factor for the blades [used only if CalcSteady=True] (N/(m/s))",
+      "module": "通用"
+    },
+    {
+      "name": "Buoyancy",
+      "description": "Include buoyancy effects? (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "CCmode",
+      "description": "Cable control mode {0- none, 4- user-defined from Simulink/Labview, 5- user-defineAfC_phased from Bladed-style DLL}",
+      "module": "通用"
+    },
+    {
+      "name": "CalcSteady",
+      "description": "Calculate a steady-state periodic operating point before linearization? [unused if Linearize=False] (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "CavitCheck",
+      "description": "Perform cavitation check? (flag) [UA_Mod must be 0 when CavitCheck=true]",
+      "module": "通用"
+    },
+    {
+      "name": "CdScaleIC",
+      "description": "factor by which to scale drag coefficients during dynamic relaxation (-)",
+      "module": "通用"
+    },
+    {
+      "name": "ChkptTime",
+      "description": "Amount of time between creating checkpoint files for potential restart (s)",
+      "module": "通用"
+    },
+    {
+      "name": "CompAA",
+      "description": "Flag to compute AeroAcoustics calculation [used only when Wake_Mod = 1 or 2]",
+      "module": "通用"
+    },
+    {
+      "name": "CompAero",
+      "description": "Compute aerodynamic loads (switch) {0=None; 1=AeroDyn v14; 2=AeroDyn v15}",
+      "module": "通用"
+    },
+    {
+      "name": "CompElast",
+      "description": "Compute structural dynamics (switch) {1=ElastoDyn; 2=ElastoDyn + BeamDyn for blades}",
+      "module": "通用"
+    },
+    {
+      "name": "CompHydro",
+      "description": "Compute hydrodynamic loads (switch) {0=None; 1=HydroDyn}",
+      "module": "通用"
+    },
+    {
+      "name": "CompIce",
+      "description": "Compute ice loads (switch) {0=None; 1=IceFloe; 2=IceDyn}",
+      "module": "通用"
+    },
+    {
+      "name": "CompInflow",
+      "description": "Compute inflow wind velocities (switch) {0=still air; 1=InflowWind; 2=external from OpenFOAM}",
+      "module": "通用"
+    },
+    {
+      "name": "CompMooring",
+      "description": "Compute mooring system (switch) {0=None; 1=MAP++; 2=FEAMooring; 3=MoorDyn; 4=OrcaFlex}",
+      "module": "通用"
+    },
+    {
+      "name": "CompSeaSt",
+      "description": "Compute sea state information (switch) {0=None; 1=SeaState}",
+      "module": "通用"
+    },
+    {
+      "name": "CompServo",
+      "description": "Compute control and electrical-drive dynamics (switch) {0=None; 1=ServoDyn}",
+      "module": "通用"
+    },
+    {
+      "name": "CompSub",
+      "description": "Compute sub-structural dynamics (switch) {0=None; 1=SubDyn; 2=External Platform MCKF}",
+      "module": "通用"
+    },
+    {
+      "name": "ConsiderHubMotion",
+      "description": "Flag whether to consider the hub motions impact on Lidar measurements",
+      "module": "通用"
+    },
+    {
+      "name": "ConstWaveMod",
+      "description": "Constrained wave model: 0=none; 1=Constrained wave with specified crest elevation, alpha; 2=Constrained wave with guaranteed peak-to-trough crest height, HCrest (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "CrestHmax",
+      "description": "Crest height (2*alpha for ConstWaveMod=1 or HCrest for ConstWaveMod=2), must be larger than WaveHs (m) [unused when ConstWaveMod=0]",
+      "module": "通用"
+    },
+    {
+      "name": "CrestTime",
+      "description": "Time at which the crest appears (s) [unused when ConstWaveMod=0]",
+      "module": "通用"
+    },
+    {
+      "name": "CrestXi",
+      "description": "X-position of the crest (m) [unused when ConstWaveMod=0]",
+      "module": "通用"
+    },
+    {
+      "name": "CrestYi",
+      "description": "Y-position of the crest (m) [unused when ConstWaveMod=0]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrDIDir",
+      "description": "Depth-independent current heading direction    (degrees) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrDIV",
+      "description": "Depth-independent current velocity                 (m/s) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrMod",
+      "description": "Current profile model {0: none=no current, 1: standard, 2: user-defined from routine UserCurrent} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "CurrNSDir",
+      "description": "Near-surface current heading direction         (degrees) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrNSRef",
+      "description": "Near-surface current reference depth            (meters) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrNSV0",
+      "description": "Near-surface current velocity at still water level (m/s) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrSSDir",
+      "description": "Sub-surface current heading direction (degrees) or DEFAULT (string) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "CurrSSV0",
+      "description": "Sub-surface current velocity at still water level  (m/s) [used only when CurrMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_DT",
+      "description": "Communication interval for dynamic library (s) (or \"default\") [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_FileName",
+      "description": "Name/location of the dynamic library {.dll [Windows] or .so [Linux]} in the Bladed-DLL format (-) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_InFile",
+      "description": "Name of input file sent to the DLL (-) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_NumTrq",
+      "description": "Record 26: No. of points in torque-speed look-up table {0 = none and use the optimal mode parameters; nonzero = ignore the optimal mode PARAMETERs by setting Record 16 to 0.0} (-) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_ProcName",
+      "description": "Name of procedure in DLL to be called (-) [case sensitive; used only with DLL Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "DLL_Ramp",
+      "description": "Whether a linear ramp should be used between DLL_DT time steps [introduces time shift when true] (flag) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "DT",
+      "description": "Recommended module time step (s)",
+      "module": "通用"
+    },
+    {
+      "name": "DTAero",
+      "description": "Time interval for aerodynamic calculations {or \"default\"} (s)",
+      "module": "通用"
+    },
+    {
+      "name": "DTTorDmp",
+      "description": "Drivetrain torsional damper (N-m/(rad/s))",
+      "module": "通用"
+    },
+    {
+      "name": "DTTorSpr",
+      "description": "Drivetrain torsional spring (N-m/rad)",
+      "module": "通用"
+    },
+    {
+      "name": "DT_Out",
+      "description": "Time step for tabular output (s) (or \"default\")",
+      "module": "通用"
+    },
+    {
+      "name": "DT_UJac",
+      "description": "Time between calls to get Jacobians (s)",
+      "module": "通用"
+    },
+    {
+      "name": "DecFact",
+      "description": "Decimation factor for tabular output {1: output every time step} (-) (currently unused)",
+      "module": "通用"
+    },
+    {
+      "name": "Delta3",
+      "description": "Delta-3 angle for teetering rotors (degrees) [unused for 3 blades]",
+      "module": "通用"
+    },
+    {
+      "name": "DiffQTF",
+      "description": "Full difference-frequency 2nd-order forces computed with full QTF          {0: None; [10, 11, or 12]: WAMIT file to use}          [Only one of MnDrift, NewmanApp, or DiffQTF can be non-zero]",
+      "module": "通用"
+    },
+    {
+      "name": "DrTrDOF",
+      "description": "Drivetrain rotational-flexibility DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "EDFile",
+      "description": "Name of file containing ElastoDyn input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "Echo",
+      "description": "Echo input data to <RootName>.ech (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "EdgeDOF",
+      "description": "First edgewise blade mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "ExctnCutOff",
+      "description": "Cutoff (corner) frequency of the low-pass time-filtered displaced position (Hz) [>0.0] [used only when PotMod=1, ExctnMod>0, and ExctnDisp=2]) [only used when PotMod=1 and ExctnMod>0 and SeaState's WaveMod>0]} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "ExctnDisp",
+      "description": "Method of computing Wave Excitation {0: use undisplaced position, 1: use displaced position, 2: use low-pass filtered displaced position) [only used when PotMod=1 and ExctnMod>0 and SeaState's WaveMod>0]} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "ExctnMod",
+      "description": "Wave Excitation model {0: None, 1: DFT, 2: state-space} (switch) [only used when PotMod=1; STATE-SPACE REQUIRES *.ssexctn INPUT FILE]",
+      "module": "通用"
+    },
+    {
+      "name": "F_LPFType",
+      "description": "(1: first-order low-pass filter, 2: second-order low-pass filter), [rad/s] (currently filters generator speed and pitch control signals",
+      "module": "通用"
+    },
+    {
+      "name": "F_NotchType",
+      "description": "Notch on the measured generator speed and/or tower fore-aft motion (for floating) {0: disable, 1: generator speed, 2: tower-top fore-aft motion, 3: generator speed and tower-top fore-aft motion}",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_BTS",
+      "description": "Name of the Full field wind file to use (.bts)",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_u",
+      "description": "name of the file containing the u-component fluctuating wind (.bin)",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_v",
+      "description": "name of the file containing the v-component fluctuating wind (.bin)",
+      "module": "通用"
+    },
+    {
+      "name": "FileName_w",
+      "description": "name of the file containing the w-component fluctuating wind (.bin)",
+      "module": "通用"
+    },
+    {
+      "name": "FilenameRoot",
+      "description": "Rootname of the full-field wind file to use (.wnd, .sum)",
+      "module": "通用"
+    },
+    {
+      "name": "Filename_Uni",
+      "description": "Filename of time series data for uniform wind field.      (-)",
+      "module": "通用"
+    },
+    {
+      "name": "Fl_Mode",
+      "description": "Floating specific feedback mode {0: no nacelle velocity feedback, 1: feed back translational velocity, 2: feed back rotational veloicty}",
+      "module": "通用"
+    },
+    {
+      "name": "FlapDOF1",
+      "description": "First flapwise blade mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "FlapDOF2",
+      "description": "Second flapwise blade mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "FocalDistanceX",
+      "description": "Focal distance co-ordinates of the lidar beam in the x direction (relative to hub height) (only first coordinate used for SensorType 2 and 3) (m)",
+      "module": "通用"
+    },
+    {
+      "name": "FocalDistanceY",
+      "description": "Focal distance co-ordinates of the lidar beam in the y direction (relative to hub height) (only first coordinate used for SensorType 2 and 3) (m)",
+      "module": "通用"
+    },
+    {
+      "name": "FocalDistanceZ",
+      "description": "Focal distance co-ordinates of the lidar beam in the z direction (relative to hub height) (only first coordinate used for SensorType 2 and 3) (m)",
+      "module": "通用"
+    },
+    {
+      "name": "FurlFile",
+      "description": "Name of file containing furling properties (quoted string) [unused when Furling=False]",
+      "module": "通用"
+    },
+    {
+      "name": "Furling",
+      "description": "Read in additional model properties for furling turbine (flag) [must currently be FALSE)",
+      "module": "通用"
+    },
+    {
+      "name": "GBRatio",
+      "description": "Gearbox ratio (-)",
+      "module": "通用"
+    },
+    {
+      "name": "GBoxEff",
+      "description": "Gearbox efficiency (%)",
+      "module": "通用"
+    },
+    {
+      "name": "Gain_OM",
+      "description": "Record 16: Optimal mode gain (Nm/(rad/s)^2) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "GenDOF",
+      "description": "Generator DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "GenEff",
+      "description": "Generator efficiency [ignored by the Thevenin and user-defined generator models] (%)",
+      "module": "通用"
+    },
+    {
+      "name": "GenIner",
+      "description": "Generator inertia about HSS (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "GenModel",
+      "description": "Generator model {1: simple, 2: Thevenin, 3: user-defined from routine UserGen} (switch) [used only when VSContrl=0]",
+      "module": "通用"
+    },
+    {
+      "name": "GenPwr_Dem",
+      "description": "Record 13: Demanded power (W) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "GenSpd_Dem",
+      "description": "Record 19: Demanded generator speed above rated (rpm) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "GenSpd_MaxOM",
+      "description": "Record 18: Optimal mode maximum speed (rpm) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "GenSpd_MinOM",
+      "description": "Record 17: Minimum generator speed (rpm) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "GenTiStp",
+      "description": "Method to stop the generator {T: timed using TimGenOf, F: when generator power = 0} (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "GenTiStr",
+      "description": "Method to start the generator {T: timed using TimGenOn, F: generator speed using SpdGenOn} (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "GenTrq_Dem",
+      "description": "Record 22: Demanded generator torque above rated (Nm) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "Gravity",
+      "description": "Gravitational acceleration (m/s^2)",
+      "module": "通用"
+    },
+    {
+      "name": "HDSum",
+      "description": "Output a summary file [flag]",
+      "module": "通用"
+    },
+    {
+      "name": "HSSBrDT",
+      "description": "Time for HSS-brake to reach full deployment once initiated (sec) [used only when HSSBrMode=1]",
+      "module": "通用"
+    },
+    {
+      "name": "HSSBrMode",
+      "description": "HSS brake model {0: none, 1: simple, 3: user-defined from routine UserHSSBr, 4: user-defined from Simulink/Labview, 5: user-defined from Bladed-style DLL} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "HSSBrTqF",
+      "description": "Fully deployed HSS-brake torque (N-m)",
+      "module": "通用"
+    },
+    {
+      "name": "HWindSpeed",
+      "description": "Horizontal windspeed                            (m/s)",
+      "module": "通用"
+    },
+    {
+      "name": "HubCM",
+      "description": "Distance from rotor apex to hub mass [positive downwind] (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "HubIner",
+      "description": "Hub inertia about rotor axis [3 blades] or teeter axis [2 blades] (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "HubLoss",
+      "description": "Use the Prandtl hub-loss model? (flag) [unused when WakeMod=0 or 3]",
+      "module": "通用"
+    },
+    {
+      "name": "HubMass",
+      "description": "Hub mass (kg)",
+      "module": "通用"
+    },
+    {
+      "name": "HubRad",
+      "description": "The distance from the rotor apex to the blade root (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "HydroFile",
+      "description": "Name of file containing hydrodynamic input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "IPC_ControlMode",
+      "description": "Turn Individual Pitch Control (IPC) for fatigue load reductions (pitch contribution) {0: off, 1: 1P reductions, 2: 1P+2P reductions}",
+      "module": "通用"
+    },
+    {
+      "name": "IPDefl",
+      "description": "Initial in-plane blade-tip deflection (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "IceFile",
+      "description": "Name of file containing ice input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "IndToler",
+      "description": "Convergence tolerance for BEMT nonlinear solve residual equation {or \"default\"} (-) [unused when WakeMod=0 or 3]",
+      "module": "通用"
+    },
+    {
+      "name": "InflowFile",
+      "description": "Name of file containing inflow wind input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "InterpOrder",
+      "description": "Interpolation order for input/output time history (-) {1=linear, 2=quadratic}",
+      "module": "通用"
+    },
+    {
+      "name": "JOutLst",
+      "description": "List of JointIDs which are to be output (-)[unused if NJOutputs=0]",
+      "module": "通用"
+    },
+    {
+      "name": "KinVisc",
+      "description": "Kinematic viscosity of the working fluid, m²/s; used to determine quantities such as the Reynolds number in aerodynamic calculations.",
+      "module": "通用"
+    },
+    {
+      "name": "LidRadialVel",
+      "description": "TRUE => return radial component, FALSE => return x direction estimate",
+      "module": "通用"
+    },
+    {
+      "name": "LinInputs",
+      "description": "Inputs included in linearization (switch) {0=none; 1=standard; 2=all module inputs (debug)} [unused if Linearize=False]",
+      "module": "通用"
+    },
+    {
+      "name": "LinOutJac",
+      "description": "Include full Jacobians in linearization output (for debug) (flag) [unused if Linearize=False; used only if LinInputs=LinOutputs=2]",
+      "module": "通用"
+    },
+    {
+      "name": "LinOutMod",
+      "description": "Write module-level linearization output files in addition to output for full system? (flag) [unused if Linearize=False]",
+      "module": "通用"
+    },
+    {
+      "name": "LinOutputs",
+      "description": "Outputs included in linearization (switch) {0=none; 1=from OutList(s); 2=all module outputs (debug)} [unused if Linearize=False]",
+      "module": "通用"
+    },
+    {
+      "name": "LinTimes",
+      "description": "List of times at which to linearize (s) [1 to NLinTimes] [used only when Linearize=True and CalcSteady=False]",
+      "module": "通用"
+    },
+    {
+      "name": "Linearize",
+      "description": "Linearization analysis (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "LoggingLevel",
+      "description": "(0: write no debug files, 1: write standard output .dbg-file, 2: LoggingLevel 1 + ROSCO LocalVars (.dbg2) 3: LoggingLevel 2 + complete avrSWAP-array (.dbg3))",
+      "module": "通用"
+    },
+    {
+      "name": "MCFD",
+      "description": "MacCamy-Fuchs member radius (ignored if radius <= 0) [must be 0 when WaveMod 0 or 6]",
+      "module": "通用"
+    },
+    {
+      "name": "MHK",
+      "description": "MHK turbine type (switch) {0=Not an MHK turbine; 1=Fixed MHK turbine; 2=Floating MHK turbine}",
+      "module": "通用"
+    },
+    {
+      "name": "MSL2SWL",
+      "description": "Offset between still-water level and mean sea level (m) [positive upward]",
+      "module": "通用"
+    },
+    {
+      "name": "M_CD",
+      "description": "Dynamic Coulomb friction moment (N-m) [M_CD when YawFrctMod=1; |Fz|*M_CD when YawFrctMod=2 and Fz<0]",
+      "module": "通用"
+    },
+    {
+      "name": "M_CSmax",
+      "description": "Maximum static Coulomb friction torque (N-m) [M_CSmax when YawFrctMod=1; |Fz|*M_CSmax when YawFrctMod=2 and Fz<0]",
+      "module": "通用"
+    },
+    {
+      "name": "M_FCD",
+      "description": "Dynamic Coulomb friction moment proportional to yaw bearing shear force (N-m) [sqrt(Fx^2+Fy^2)*M_FCD; only used when YawFrctMod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "M_FCSmax",
+      "description": "Maximum static Coulomb friction torque proportional to yaw bearing shear force (N-m) [sqrt(Fx^2+Fy^2)*M_FCSmax; only used when YawFrctMod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "M_MCD",
+      "description": "Dynamic Coulomb friction moment proportional to yaw bearing bending moment (N-m) [sqrt(Mx^2+My^2)*M_MCD; only used when YawFrctMod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "M_MCSmax",
+      "description": "Maximum static Coulomb friction torque proportional to yaw bearing bending moment (N-m) [sqrt(Mx^2+My^2)*M_MCSmax; only used when YawFrctMod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "MaxIter",
+      "description": "Maximum number of iteration steps (-) [unused when WakeMod=0]",
+      "module": "通用"
+    },
+    {
+      "name": "MeasurementInterval",
+      "description": "Time between each measurement [s]",
+      "module": "通用"
+    },
+    {
+      "name": "Method",
+      "description": "Integration method: {1: RK4, 2: AB4, or 3: ABM4} (-)",
+      "module": "通用"
+    },
+    {
+      "name": "MnDrift",
+      "description": "Mean-drift 2nd-order forces computed                                       {0: None; [7, 8, 9, 10, 11, or 12]: WAMIT file to use} [Only one of MnDrift, NewmanApp, or DiffQTF can be non-zero]",
+      "module": "通用"
+    },
+    {
+      "name": "MooringFile",
+      "description": "Name of file containing mooring system input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "NAxCoef",
+      "description": "Number of axial coefficients (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NBlGages",
+      "description": "Number of blade nodes that have strain gages for output [0 to 9] (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NBlInpSt",
+      "description": "Number of blade input stations (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NBody",
+      "description": "Number of WAMIT bodies to be used (-) [>=1; only used when PotMod=1. If NBodyMod=1, the WAMIT data contains a vector of size 6*NBody x 1 and matrices of size 6*NBody x 6*NBody; if NBodyMod>1, there are NBody sets of WAMIT data each with a vector of size 6 x 1 and matrices of size 6 x 6]",
+      "module": "通用"
+    },
+    {
+      "name": "NBodyMod",
+      "description": "Body coupling model {1: include coupling terms between each body and NBody in HydroDyn equals NBODY in WAMIT, 2: neglect coupling terms between each body and NBODY=1 with XBODY=0 in WAMIT, 3: Neglect coupling terms between each body and NBODY=1 with XBODY=/0 in WAMIT} (switch) [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefDpthCyl",
+      "description": "Number of depth-dependent cylindrical member coefficients (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefDpthRec",
+      "description": "Number of depth-dependent rectangular member coefficients (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefMembersCyl",
+      "description": "Number of member-based cylindrical member coefficients (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NCoefMembersRec",
+      "description": "Number of member-based rectangular member coefficients (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NExctnHdg",
+      "description": "Number of evenly distributed platform yaw/heading angles over the range of [-180, 180) deg for which the wave excitation shall be computed [only used when PtfmYMod=1] (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NFillGroups",
+      "description": "Number of filled member groups (-) [If FillDens = DEFAULT, then FillDens = WtrDens; FillFSLoc is related to MSL2SWL]",
+      "module": "通用"
+    },
+    {
+      "name": "NJOutputs",
+      "description": "Number of joint outputs [Must be < 10]",
+      "module": "通用"
+    },
+    {
+      "name": "NJoints",
+      "description": "Number of joints (-)   [must be exactly 0 or at least 2]",
+      "module": "通用"
+    },
+    {
+      "name": "NLinTimes",
+      "description": "Number of times to linearize (-) [>=1] [unused if Linearize=False]",
+      "module": "通用"
+    },
+    {
+      "name": "NMGDepths",
+      "description": "Number of marine-growth depths specified (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NMOutputs",
+      "description": "Number of member outputs (-) [must be < 10]",
+      "module": "通用"
+    },
+    {
+      "name": "NMembers",
+      "description": "Number of members (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NPropSetsCyl",
+      "description": "Number of cylindrical member property sets (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NPropSetsRec",
+      "description": "Number of rectangular member property sets (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NStCfiles",
+      "description": "Name of the file for nacelle tuned mass damper (quoted string) [unused when CompNTMD is false]",
+      "module": "通用"
+    },
+    {
+      "name": "NTwGages",
+      "description": "Number of tower nodes that have strain gages for output [0 to 9] (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NTwInpSt",
+      "description": "Number of input stations to specify tower geometry",
+      "module": "通用"
+    },
+    {
+      "name": "NWaveElev",
+      "description": "Number of points where the incident wave elevations can be computed (-)       [maximum of 9 output locations]",
+      "module": "通用"
+    },
+    {
+      "name": "NWaveKin",
+      "description": "Number of points where the wave kinematics can be output (-)       [maximum of 9 output locations]",
+      "module": "通用"
+    },
+    {
+      "name": "NWindVel",
+      "description": "Number of points to output the wind velocity    (0 to 9)",
+      "module": "通用"
+    },
+    {
+      "name": "NX",
+      "description": "number of grids in the x direction (in the 3 files above) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NY",
+      "description": "number of grids in the y direction (in the 3 files above) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NZ",
+      "description": "number of grids in the z direction (in the 3 files above) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NacCMxn",
+      "description": "Downwind distance from the tower-top to the nacelle CM (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "NacCMyn",
+      "description": "Lateral  distance from the tower-top to the nacelle CM (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "NacCMzn",
+      "description": "Vertical distance from the tower-top to the nacelle CM (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "NacMass",
+      "description": "Nacelle mass (kg)",
+      "module": "通用"
+    },
+    {
+      "name": "NacYIner",
+      "description": "Nacelle inertia about yaw axis (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "NacYaw",
+      "description": "Initial or fixed nacelle-yaw angle (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "NacYawF",
+      "description": "Final yaw angle for override yaw maneuvers (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "NacYaw_North",
+      "description": "Reference yaw angle of the nacelle when the upwind end points due North (deg) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "NacelleDrag",
+      "description": "Include Nacelle Drag effects? (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "NcIMUxn",
+      "description": "Downwind distance from the tower-top to the nacelle IMU (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "NcIMUyn",
+      "description": "Lateral  distance from the tower-top to the nacelle IMU (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "NcIMUzn",
+      "description": "Vertical distance from the tower-top to the nacelle IMU (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "NewmanApp",
+      "description": "Mean- and slow-drift 2nd-order forces computed with Newman's approximation {0: None; [7, 8, 9, 10, 11, or 12]: WAMIT file to use} [Only one of MnDrift, NewmanApp, or DiffQTF can be non-zero. Used only when WaveDirMod=0]",
+      "module": "通用"
+    },
+    {
+      "name": "NumAFfiles",
+      "description": "Number of airfoil files used (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NumBStC",
+      "description": "Number of blade structural controllers (integer)",
+      "module": "通用"
+    },
+    {
+      "name": "NumBeam",
+      "description": "Number of lidar measurement beams (0-5)(used when SensorType = 1)",
+      "module": "通用"
+    },
+    {
+      "name": "NumBl",
+      "description": "Number of blades (-)",
+      "module": "通用"
+    },
+    {
+      "name": "NumCrctn",
+      "description": "Number of correction iterations (-) {0=explicit calculation, i.e., no corrections}",
+      "module": "通用"
+    },
+    {
+      "name": "NumNStC",
+      "description": "Number of nacelle structural controllers (integer)",
+      "module": "通用"
+    },
+    {
+      "name": "NumPulseGate",
+      "description": "Number of lidar measurement gates (used when SensorType = 3)",
+      "module": "通用"
+    },
+    {
+      "name": "NumSStC",
+      "description": "Number of sbustructure structural controllers (integer)",
+      "module": "通用"
+    },
+    {
+      "name": "NumTStC",
+      "description": "Number of tower structural controllers (integer)",
+      "module": "通用"
+    },
+    {
+      "name": "NumTwrNds",
+      "description": "Number of tower nodes used in the analysis  (-) [used only when TwrPotent/=0, TwrShadow/=0, TwrAero=True, or Buoyancy=True]",
+      "module": "通用"
+    },
+    {
+      "name": "OmgCut",
+      "description": "Yaw angular velocity cutoff below which viscous friction is linearized (rad/s)",
+      "module": "通用"
+    },
+    {
+      "name": "OoPDefl",
+      "description": "Initial out-of-plane blade-tip displacement (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "OutAll",
+      "description": "Output all user-specified member and joint loads (only at each member end, not interior locations) [flag]",
+      "module": "通用"
+    },
+    {
+      "name": "OutFile",
+      "description": "Switch to determine where output will be placed: {1: in module output file only; 2: in glue code output file only; 3: both} (currently unused)",
+      "module": "通用"
+    },
+    {
+      "name": "OutFileFmt",
+      "description": "Format for tabular (time-marching) output file (switch) {1: text file [<RootName>.out], 2: binary file [<RootName>.outb], 3: both}",
+      "module": "通用"
+    },
+    {
+      "name": "OutFmt",
+      "description": "Format used for text tabular output, excluding the time channel.  Resulting field should be 10 characters. (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "OutList",
+      "description": "Start of the output-channel list. Following lines request recorded variables until END; requesting an output does not enable its physical model.",
+      "module": "通用"
+    },
+    {
+      "name": "OutSFmt",
+      "description": "Output format for header strings (quoted string) [not checked for validity",
+      "module": "通用"
+    },
+    {
+      "name": "OutSwtch",
+      "description": "Output requested channels to: [1=Hydrodyn.out, 2=GlueCode.out, 3=both files]",
+      "module": "通用"
+    },
+    {
+      "name": "OverHang",
+      "description": "Distance from yaw axis to rotor apex [3 blades] or teeter pin [2 blades] (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PCMode",
+      "description": "Pitch control mode {0: none, 3: user-defined from routine PitchCntrl, 4: user-defined from Simulink/Labview, 5: user-defined from Bladed-style DLL} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "PC_ControlMode",
+      "description": "Blade pitch control mode {0: No pitch, fix to fine pitch, 1: active PI blade pitch control}",
+      "module": "通用"
+    },
+    {
+      "name": "PC_GS_angles",
+      "description": "Gain-schedule table: pitch angles [rad].",
+      "module": "通用"
+    },
+    {
+      "name": "PC_GS_n",
+      "description": "Amount of gain-scheduling table entries",
+      "module": "通用"
+    },
+    {
+      "name": "PC_KI",
+      "description": "ROSCO pitch PI integral-gain array at the gain-scheduling pitch-angle nodes.",
+      "module": "通用"
+    },
+    {
+      "name": "PC_KP",
+      "description": "ROSCO pitch PI proportional-gain array at the gain-scheduling pitch-angle nodes. Units follow the controller interface.",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MaxPit",
+      "description": "Maximum physical pitch limit, [rad].",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MaxRat",
+      "description": "Maximum pitch rate (in absolute value) in pitch controller, [rad/s].",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MinPit",
+      "description": "Minimum physical pitch limit, [rad].",
+      "module": "通用"
+    },
+    {
+      "name": "PC_MinRat",
+      "description": "Minimum pitch rate (in absolute value) in pitch controller, [rad/s].",
+      "module": "通用"
+    },
+    {
+      "name": "PLExp_Hawc",
+      "description": "Power law exponent (-) (used for PL wind profile type only)",
+      "module": "通用"
+    },
+    {
+      "name": "PLexp",
+      "description": "Power law exponent                              (-)",
+      "module": "通用"
+    },
+    {
+      "name": "PS_Mode",
+      "description": "Pitch saturation mode {0: no pitch saturation, 1: implement pitch saturation}",
+      "module": "通用"
+    },
+    {
+      "name": "Patm",
+      "description": "Atmospheric pressure (Pa) [used only for an MHK turbine cavitation check]",
+      "module": "通用"
+    },
+    {
+      "name": "PitManRat",
+      "description": "Pitch maneuver rate for the corresponding blade, deg/s; used with TPitManS and BlPitchF.",
+      "module": "通用"
+    },
+    {
+      "name": "PotFile",
+      "description": "Root name of potential-flow model data; WAMIT output files containing the linear, nondimensionalized, hydrostatic restoring matrix (.hst), frequency-dependent hydrodynamic added mass matrix and damping matrix (.1), and frequency- and direction-dependent wave excitation force vector per unit wave amplitude (.3) (quoted string) [MAKE SURE THE FREQUENCIES INHERENT IN THESE WAMIT FILES SPAN THE PHYSICALLY-SIGNIFICANT RANGE OF FREQUENCIES FOR THE GIVEN PLATFORM; THEY MUST CONTAIN THE ZERO- AND INFINITE-FREQUENCY LIMITS",
+      "module": "通用"
+    },
+    {
+      "name": "PotMod",
+      "description": "Potential-flow model {0: none=no potential flow, 1: frequency-to-time-domain transforms based on WAMIT output, 2: fluid-impulse theory (FIT)} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "PreCone",
+      "description": "Precone angle of the corresponding blade, deg. Preserve the sign required by the ElastoDyn coordinate convention.",
+      "module": "通用"
+    },
+    {
+      "name": "PropagationDir",
+      "description": "Direction of wind propagation (meteoroligical rotation from aligned with X (positive rotates towards -Y) -- degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "PtchRate_Max",
+      "description": "Record  9: Maximum pitch rate  (deg/s) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "PtchRate_Min",
+      "description": "Record  8: Minimum pitch rate (most negative value allowed) (deg/s) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_Cntrl",
+      "description": "Record 28: Use individual pitch control {0: collective pitch; 1: individual pitch control} (switch) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_Max",
+      "description": "Record  7: Maximum pitch angle (deg) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_Min",
+      "description": "Record  6: Minimum pitch angle (deg) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "Ptch_SetPnt",
+      "description": "Record  5: Below-rated pitch angle set-point (deg) [used only with Bladed Interface]",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCMxt",
+      "description": "Downwind distance from the ground level [onshore] or MSL [offshore] to the platform CM (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCMyt",
+      "description": "Lateral distance from the ground level [onshore] or MSL [offshore] to the platform CM (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCMzt",
+      "description": "Vertical distance from the ground level [onshore] or MSL [offshore] to the platform CM (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCOBxt",
+      "description": "The xt offset of the center of buoyancy (COB) from the platform reference point (meters)  [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmCOByt",
+      "description": "The yt offset of the center of buoyancy (COB) from the platform reference point (meters)  [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmHeave",
+      "description": "Initial or fixed vertical heave translational displacement of platform (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmHvDOF",
+      "description": "Platform vertical heave translation DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmMass",
+      "description": "Platform mass (kg)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmPDOF",
+      "description": "Platform pitch tilt rotation DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmPIner",
+      "description": "Platform inertia for pitch tilt rotation about the platform CM (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmPitch",
+      "description": "Initial or fixed pitch tilt rotational displacement of platform (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRDOF",
+      "description": "Platform roll tilt rotation DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRIner",
+      "description": "Platform inertia for roll tilt rotation about the platform CM (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefY",
+      "description": "Constant (if PtfmYMod=0) or initial (if PtfmYMod=1) platform reference yaw offset (deg)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefxt",
+      "description": "The xt offset of the body reference point(s) from (0,0,0) (meters) [1 to NBody] [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefyt",
+      "description": "The yt offset of the body reference point(s) from (0,0,0) (meters) [1 to NBody] [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefzt",
+      "description": "Vertical distance from the ground level [onshore] or MSL [offshore] to the platform reference point (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRefztRot",
+      "description": "The rotation about zt of the body reference frame(s) from xt/yt (degrees) [1 to NBody] [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmRoll",
+      "description": "Initial or fixed roll tilt rotational displacement of platform (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSgDOF",
+      "description": "Platform horizontal surge translation DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSurge",
+      "description": "Initial or fixed horizontal surge translational displacement of platform (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSwDOF",
+      "description": "Platform horizontal sway translation DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmSway",
+      "description": "Initial or fixed horizontal sway translational displacement of platform (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmVol0",
+      "description": "Displaced volume of water when the platform is in its undisplaced position (m^3) [only used when PotMod=1; USE THE SAME VALUE COMPUTED BY WAMIT AS OUTPUT IN THE .OUT FILE",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmXYIner",
+      "description": "Platform xy moment of inertia about the platform CM (=-int(xydm)) (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmXZIner",
+      "description": "Platform xz moment of inertia about the platform CM (=-int(xzdm)) (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYCutOff",
+      "description": "Cutoff frequency for the low-pass filtering of PRP yaw motion when PtfmYMod=1 [unused when PtfmYMod=0] (Hz)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYDOF",
+      "description": "Platform yaw rotation DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYIner",
+      "description": "Platform inertia for yaw rotation about the platform CM (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYMod",
+      "description": "Model for large platform yaw offset {0: Static reference yaw offset based on PtfmRefY, 1: dynamic reference yaw offset based on low-pass filtering the PRP yaw motion with cutoff frequency PtfmYCutOff} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYZIner",
+      "description": "Platform yz moment of inertia about the platform CM (=-int(yzdm)) (kg m^2)",
+      "module": "通用"
+    },
+    {
+      "name": "PtfmYaw",
+      "description": "Initial or fixed yaw rotational displacement of platform (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "PulseSpacing",
+      "description": "Distance between range gates (m) (used when SensorType = 3)",
+      "module": "通用"
+    },
+    {
+      "name": "Pvap",
+      "description": "Vapour pressure of working fluid (Pa) [used only for an MHK turbine cavitation check]",
+      "module": "通用"
+    },
+    {
+      "name": "RdtnDT",
+      "description": "Time step for wave radiation kernel calculations (sec) [only used when PotMod=1; DT<=RdtnDT<=0.1 recommended; determines RdtnOmegaMax=Pi/RdtnDT in the cosine transform]",
+      "module": "通用"
+    },
+    {
+      "name": "RdtnMod",
+      "description": "Radiation memory-effect model {0: no memory-effect calculation, 1: convolution, 2: state-space} (switch) [only used when PotMod=1; STATE-SPACE REQUIRES *.ss INPUT FILE]",
+      "module": "通用"
+    },
+    {
+      "name": "RdtnTMax",
+      "description": "Analysis time for wave radiation kernel calculations (sec) [only used when PotMod=1; determines RdtnDOmega=Pi/RdtnTMax in the cosine transform; MAKE SURE THIS IS LONG ENOUGH FOR THE RADIATION IMPULSE RESPONSE FUNCTIONS TO DECAY TO NEAR-ZERO FOR THE GIVEN PLATFORM",
+      "module": "通用"
+    },
+    {
+      "name": "RefHt",
+      "description": "Reference height for horizontal wind speed      (m)",
+      "module": "通用"
+    },
+    {
+      "name": "RefHt_Hawc",
+      "description": "reference height; the height (in meters) of the vertical center of the grid (m)",
+      "module": "通用"
+    },
+    {
+      "name": "RefHt_Uni",
+      "description": "Reference height for horizontal wind speed                (m)",
+      "module": "通用"
+    },
+    {
+      "name": "RefLength",
+      "description": "Reference length for linear horizontal and vertical sheer (-)",
+      "module": "通用"
+    },
+    {
+      "name": "RotSpeed",
+      "description": "Initial or fixed rotor speed (rpm)",
+      "module": "通用"
+    },
+    {
+      "name": "RotorApexOffsetPos",
+      "description": "Offset of the lidar from hub height (m)",
+      "module": "通用"
+    },
+    {
+      "name": "SD_Mode",
+      "description": "Shutdown mode {0: no shutdown procedure, 1: pitch to max pitch at shutdown}",
+      "module": "通用"
+    },
+    {
+      "name": "SFx",
+      "description": "Turbulence scaling factor for the x direction (-)   [ScaleMethod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SFy",
+      "description": "Turbulence scaling factor for the y direction (-)   [ScaleMethod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SFz",
+      "description": "Turbulence scaling factor for the z direction (-)   [ScaleMethod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_PORt",
+      "description": "Pull-out ratio (Tpullout/Trated) (-) [used only when VSContrl=0 and GenModel=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_RtTq",
+      "description": "Rated torque (N-m) [used only when VSContrl=0 and GenModel=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_SlPc",
+      "description": "Rated generator slip percentage (%) [used only when VSContrl=0 and GenModel=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SIG_SySp",
+      "description": "Synchronous (zero-torque) generator speed (rpm) [used only when VSContrl=0 and GenModel=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SS_Mode",
+      "description": "Setpoint Smoother mode {0: no setpoint smoothing, 1: introduce setpoint smoothing}",
+      "module": "通用"
+    },
+    {
+      "name": "SStCfiles",
+      "description": "Name of the file for sbustructure tuned mass damper (quoted string) [unused when CompNTMD is false]",
+      "module": "通用"
+    },
+    {
+      "name": "ScaleMethod",
+      "description": "Turbulence scaling method   [0 = none, 1 = direct scaling, 2 = calculate scaling factor based on a desired standard deviation]",
+      "module": "通用"
+    },
+    {
+      "name": "SeaStFile",
+      "description": "Name of file containing sea state input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "SeaStSum",
+      "description": "Output a summary file [flag]",
+      "module": "通用"
+    },
+    {
+      "name": "SensorType",
+      "description": "Switch for lidar configuration (0 = None, 1 = Single Point Beam(s), 2 = Continuous, 3 = Pulsed)",
+      "module": "通用"
+    },
+    {
+      "name": "ServoFile",
+      "description": "Name of file containing control and electrical-drive input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "ShftGagL",
+      "description": "Distance from rotor apex [3 blades] or teeter pin [2 blades] to shaft strain gages [positive for upwind rotors] (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "ShftTilt",
+      "description": "Rotor shaft tilt angle (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "SigmaFx",
+      "description": "Turbulence standard deviation to calculate scaling from in x direction (m/s)    [ScaleMethod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "SigmaFy",
+      "description": "Turbulence standard deviation to calculate scaling from in y direction (m/s)    [ScaleMethod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "SigmaFz",
+      "description": "Turbulence standard deviation to calculate scaling from in z direction (m/s)    [ScaleMethod=2]",
+      "module": "通用"
+    },
+    {
+      "name": "SkewMomCorr",
+      "description": "Turn the skew momentum correction on or off [used only when Skew_Mod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SkewRedistrFactor",
+      "description": "Constant used in Pitt/Peters skewed wake model {or \"default\" is 15/32*pi} (-) [used only when Skew_Mod=1 and SkewRedistr_Mod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "SkewRedistr_Mod",
+      "description": "Type of skewed-wake correction model (switch) {0=no redistribution, 1=Glauert/Pitt/Peters, default=1} [used only when Skew_Mod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "Skew_Mod",
+      "description": "Skew model {0=No skew model, -1=Remove non-normal component for linearization, 1=skew model active}",
+      "module": "通用"
+    },
+    {
+      "name": "SpdGenOn",
+      "description": "Generator speed to turn on the generator for a startup (HSS speed) (rpm) [used only when GenTiStr=False]",
+      "module": "通用"
+    },
+    {
+      "name": "SpdSound",
+      "description": "Speed of sound in working fluid (m/s)",
+      "module": "通用"
+    },
+    {
+      "name": "SttsTime",
+      "description": "Amount of time between screen status messages (s)",
+      "module": "通用"
+    },
+    {
+      "name": "SubFile",
+      "description": "Name of file containing sub-structural input parameters (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "SumPrint",
+      "description": "Print summary data to \"<RootName>.sum\" (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "SumQTF",
+      "description": "Full summation -frequency 2nd-order forces computed with full QTF          {0: None; [10, 11, or 12]: WAMIT file to use}",
+      "module": "通用"
+    },
+    {
+      "name": "TD_Mode",
+      "description": "Tower damper mode {0: no tower damper, 1: feed back translational nacelle accelleration to pitch angle}",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_Freq",
+      "description": "Line frequency [50 or 60] (Hz) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_MR",
+      "description": "Magnetizing reactance (ohms) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_NPol",
+      "description": "Number of poles [even integer > 0] (-) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_RLR",
+      "description": "Rotor leakage reactance (ohms) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_RRes",
+      "description": "Rotor resistance (ohms) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_SLR",
+      "description": "Stator leakage reactance (ohms) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_SRes",
+      "description": "Stator resistance (ohms) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "TEC_VLL",
+      "description": "Line-to-line RMS voltage (volts) [used only when VSContrl=0 and GenModel=2]",
+      "module": "通用"
+    },
+    {
+      "name": "THSSBrDp",
+      "description": "Time to initiate deployment of the HSS brake (s)",
+      "module": "通用"
+    },
+    {
+      "name": "TIDrag",
+      "description": "Include the drag term in the tangential-induction calculation? (flag) [unused when WakeMod=0,3 or TanInd=FALSE]",
+      "module": "通用"
+    },
+    {
+      "name": "TMax",
+      "description": "Total run time (s)",
+      "module": "通用"
+    },
+    {
+      "name": "TPCOn",
+      "description": "Time to enable active pitch control (s) [unused when PCMode=0]",
+      "module": "通用"
+    },
+    {
+      "name": "TPitManS",
+      "description": "Start time of the corresponding blade pitch maneuver, s; the maneuver overrides normal pitch control.",
+      "module": "通用"
+    },
+    {
+      "name": "TStCfiles",
+      "description": "Name of the file for tower tuned mass damper (quoted string) [unused when CompNTMD is false]",
+      "module": "通用"
+    },
+    {
+      "name": "TStart",
+      "description": "Time to begin tabular output (s)",
+      "module": "通用"
+    },
+    {
+      "name": "TTDspFA",
+      "description": "Initial fore-aft tower-top displacement (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "TTDspSS",
+      "description": "Initial side-to-side tower-top displacement (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "TYCOn",
+      "description": "Time to enable active yaw control (s) [unused when YCMode=0]",
+      "module": "通用"
+    },
+    {
+      "name": "TYawManS",
+      "description": "Time to start override yaw maneuver and end standard yaw control (s)",
+      "module": "通用"
+    },
+    {
+      "name": "TabDelim",
+      "description": "Use tab delimiters in text tabular output file? (flag) {uses spaces if false}",
+      "module": "通用"
+    },
+    {
+      "name": "TanInd",
+      "description": "Include tangential induction in BEMT calculations? (flag) [unused when WakeMod=0 or 3]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetCDmp",
+      "description": "Rotor-teeter rate-independent Coulomb-damping moment (N-m) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDOF",
+      "description": "Rotor-teeter DOF (flag) [unused for 3 blades]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDefl",
+      "description": "Initial or fixed teeter angle (degrees) [unused for 3 blades]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDmp",
+      "description": "Rotor-teeter damping constant (N-m/(rad/s)) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetDmpP",
+      "description": "Rotor-teeter damper position (degrees) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetHSSp",
+      "description": "Rotor-teeter hard-stop linear-spring constant (N-m/rad) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetHStP",
+      "description": "Rotor-teeter hard-stop position (degrees) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetMod",
+      "description": "Rotor-teeter spring/damper model {0: none, 1: standard, 2: user-defined from routine UserTeet} (switch) [unused for 3 blades]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetSSSp",
+      "description": "Rotor-teeter soft-stop linear-spring constant (N-m/rad) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TeetSStP",
+      "description": "Rotor-teeter soft-stop position (degrees) [used only for 2 blades and when TeetMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "TimGenOf",
+      "description": "Time to turn off the generator (s) [used only when GenTiStp=True]",
+      "module": "通用"
+    },
+    {
+      "name": "TimGenOn",
+      "description": "Time to turn on the generator for a startup (s) [used only when GenTiStr=True]",
+      "module": "通用"
+    },
+    {
+      "name": "TipLoss",
+      "description": "Use the Prandtl tip-loss model? (flag) [unused when WakeMod=0 or 3]",
+      "module": "通用"
+    },
+    {
+      "name": "TipMass",
+      "description": "Concentrated tip-brake mass for the corresponding blade, kg.",
+      "module": "通用"
+    },
+    {
+      "name": "TipRad",
+      "description": "The distance from the rotor apex to the blade tip (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "TmaxIC",
+      "description": "max time for ic gen (s)",
+      "module": "通用"
+    },
+    {
+      "name": "TowerBsHt",
+      "description": "Height of tower base above ground level [onshore] or MSL [offshore] (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "TowerFile",
+      "description": "Have tower file (.twr) (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "TowerHt",
+      "description": "Height of tower above ground level [onshore] or MSL [offshore] (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "TrimCase",
+      "description": "Controller parameter to be trimmed {1:yaw; 2:torque; 3:pitch} [used only if CalcSteady=True] (-)",
+      "module": "通用"
+    },
+    {
+      "name": "TrimGain",
+      "description": "Proportional gain for the rotational speed error (>0) [used only if CalcSteady=True] (rad/(rad/s) for yaw or pitch; Nm/(rad/s) for torque)",
+      "module": "通用"
+    },
+    {
+      "name": "TrimTol",
+      "description": "Tolerance for the rotational speed convergence [used only if CalcSteady=True] (-)",
+      "module": "通用"
+    },
+    {
+      "name": "TwFADOF1",
+      "description": "First fore-aft tower bending-mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "TwFADOF2",
+      "description": "Second fore-aft tower bending-mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "TwSSDOF1",
+      "description": "First side-to-side tower bending-mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "TwSSDOF2",
+      "description": "Second side-to-side tower bending-mode DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "Twr2Shft",
+      "description": "Vertical distance from the tower-top to the rotor shaft (meters)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrAero",
+      "description": "Calculate tower aerodynamic loads? (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrFADmp(1)",
+      "description": "Tower 1st fore-aft mode structural damping ratio (%)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrFADmp(2)",
+      "description": "Tower 2nd fore-aft mode structural damping ratio (%)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrFile",
+      "description": "Name of file containing tower properties (quoted string)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrGagNd",
+      "description": "List of tower nodes that have strain gages [1 to TwrNodes] (-) [unused if NTwGages=0]",
+      "module": "通用"
+    },
+    {
+      "name": "TwrNodes",
+      "description": "Number of tower nodes used for analysis (-)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrPotent",
+      "description": "Type tower influence on wind based on potential flow around the tower (switch) {0=none, 1=baseline potential flow, 2=potential flow with Bak correction}",
+      "module": "通用"
+    },
+    {
+      "name": "TwrSSDmp(1)",
+      "description": "Tower 1st side-to-side mode structural damping ratio (%)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrSSDmp(2)",
+      "description": "Tower 2nd side-to-side mode structural damping ratio (%)",
+      "module": "通用"
+    },
+    {
+      "name": "TwrShadow",
+      "description": "Calculate tower influence on wind based on downstream tower shadow (switch) {0=none, 1=Powles model, 2=Eames model}",
+      "module": "通用"
+    },
+    {
+      "name": "Twr_Kdmp",
+      "description": "Damping factor for the tower [used only if CalcSteady=True] (N/(m/s))",
+      "module": "通用"
+    },
+    {
+      "name": "UA_Mod",
+      "description": "Unsteady Aero Model Switch (switch) {0=Quasi-steady (no UA), 2=B-L Gonzalez, 3=B-L Minnema/Pierce, 4=B-L HGM 4-states, 5=B-L HGM+vortex 5 states, 6=Oye, 7=Boeing-Vertol}",
+      "module": "通用"
+    },
+    {
+      "name": "UJacSclFact",
+      "description": "Scaling factor used in Jacobians (-)",
+      "module": "通用"
+    },
+    {
+      "name": "URef",
+      "description": "Mean u-component wind speed at the reference height (m/s)",
+      "module": "通用"
+    },
+    {
+      "name": "URefLid",
+      "description": "Reference average wind speed for the lidar[m/s]",
+      "module": "通用"
+    },
+    {
+      "name": "UndSling",
+      "description": "Undersling length [distance from teeter pin to the rotor apex] (meters) [unused for 3 blades]",
+      "module": "通用"
+    },
+    {
+      "name": "VFlowAng",
+      "description": "Upflow angle (degrees) (not used for native Bladed format WindType=7)",
+      "module": "通用"
+    },
+    {
+      "name": "VSContrl",
+      "description": "Variable-speed control mode {0: none, 1: simple VS, 3: user-defined from routine UserVSCont, 4: user-defined from Simulink/Labview, 5: user-defined from Bladed-style DLL} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "VS_ControlMode",
+      "description": "Generator torque control mode in above rated conditions {0: constant torque, 1: constant power, 2: TSR tracking PI control with constant torque, 3: TSR tracking PI control with constant power}",
+      "module": "通用"
+    },
+    {
+      "name": "VS_Rgn2K",
+      "description": "Generator torque constant in Region 2 for simple variable-speed generator control (HSS side) (N-m/rpm^2) [used only when VSContrl=1]",
+      "module": "通用"
+    },
+    {
+      "name": "VS_RtGnSp",
+      "description": "Rated generator speed for simple variable-speed generator control (HSS side) (rpm) [used only when VSContrl=1]",
+      "module": "通用"
+    },
+    {
+      "name": "VS_RtTq",
+      "description": "Rated generator torque/constant generator torque in Region 3 for simple variable-speed generator control (HSS side) (N-m) [used only when VSContrl=1]",
+      "module": "通用"
+    },
+    {
+      "name": "VS_SlPc",
+      "description": "Rated generator slip percentage in Region 2 1/2 for simple variable-speed generator control (%) [used only when VSContrl=1]",
+      "module": "通用"
+    },
+    {
+      "name": "VTK_fields",
+      "description": "Write mesh fields to VTK data files? (flag) {true/false} [unused if WrVTK=0]",
+      "module": "通用"
+    },
+    {
+      "name": "VTK_fps",
+      "description": "Frame rate for VTK output (frames per second){will use closest integer multiple of DT} [used only if WrVTK=2]",
+      "module": "通用"
+    },
+    {
+      "name": "VTK_type",
+      "description": "Type of VTK visualization data: (switch) {1=surfaces; 2=basic meshes (lines/points); 3=all meshes (debug)} [unused if WrVTK=0]",
+      "module": "通用"
+    },
+    {
+      "name": "VelInterpCubic",
+      "description": "Use cubic interpolation for velocity in time (false=linear, true=cubic) [Used with WindType=2,3,4,5,7]",
+      "module": "通用"
+    },
+    {
+      "name": "WAMITULEN",
+      "description": "Characteristic body length scale used to redimensionalize WAMIT output (meters) [only used when PotMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "WE_Mode",
+      "description": "Wind speed estimator mode {0: One-second low pass filtered hub height wind speed, 1: Immersion and Invariance Estimator, 2: Extended Kalman Filter}",
+      "module": "通用"
+    },
+    {
+      "name": "WakeMod",
+      "description": "Legacy wake/induction model selector. Interpret supported choices using the input comments and version documentation.",
+      "module": "通用"
+    },
+    {
+      "name": "Wake_Mod",
+      "description": "Wake/induction model (switch) {0=none, 1=BEMT, 3=OLAF} [Wake_Mod cannot be 2 or 3 when linearizing]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDT",
+      "description": "Time step for incident wave calculations     (sec) [unused when WaveMod=0; 0.1<=WaveDT<=1.0 recommended; determines WaveOmegaMax=Pi/WaveDT in the IFFT]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDir",
+      "description": "Incident wave propagation heading direction                         (degrees) [unused when WaveMod=0 or 6]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDirMod",
+      "description": "Directional spreading function {0: none, 1: COS2S}                  (-)       [only used when WaveMod=2,3, or 4]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDirRange",
+      "description": "Range of wave directions (full range: WaveDir +/- 1/2*WaveDirRange) (degrees) [only used when WaveMod=2,3,or 4 and WaveDirMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDirSpread",
+      "description": "Wave direction spreading coefficient ( > 0 )                        (-)       [only used when WaveMod=2,3, or 4 and WaveDirMod=1]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveDisp",
+      "description": "Method of computing Wave Kinematics {0: use undisplaced position, 1: use displaced position) } (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "WaveElevxi",
+      "description": "List of xi-coordinates for points where the incident wave elevations can be output (meters) [NWaveElev points, separated by commas or white space; usused if NWaveElev = 0]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveElevyi",
+      "description": "List of yi-coordinates for points where the incident wave elevations can be output (meters) [NWaveElev points, separated by commas or white space; usused if NWaveElev = 0]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveHs",
+      "description": "Significant wave height of incident waves (meters) [used only when WaveMod=1, 2, or 3]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveKinxi",
+      "description": "List of xi-coordinates for points where the wave kinematics can be output (meters) [NWaveKin points, separated by commas or white space; usused if NWaveKin = 0]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveKinyi",
+      "description": "List of yi-coordinates for points where the wave kinematics can be output (meters) [NWaveKin points, separated by commas or white space; usused if NWaveKin = 0]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveKinzi",
+      "description": "List of zi-coordinates for points where the wave kinematics can be output (meters) [NWaveKin points, separated by commas or white space; usused if NWaveKin = 0]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveMod",
+      "description": "Incident wave kinematics model {0: none=still water, 1: regular (periodic), 1P#: regular with user-specified phase, 2: JONSWAP/Pierson-Moskowitz spectrum (irregular), 3: White noise spectrum (irregular), 4: user-defined spectrum from routine UserWaveSpctrm (irregular), 5: Externally generated wave-elevation time series, 6: Externally generated full wave-kinematics time series [option 6 is invalid for PotMod/=0]} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "WaveNDAmp",
+      "description": "Flag for normally distributed amplitudes                            (flag)    [only used when WaveMod=2, 3, or 4]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveNDir",
+      "description": "Number of wave directions                                           (-)       [only used when WaveMod=2,3, or 4 and WaveDirMod=1; odd number only]",
+      "module": "通用"
+    },
+    {
+      "name": "WavePkShp",
+      "description": "Peak-shape parameter of incident wave spectrum (-) or DEFAULT (string) [used only when WaveMod=2; use 1.0 for Pierson-Moskowitz]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveSeed(1)",
+      "description": "First  random seed of incident waves [-2147483648 to 2147483647]    (-)       [unused when WaveMod=0, 5, or 6]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveSeed(2)",
+      "description": "Second random seed of incident waves [-2147483648 to 2147483647]    (-)       [unused when WaveMod=0, 5, or 6] for intrinsic pRNG, or an alternative pRNG: \"RanLux\"",
+      "module": "通用"
+    },
+    {
+      "name": "WaveStMod",
+      "description": "Model for stretching incident wave kinematics to instantaneous free surface {0: none=no stretching, 1: vertical stretching, 2: extrapolation stretching, 3: Wheeler stretching} (switch) [unused when WaveMod=0 or when PotMod/=0]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveTMax",
+      "description": "Analysis time for incident wave calculations (sec) [unused when WaveMod=0; determines WaveDOmega=2Pi/WaveTMax in the IFFT]",
+      "module": "通用"
+    },
+    {
+      "name": "WaveTp",
+      "description": "Peak-spectral period of incident waves       (sec) [used only when WaveMod=1 or 2]",
+      "module": "通用"
+    },
+    {
+      "name": "WindProfile",
+      "description": "Wind profile type (0=constant;1=logarithmic,2=power law)",
+      "module": "通用"
+    },
+    {
+      "name": "WindType",
+      "description": "switch for wind file type (1=steady; 2=uniform; 3=binary TurbSim FF; 4=binary Bladed-style FF; 5=HAWC format; 6=User defined; 7=native Bladed FF)",
+      "module": "通用"
+    },
+    {
+      "name": "WindVxiList",
+      "description": "List of coordinates in the inertial X direction (m)",
+      "module": "通用"
+    },
+    {
+      "name": "WindVyiList",
+      "description": "List of coordinates in the inertial Y direction (m)",
+      "module": "通用"
+    },
+    {
+      "name": "WindVziList",
+      "description": "List of coordinates in the inertial Z direction (m)",
+      "module": "通用"
+    },
+    {
+      "name": "WrVTK",
+      "description": "VTK visualization data output: (switch) {0=none; 1=initialization data only; 2=animation}",
+      "module": "通用"
+    },
+    {
+      "name": "WtrDens",
+      "description": "Water density (kg/m^3)",
+      "module": "通用"
+    },
+    {
+      "name": "WtrDpth",
+      "description": "Water depth (m)",
+      "module": "通用"
+    },
+    {
+      "name": "WvDiffQTF",
+      "description": "Full difference-frequency 2nd-order wave kinematics (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "WvHiCOff",
+      "description": "High cut-off frequency or upper frequency limit of the wave spectrum beyond which the wave spectrum is zeroed (rad/s) [unused when WaveMod=0, 1, or 6]",
+      "module": "通用"
+    },
+    {
+      "name": "WvHiCOffD",
+      "description": "High frequency cutoff used in the difference-frequencies (rad/s) [Only used with a difference-frequency method]",
+      "module": "通用"
+    },
+    {
+      "name": "WvHiCOffS",
+      "description": "High frequency cutoff used in the summation-frequencies  (rad/s) [Only used with a summation-frequency  method]",
+      "module": "通用"
+    },
+    {
+      "name": "WvKinFile",
+      "description": "Root name of externally generated wave data file(s)        (quoted string)    [used only when WaveMod=5 or 6]",
+      "module": "通用"
+    },
+    {
+      "name": "WvLowCOff",
+      "description": "Low  cut-off frequency or lower frequency limit of the wave spectrum beyond which the wave spectrum is zeroed (rad/s) [unused when WaveMod=0, 1, or 6]",
+      "module": "通用"
+    },
+    {
+      "name": "WvLowCOffD",
+      "description": "Low  frequency cutoff used in the difference-frequencies (rad/s) [Only used with a difference-frequency method]",
+      "module": "通用"
+    },
+    {
+      "name": "WvLowCOffS",
+      "description": "Low  frequency cutoff used in the summation-frequencies  (rad/s) [Only used with a summation-frequency  method]",
+      "module": "通用"
+    },
+    {
+      "name": "WvSumQTF",
+      "description": "Full summation-frequency  2nd-order wave kinematics (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "XOffset",
+      "description": "Initial offset in +x direction (shift of wind box) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "X_HalfWidth",
+      "description": "Half-width of the domain in the X direction (m) [>0, NOTE: X[nX] = nX*dX, where nX = {-NX+1,-NX+2,…,NX-1} and dX = X_HalfWidth/(NX-1)]",
+      "module": "通用"
+    },
+    {
+      "name": "YCMode",
+      "description": "Yaw control mode {0: none, 3: user-defined from routine UserYawCont, 4: user-defined from Simulink/Labview, 5: user-defined from Bladed-style DLL} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "Y_ControlMode",
+      "description": "Yaw control mode {0: no yaw control, 1: yaw rate control, 2: yaw-by-IPC}",
+      "module": "通用"
+    },
+    {
+      "name": "Y_HalfWidth",
+      "description": "Half-width of the domain in the Y direction (m) [>0, NOTE: Y[nY] = nY*dY, where nY = {-NY+1,-NY+2,…,NY-1} and dY = Y_HalfWidth/(NY-1)]",
+      "module": "通用"
+    },
+    {
+      "name": "YawBrMass",
+      "description": "Yaw bearing mass (kg)",
+      "module": "通用"
+    },
+    {
+      "name": "YawDOF",
+      "description": "Yaw DOF (flag)",
+      "module": "通用"
+    },
+    {
+      "name": "YawDamp",
+      "description": "Nacelle-yaw damping constant (N-m/(rad/s))",
+      "module": "通用"
+    },
+    {
+      "name": "YawFrctMod",
+      "description": "Yaw-friction model {0: none, 1: friction independent of yaw-bearing force and bending moment, 2: friction with Coulomb terms depending on yaw-bearing force and bending moment, 3: user defined model} (switch)",
+      "module": "通用"
+    },
+    {
+      "name": "YawManRat",
+      "description": "Yaw maneuver rate (in absolute value) (deg/s)",
+      "module": "通用"
+    },
+    {
+      "name": "YawNeut",
+      "description": "Neutral yaw position--yaw spring force is zero at this yaw (degrees)",
+      "module": "通用"
+    },
+    {
+      "name": "YawSpr",
+      "description": "Nacelle-yaw spring constant (N-m/rad)",
+      "module": "通用"
+    },
+    {
+      "name": "Z0",
+      "description": "Surface roughness length (m) (used for LG wind profile type only)",
+      "module": "通用"
+    },
+    {
+      "name": "Z_Depth",
+      "description": "Depth of the domain the Z direction (m) relative to SWL [0 < Z_Depth <= WtrDpth+MSL2SWL; \"default\": Z_Depth = WtrDpth+MSL2SWL; Z[nZ] = ( COS( nZ*dthetaZ ) – 1 )*Z_Depth, where nZ = {0,1,…NZ-1} and dthetaZ = pi/( 2*(NZ-1) )]",
+      "module": "通用"
+    },
+    {
+      "name": "cbot",
+      "description": "bottom damping (Pa-s/m)",
+      "module": "通用"
+    },
+    {
+      "name": "dtIC",
+      "description": "time interval for analyzing convergence during IC gen (s)",
+      "module": "通用"
+    },
+    {
+      "name": "dtM",
+      "description": "time step to use in mooring integration (s)",
+      "module": "通用"
+    },
+    {
+      "name": "dx",
+      "description": "distance (in meters) between points in the x direction    (m)",
+      "module": "通用"
+    },
+    {
+      "name": "dy",
+      "description": "distance (in meters) between points in the y direction    (m)",
+      "module": "通用"
+    },
+    {
+      "name": "dz",
+      "description": "distance (in meters) between points in the z direction    (m)",
+      "module": "通用"
+    },
+    {
+      "name": "kbot",
+      "description": "bottom stiffness (Pa/m)",
+      "module": "通用"
+    },
+    {
+      "name": "nx",
+      "description": "number of grids in the x direction (in the 3 files above) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "ny",
+      "description": "number of grids in the y direction (in the 3 files above) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "nz",
+      "description": "number of grids in the z direction (in the 3 files above) (-)",
+      "module": "通用"
+    },
+    {
+      "name": "sig_v",
+      "description": "Linear viscous friction coefficient (N-m/(rad/s))",
+      "module": "通用"
+    },
+    {
+      "name": "sig_v2",
+      "description": "Quadratic viscous friction coefficient (N-m/(rad/s)^2)",
+      "module": "通用"
+    },
+    {
+      "name": "threshIC",
+      "description": "threshold for IC convergence (-)",
+      "module": "通用"
+    },
+    {
+      "name": "DT",
+      "module": "ElastoDyn",
+      "description": "Integration time step (s)"
+    },
+    {
+      "name": "DT",
+      "module": "ServoDyn",
+      "description": "Communication interval for controllers (s) (or \"default\")"
+    },
+    {
+      "name": "Echo",
+      "module": "ROSCO",
+      "description": "(0 - no Echo, 1 - Echo input data to <RootName>.echo)"
+    },
+    {
+      "name": "VS_RtTq",
+      "module": "ROSCO",
+      "description": "Rated torque, [Nm]."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "ModCoupling",
+      "description": "Module coupling method from 5.0: 1=loose, 2=tight with fixed Jacobian updates, 3=tight with automatic Jacobian updates."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "RhoInf",
+      "description": "Numerical damping parameter of the tight-coupling generalized-alpha integrator, from 0 to 1."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "ConvTol",
+      "description": "Convergence tolerance of the tight-coupling generalized-alpha integrator."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "MaxConvIter",
+      "description": "Maximum number of convergence iterations in the tight-coupling solver."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "NRotors",
+      "description": "Number of rotors. Version 5.0 introduces multiple rotors within one turbine."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "CompSoil",
+      "description": "Soil-structure module: 0=disabled, 1=SoilDyn."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "MirrorRotor",
+      "description": "Reverse the rotation direction of this rotor. The first rotor keeps the conventional direction."
+    },
+    {
+      "module": "OpenFAST",
+      "name": "SoilFile",
+      "description": "SoilDyn soil-structure input file."
+    },
+    {
+      "module": "SeaState",
+      "name": "WvCrntMod",
+      "description": "Combined wave-current model: 0=simple superposition, 1=include Doppler effect, 2=also scale wave amplitude/spectrum."
+    },
+    {
+      "name": "BldNd_BladesOut",
+      "module": "ElastoDyn",
+      "description": "Number of blades requested for blade-node outputs; the nodal OutList uses independent channel families."
+    },
+    {
+      "name": "BldNd_BlOutNd",
+      "module": "ElastoDyn",
+      "description": "Blade-node output location string; unused in the verified ElastoDyn format. Check the target version."
+    },
+    {
+      "name": "BldNd_BlOutNd_Str",
+      "module": "ElastoDyn",
+      "description": "Blade-node output location string; unused in the verified format."
+    },
+    {
+      "name": "NBlOuts",
+      "module": "AeroDyn",
+      "description": "Number of blade aerodynamic output nodes, 0–9; BlOutNd contains this many indices."
+    },
+    {
+      "name": "NTwOuts",
+      "module": "AeroDyn",
+      "description": "Number of tower aerodynamic output nodes, 0–9; TwOutNd contains this many indices."
+    },
+    {
+      "name": "BlOutNd",
+      "module": "AeroDyn",
+      "description": "Blade aerodynamic output node indices; count is NBlOuts. The upper bound comes from NumBlNds in the applicable blade file."
+    },
+    {
+      "name": "TwOutNd",
+      "module": "AeroDyn",
+      "description": "Tower aerodynamic output node indices; count is NTwOuts, with indices from 1 to NumTwrNds."
+    }
+  ],
+  "tables": [
+    {
+      "name": "AttachA",
+      "description": "Connection-point ID at line end A."
+    },
+    {
+      "name": "AttachB",
+      "description": "Connection-point ID at line end B."
+    },
+    {
+      "name": "Attachment",
+      "description": "Point attachment: fixed=anchor in global coordinates; vessel=fairlead moving with the platform in platform-reference coordinates."
+    },
+    {
+      "name": "AxCa",
+      "description": "Axial end added-mass coefficient, dimensionless."
+    },
+    {
+      "name": "AxCd",
+      "description": "Axial end drag coefficient, dimensionless."
+    },
+    {
+      "name": "AxCoefID",
+      "description": "Axial hydrodynamic coefficient-set ID, referenced by JointAxID."
+    },
+    {
+      "name": "AxCp",
+      "description": "Axial end dynamic-pressure coefficient, dimensionless."
+    },
+    {
+      "name": "BA/-zeta",
+      "description": "Axial internal damping BA, N·s. A negative value specifies the target critical damping ratio by its absolute value."
+    },
+    {
+      "name": "BlAFID",
+      "description": "Airfoil data-file index for this blade node."
+    },
+    {
+      "name": "BlChord",
+      "description": "Local blade chord, m."
+    },
+    {
+      "name": "BlSpn",
+      "description": "Radial/spanwise position of the aerodynamic blade node, m."
+    },
+    {
+      "name": "BlTwist",
+      "description": "Local aerodynamic blade twist, deg."
+    },
+    {
+      "name": "CA",
+      "description": "Transverse or point added-mass coefficient, dimensionless; interpret in the current table."
+    },
+    {
+      "name": "Ca",
+      "description": "Transverse or point added-mass coefficient, dimensionless; interpret in the current table."
+    },
+    {
+      "name": "CaAx",
+      "description": "Axial/tangential added-mass coefficient, dimensionless."
+    },
+    {
+      "name": "Cd",
+      "description": "Transverse drag coefficient, dimensionless."
+    },
+    {
+      "name": "CdA",
+      "description": "Point drag coefficient multiplied by its reference area, m²."
+    },
+    {
+      "name": "CdAx",
+      "description": "Axial/tangential drag coefficient, dimensionless."
+    },
+    {
+      "name": "Diam",
+      "description": "Equivalent-volume diameter, m; used for displaced volume and hydrodynamic area."
+    },
+    {
+      "name": "Dpth",
+      "description": "Depth in the depth-dependent coefficient table, m. Increasing depth corresponds to decreasing global Z."
+    },
+    {
+      "name": "DpthAxCa",
+      "description": "Depth-dependent axial added-mass coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthAxCaMG",
+      "description": "Depth-dependent axial added-mass coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "DpthAxCd",
+      "description": "Depth-dependent axial drag coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthAxCdMG",
+      "description": "Depth-dependent axial drag coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "DpthAxCp",
+      "description": "Depth-dependent axial dynamic-pressure coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthAxCpMG",
+      "description": "Depth-dependent axial dynamic-pressure coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "DpthCa",
+      "description": "Depth-dependent transverse added-mass coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthCaA",
+      "description": "Depth-dependent transverse added-mass coefficient, dimensionless, rectangular A direction; without marine growth."
+    },
+    {
+      "name": "DpthCaAMG",
+      "description": "Depth-dependent transverse added-mass coefficient, dimensionless, rectangular A direction; with marine growth."
+    },
+    {
+      "name": "DpthCaB",
+      "description": "Depth-dependent transverse added-mass coefficient, dimensionless, rectangular B direction; without marine growth."
+    },
+    {
+      "name": "DpthCaBMG",
+      "description": "Depth-dependent transverse added-mass coefficient, dimensionless, rectangular B direction; with marine growth."
+    },
+    {
+      "name": "DpthCaMG",
+      "description": "Depth-dependent transverse added-mass coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "DpthCb",
+      "description": "Depth-dependent transverse hydrostatic buoyancy coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthCbMG",
+      "description": "Depth-dependent transverse hydrostatic buoyancy coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "DpthCd",
+      "description": "Depth-dependent transverse drag coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthCdA",
+      "description": "Depth-dependent transverse drag coefficient, dimensionless, rectangular A direction; without marine growth."
+    },
+    {
+      "name": "DpthCdAMG",
+      "description": "Depth-dependent transverse drag coefficient, dimensionless, rectangular A direction; with marine growth."
+    },
+    {
+      "name": "DpthCdB",
+      "description": "Depth-dependent transverse drag coefficient, dimensionless, rectangular B direction; without marine growth."
+    },
+    {
+      "name": "DpthCdBMG",
+      "description": "Depth-dependent transverse drag coefficient, dimensionless, rectangular B direction; with marine growth."
+    },
+    {
+      "name": "DpthCdMG",
+      "description": "Depth-dependent transverse drag coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "DpthCp",
+      "description": "Depth-dependent transverse dynamic-pressure coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "DpthCpMG",
+      "description": "Depth-dependent transverse dynamic-pressure coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "EA",
+      "description": "Axial tensile stiffness E·A, N."
+    },
+    {
+      "name": "EI",
+      "description": "Bending stiffness E·I, N·m². The original unit row may show (-)."
+    },
+    {
+      "name": "FillDens",
+      "description": "Internal filling-fluid density, kg/m³; DEFAULT uses WtrDens."
+    },
+    {
+      "name": "FillFSLoc",
+      "description": "Internal filling-fluid free-surface elevation, m, relative to the MSL2SWL reference."
+    },
+    {
+      "name": "FillMList",
+      "description": "Member IDs in this filling group."
+    },
+    {
+      "name": "FillNumM",
+      "description": "Number of members in this filling group."
+    },
+    {
+      "name": "GenSpd_TLU",
+      "description": "Generator speed column of the DLL torque lookup table, rpm."
+    },
+    {
+      "name": "GenTrq_TLU",
+      "description": "Generator torque column of the DLL lookup table, N·m."
+    },
+    {
+      "name": "ID",
+      "description": "Connection-point ID, referenced by AttachA/AttachB."
+    },
+    {
+      "name": "JointAxID",
+      "description": "Axial end coefficient-set ID for this joint."
+    },
+    {
+      "name": "JointID",
+      "description": "Hydrodynamic geometry-joint ID, referenced by member endpoints."
+    },
+    {
+      "name": "JointOvrlp",
+      "description": "Joint overlap handling: 0=none, 1=remove overlap using super-members."
+    },
+    {
+      "name": "Jointxi",
+      "description": "Joint global X coordinate, m."
+    },
+    {
+      "name": "Jointyi",
+      "description": "Joint global Y coordinate, m."
+    },
+    {
+      "name": "Jointzi",
+      "description": "Joint global Z coordinate, m, relative to the model sea-level reference."
+    },
+    {
+      "name": "Line",
+      "description": "Mooring-line ID, used by outputs such as FairTen#/AnchTen#."
+    },
+    {
+      "name": "LineType",
+      "description": "Line-property type name, referencing LINE TYPES."
+    },
+    {
+      "name": "M",
+      "description": "Concentrated point mass, kg."
+    },
+    {
+      "name": "MCoefMod",
+      "description": "Hydrodynamic coefficients: 1=uniform/simple, 2=depth-dependent, 3=member-specific."
+    },
+    {
+      "name": "MDivSize",
+      "description": "Target hydrodynamic discretization segment length of the member, m."
+    },
+    {
+      "name": "MGDens",
+      "description": "Marine-growth density, kg/m³."
+    },
+    {
+      "name": "MGDpth",
+      "description": "Depth/vertical position of a marine-growth entry, m."
+    },
+    {
+      "name": "MGThck",
+      "description": "Marine-growth thickness, m."
+    },
+    {
+      "name": "MHstLMod",
+      "description": "Member hydrostatic-load model: 0=off, 1=analytical, 2=semi-numerical. Rectangular sections support 0/2; avoid duplicate loads when PropPot=True."
+    },
+    {
+      "name": "MJointID1",
+      "description": "Joint ID at member end 1."
+    },
+    {
+      "name": "MJointID2",
+      "description": "Joint ID at member end 2."
+    },
+    {
+      "name": "MPropSetID",
+      "description": "Rectangular cross-section property-set ID."
+    },
+    {
+      "name": "MPropSetID1",
+      "description": "Cross-section property-set ID at member end 1."
+    },
+    {
+      "name": "MPropSetID2",
+      "description": "Cross-section property-set ID at member end 2; differing end properties allow taper."
+    },
+    {
+      "name": "MSecGeom",
+      "description": "Cross-section geometry: 1=circular/cylindrical, 2=rectangular."
+    },
+    {
+      "name": "MSpinOrient",
+      "description": "Cross-section orientation about the member axis, deg; sets the orientation of rectangular sections."
+    },
+    {
+      "name": "MassDen",
+      "description": "Mass per unit length, kg/m."
+    },
+    {
+      "name": "MemberAxCa1",
+      "description": "Member-specific axial added-mass coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberAxCa2",
+      "description": "Member-specific axial added-mass coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberAxCaMG1",
+      "description": "Member-specific axial added-mass coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberAxCaMG2",
+      "description": "Member-specific axial added-mass coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberAxCd1",
+      "description": "Member-specific axial drag coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberAxCd2",
+      "description": "Member-specific axial drag coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberAxCdMG1",
+      "description": "Member-specific axial drag coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberAxCdMG2",
+      "description": "Member-specific axial drag coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberAxCp1",
+      "description": "Member-specific axial dynamic-pressure coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberAxCp2",
+      "description": "Member-specific axial dynamic-pressure coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberAxCpMG1",
+      "description": "Member-specific axial dynamic-pressure coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberAxCpMG2",
+      "description": "Member-specific axial dynamic-pressure coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCa1",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCa2",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCaA1",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular A direction; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCaA2",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular A direction; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCaAMG1",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular A direction; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCaAMG2",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular A direction; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCaB1",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular B direction; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCaB2",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular B direction; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCaBMG1",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular B direction; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCaBMG2",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless, rectangular B direction; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCaMG1",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCaMG2",
+      "description": "Member-specific transverse added-mass coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCb1",
+      "description": "Member-specific transverse hydrostatic buoyancy coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCb2",
+      "description": "Member-specific transverse hydrostatic buoyancy coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCbMG1",
+      "description": "Member-specific transverse hydrostatic buoyancy coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCbMG2",
+      "description": "Member-specific transverse hydrostatic buoyancy coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCd1",
+      "description": "Member-specific transverse drag coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCd2",
+      "description": "Member-specific transverse drag coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCdA1",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular A direction; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCdA2",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular A direction; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCdAMG1",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular A direction; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCdAMG2",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular A direction; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCdB1",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular B direction; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCdB2",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular B direction; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCdBMG1",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular B direction; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCdBMG2",
+      "description": "Member-specific transverse drag coefficient, dimensionless, rectangular B direction; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCdMG1",
+      "description": "Member-specific transverse drag coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCdMG2",
+      "description": "Member-specific transverse drag coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberCp1",
+      "description": "Member-specific transverse dynamic-pressure coefficient, dimensionless; without marine growth, member end 1."
+    },
+    {
+      "name": "MemberCp2",
+      "description": "Member-specific transverse dynamic-pressure coefficient, dimensionless; without marine growth, member end 2."
+    },
+    {
+      "name": "MemberCpMG1",
+      "description": "Member-specific transverse dynamic-pressure coefficient, dimensionless; with marine growth, member end 1."
+    },
+    {
+      "name": "MemberCpMG2",
+      "description": "Member-specific transverse dynamic-pressure coefficient, dimensionless; with marine growth, member end 2."
+    },
+    {
+      "name": "MemberID",
+      "description": "Hydrodynamic member ID linking endpoints, geometry and member-specific coefficients."
+    },
+    {
+      "name": "MemberID_out",
+      "description": "Member ID requested for internal output stations."
+    },
+    {
+      "name": "NOutLoc",
+      "description": "Number of output locations for this member."
+    },
+    {
+      "name": "Name",
+      "description": "Mooring-line type name, referenced by LineType in LINES."
+    },
+    {
+      "name": "NodeLocs",
+      "description": "Normalized member output positions from end 1 to end 2, between 0 and 1."
+    },
+    {
+      "name": "NumSegs",
+      "description": "Number of discretized line segments."
+    },
+    {
+      "name": "Outputs",
+      "description": "Flags controlling this line’s individual output file."
+    },
+    {
+      "name": "PropA",
+      "description": "External rectangular-section dimension along A, m."
+    },
+    {
+      "name": "PropB",
+      "description": "External rectangular-section dimension along B, m."
+    },
+    {
+      "name": "PropD",
+      "description": "External circular-section diameter, m."
+    },
+    {
+      "name": "PropPot",
+      "description": "True if potential-flow data covers this member. Avoid double counting inertia/hydrostatic contributions; strip theory may still provide viscous drag."
+    },
+    {
+      "name": "PropSetID",
+      "description": "Circular-section property-set ID."
+    },
+    {
+      "name": "PropThck",
+      "description": "Cross-section wall thickness, m."
+    },
+    {
+      "name": "SimplAxCa",
+      "description": "Uniform/simple axial added-mass coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplAxCaMG",
+      "description": "Uniform/simple axial added-mass coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "SimplAxCd",
+      "description": "Uniform/simple axial drag coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplAxCdMG",
+      "description": "Uniform/simple axial drag coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "SimplAxCp",
+      "description": "Uniform/simple axial dynamic-pressure coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplAxCpMG",
+      "description": "Uniform/simple axial dynamic-pressure coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "SimplCa",
+      "description": "Uniform/simple transverse added-mass coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplCaA",
+      "description": "Uniform/simple transverse added-mass coefficient, dimensionless, rectangular A direction; without marine growth."
+    },
+    {
+      "name": "SimplCaAMG",
+      "description": "Uniform/simple transverse added-mass coefficient, dimensionless, rectangular A direction; with marine growth."
+    },
+    {
+      "name": "SimplCaB",
+      "description": "Uniform/simple transverse added-mass coefficient, dimensionless, rectangular B direction; without marine growth."
+    },
+    {
+      "name": "SimplCaBMG",
+      "description": "Uniform/simple transverse added-mass coefficient, dimensionless, rectangular B direction; with marine growth."
+    },
+    {
+      "name": "SimplCaMG",
+      "description": "Uniform/simple transverse added-mass coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "SimplCb",
+      "description": "Uniform/simple transverse hydrostatic buoyancy coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplCbMG",
+      "description": "Uniform/simple transverse hydrostatic buoyancy coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "SimplCd",
+      "description": "Uniform/simple transverse drag coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplCdA",
+      "description": "Uniform/simple transverse drag coefficient, dimensionless, rectangular A direction; without marine growth."
+    },
+    {
+      "name": "SimplCdAMG",
+      "description": "Uniform/simple transverse drag coefficient, dimensionless, rectangular A direction; with marine growth."
+    },
+    {
+      "name": "SimplCdB",
+      "description": "Uniform/simple transverse drag coefficient, dimensionless, rectangular B direction; without marine growth."
+    },
+    {
+      "name": "SimplCdBMG",
+      "description": "Uniform/simple transverse drag coefficient, dimensionless, rectangular B direction; with marine growth."
+    },
+    {
+      "name": "SimplCdMG",
+      "description": "Uniform/simple transverse drag coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "SimplCp",
+      "description": "Uniform/simple transverse dynamic-pressure coefficient, dimensionless; without marine growth."
+    },
+    {
+      "name": "SimplCpMG",
+      "description": "Uniform/simple transverse dynamic-pressure coefficient, dimensionless; with marine growth."
+    },
+    {
+      "name": "TwrCd",
+      "description": "Tower aerodynamic drag coefficient, dimensionless."
+    },
+    {
+      "name": "TwrDiam",
+      "description": "Diameter at the aerodynamic tower node, m."
+    },
+    {
+      "name": "TwrElev",
+      "description": "Aerodynamic tower-node elevation, m."
+    },
+    {
+      "name": "UnstrLen",
+      "description": "Unstretched line length, m."
+    },
+    {
+      "name": "V",
+      "description": "Point displaced volume, m³."
+    },
+    {
+      "name": "X",
+      "description": "Point X coordinate, m."
+    },
+    {
+      "name": "Y",
+      "description": "Point Y coordinate, m."
+    },
+    {
+      "name": "Z",
+      "description": "Point Z coordinate, m; positive upwards."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "AnchTen1",
+      "description": "Mooring line 1, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen10",
+      "description": "Mooring line 10, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen11",
+      "description": "Mooring line 11, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen12",
+      "description": "Mooring line 12, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen2",
+      "description": "Mooring line 2, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen3",
+      "description": "Mooring line 3, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen4",
+      "description": "Mooring line 4, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen5",
+      "description": "Mooring line 5, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen6",
+      "description": "Mooring line 6, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen7",
+      "description": "Mooring line 7, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen8",
+      "description": "Mooring line 8, anchor-end tension, N."
+    },
+    {
+      "name": "AnchTen9",
+      "description": "Mooring line 9, anchor-end tension, N."
+    },
+    {
+      "name": "Azimuth",
+      "description": "Rotor azimuth angle, deg."
+    },
+    {
+      "name": "BldPitch1",
+      "description": "Actual pitch angle of blade 1, deg."
+    },
+    {
+      "name": "BldPitch2",
+      "description": "Actual pitch angle of blade 2, deg."
+    },
+    {
+      "name": "BldPitch3",
+      "description": "Actual pitch angle of blade 3, deg."
+    },
+    {
+      "name": "FairTen1",
+      "description": "Mooring line 1, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen10",
+      "description": "Mooring line 10, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen11",
+      "description": "Mooring line 11, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen12",
+      "description": "Mooring line 12, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen2",
+      "description": "Mooring line 2, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen3",
+      "description": "Mooring line 3, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen4",
+      "description": "Mooring line 4, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen5",
+      "description": "Mooring line 5, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen6",
+      "description": "Mooring line 6, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen7",
+      "description": "Mooring line 7, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen8",
+      "description": "Mooring line 8, fairlead-end tension, N."
+    },
+    {
+      "name": "FairTen9",
+      "description": "Mooring line 9, fairlead-end tension, N."
+    },
+    {
+      "name": "GenPwr",
+      "description": "Generator electrical power, kW."
+    },
+    {
+      "name": "GenSpeed",
+      "description": "Generator high-speed shaft speed, rpm."
+    },
+    {
+      "name": "GenTq",
+      "description": "Generator torque, kN·m."
+    },
+    {
+      "name": "HydroFxi",
+      "description": "Resultant platform hydrodynamic force along/about global X, N."
+    },
+    {
+      "name": "HydroFyi",
+      "description": "Resultant platform hydrodynamic force along/about global Y, N."
+    },
+    {
+      "name": "HydroFzi",
+      "description": "Resultant platform hydrodynamic force along/about global Z, N."
+    },
+    {
+      "name": "HydroMxi",
+      "description": "Resultant platform hydrodynamic moment along/about global X, N·m, about the hydrodynamic reference point."
+    },
+    {
+      "name": "HydroMyi",
+      "description": "Resultant platform hydrodynamic moment along/about global Y, N·m, about the hydrodynamic reference point."
+    },
+    {
+      "name": "HydroMzi",
+      "description": "Resultant platform hydrodynamic moment along/about global Z, N·m, about the hydrodynamic reference point."
+    },
+    {
+      "name": "IPDefl1",
+      "description": "Blade 1 elastic in-plane tip deflection, m."
+    },
+    {
+      "name": "IPDefl2",
+      "description": "Blade 2 elastic in-plane tip deflection, m."
+    },
+    {
+      "name": "IPDefl3",
+      "description": "Blade 3 elastic in-plane tip deflection, m."
+    },
+    {
+      "name": "LSSGagMya",
+      "description": "Low-speed shaft strain-gauge bending moment about y in the a shaft coordinate system, kN·m."
+    },
+    {
+      "name": "LSSGagMza",
+      "description": "Low-speed shaft strain-gauge bending moment about z in the a shaft coordinate system, kN·m."
+    },
+    {
+      "name": "LSSTipMys",
+      "description": "Low-speed shaft tip bending moment about y in the s shaft coordinate system, kN·m."
+    },
+    {
+      "name": "LSSTipMzs",
+      "description": "Low-speed shaft tip bending moment about z in the s shaft coordinate system, kN·m."
+    },
+    {
+      "name": "LSShftFys",
+      "description": "Low-speed shaft shear force along y in the s coordinate system, kN."
+    },
+    {
+      "name": "LSShftFzs",
+      "description": "Low-speed shaft shear force along z in the s coordinate system, kN."
+    },
+    {
+      "name": "NacYaw",
+      "description": "Nacelle yaw angle, deg."
+    },
+    {
+      "name": "NcIMUTAxs",
+      "description": "Nacelle IMU translational acceleration along x in the s coordinate system, m/s²; check the version’s inertial/gravity convention."
+    },
+    {
+      "name": "NcIMUTAys",
+      "description": "Nacelle IMU translational acceleration along y in the s coordinate system, m/s²; check the version’s inertial/gravity convention."
+    },
+    {
+      "name": "NcIMUTAzs",
+      "description": "Nacelle IMU translational acceleration along z in the s coordinate system, m/s²; check the version’s inertial/gravity convention."
+    },
+    {
+      "name": "OoPDefl1",
+      "description": "Blade 1 elastic out-of-plane tip deflection, m."
+    },
+    {
+      "name": "OoPDefl2",
+      "description": "Blade 2 elastic out-of-plane tip deflection, m."
+    },
+    {
+      "name": "OoPDefl3",
+      "description": "Blade 3 elastic out-of-plane tip deflection, m."
+    },
+    {
+      "name": "PtfmHeave",
+      "description": "Platform heave displacement, m."
+    },
+    {
+      "name": "PtfmPitch",
+      "description": "Platform pitch angle, deg."
+    },
+    {
+      "name": "PtfmRoll",
+      "description": "Platform roll angle, deg."
+    },
+    {
+      "name": "PtfmSurge",
+      "description": "Platform surge displacement, m."
+    },
+    {
+      "name": "PtfmSway",
+      "description": "Platform sway displacement, m."
+    },
+    {
+      "name": "PtfmYaw",
+      "description": "Platform yaw angle, deg."
+    },
+    {
+      "name": "RotSpeed",
+      "description": "Rotor speed, rpm; useful for checking operating speed and resonance-frequency relationships."
+    },
+    {
+      "name": "RotThrust",
+      "description": "Rotor axial thrust at the low-speed shaft, kN."
+    },
+    {
+      "name": "RotTorq",
+      "description": "Rotor low-speed shaft torque, kN·m."
+    },
+    {
+      "name": "TTDspFA",
+      "description": "Tower-top fore-aft displacement, m."
+    },
+    {
+      "name": "TTDspSS",
+      "description": "Tower-top side-to-side displacement, m."
+    },
+    {
+      "name": "TwHt1TPxi",
+      "description": "Total global X position at tower output station 1, m; station numbering follows TwrGagNd."
+    },
+    {
+      "name": "TwHt1TPyi",
+      "description": "Total global Y position at tower output station 1, m; station numbering follows TwrGagNd."
+    },
+    {
+      "name": "TwrBsFxt",
+      "description": "Tower-base force along x in the tower t coordinate system, kN."
+    },
+    {
+      "name": "TwrBsFyt",
+      "description": "Tower-base force along y in the tower t coordinate system, kN."
+    },
+    {
+      "name": "TwrBsFzt",
+      "description": "Tower-base force along z in the tower t coordinate system, kN."
+    },
+    {
+      "name": "TwrBsMxt",
+      "description": "Tower-base moment about x in the tower t coordinate system, kN·m."
+    },
+    {
+      "name": "TwrBsMyt",
+      "description": "Tower-base moment about y in the tower t coordinate system, kN·m."
+    },
+    {
+      "name": "TwrBsMzt",
+      "description": "Tower-base moment about z in the tower t coordinate system, kN·m."
+    },
+    {
+      "name": "TwstDefl1",
+      "description": "Blade 1 tip torsional deflection, deg; a nonzero response requires torsion support in the structural model."
+    },
+    {
+      "name": "TwstDefl2",
+      "description": "Blade 2 tip torsional deflection, deg; a nonzero response requires torsion support in the structural model."
+    },
+    {
+      "name": "TwstDefl3",
+      "description": "Blade 3 tip torsional deflection, deg; a nonzero response requires torsion support in the structural model."
+    },
+    {
+      "name": "Wave1Elev",
+      "description": "Incident wave elevation at wave observation point 1, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave2Elev",
+      "description": "Incident wave elevation at wave observation point 2, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave3Elev",
+      "description": "Incident wave elevation at wave observation point 3, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave4Elev",
+      "description": "Incident wave elevation at wave observation point 4, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave5Elev",
+      "description": "Incident wave elevation at wave observation point 5, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave6Elev",
+      "description": "Incident wave elevation at wave observation point 6, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave7Elev",
+      "description": "Incident wave elevation at wave observation point 7, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave8Elev",
+      "description": "Incident wave elevation at wave observation point 8, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wave9Elev",
+      "description": "Incident wave elevation at wave observation point 9, m; location is set by WaveElevxi/yi."
+    },
+    {
+      "name": "Wind1VelX",
+      "description": "Global X wind-velocity component at observation point 1, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind1VelY",
+      "description": "Global Y wind-velocity component at observation point 1, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind1VelZ",
+      "description": "Global Z wind-velocity component at observation point 1, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind2VelX",
+      "description": "Global X wind-velocity component at observation point 2, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind2VelY",
+      "description": "Global Y wind-velocity component at observation point 2, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind2VelZ",
+      "description": "Global Z wind-velocity component at observation point 2, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind3VelX",
+      "description": "Global X wind-velocity component at observation point 3, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind3VelY",
+      "description": "Global Y wind-velocity component at observation point 3, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind3VelZ",
+      "description": "Global Z wind-velocity component at observation point 3, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind4VelX",
+      "description": "Global X wind-velocity component at observation point 4, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind4VelY",
+      "description": "Global Y wind-velocity component at observation point 4, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind4VelZ",
+      "description": "Global Z wind-velocity component at observation point 4, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind5VelX",
+      "description": "Global X wind-velocity component at observation point 5, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind5VelY",
+      "description": "Global Y wind-velocity component at observation point 5, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind5VelZ",
+      "description": "Global Z wind-velocity component at observation point 5, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind6VelX",
+      "description": "Global X wind-velocity component at observation point 6, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind6VelY",
+      "description": "Global Y wind-velocity component at observation point 6, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind6VelZ",
+      "description": "Global Z wind-velocity component at observation point 6, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind7VelX",
+      "description": "Global X wind-velocity component at observation point 7, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind7VelY",
+      "description": "Global Y wind-velocity component at observation point 7, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind7VelZ",
+      "description": "Global Z wind-velocity component at observation point 7, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind8VelX",
+      "description": "Global X wind-velocity component at observation point 8, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind8VelY",
+      "description": "Global Y wind-velocity component at observation point 8, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind8VelZ",
+      "description": "Global Z wind-velocity component at observation point 8, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind9VelX",
+      "description": "Global X wind-velocity component at observation point 9, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind9VelY",
+      "description": "Global Y wind-velocity component at observation point 9, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "Wind9VelZ",
+      "description": "Global Z wind-velocity component at observation point 9, m/s; location is set by WindVxiList/yiList/ziList."
+    },
+    {
+      "name": "YawBrFxp",
+      "description": "Yaw-bearing force along x in the p coordinate system, kN."
+    },
+    {
+      "name": "YawBrFyp",
+      "description": "Yaw-bearing force along y in the p coordinate system, kN."
+    },
+    {
+      "name": "YawBrFzp",
+      "description": "Yaw-bearing force along z in the p coordinate system, kN."
+    },
+    {
+      "name": "YawBrMxp",
+      "description": "Yaw-bearing moment about x in the p coordinate system, kN·m."
+    },
+    {
+      "name": "YawBrMyp",
+      "description": "Yaw-bearing moment about y in the p coordinate system, kN·m."
+    },
+    {
+      "name": "YawBrMzp",
+      "description": "Yaw-bearing moment about z in the p coordinate system, kN·m."
+    },
+    {
+      "name": "YawBrTDxt",
+      "description": "Yaw-bearing/tower-top fore-aft deflection from the undeflected position along tower xt, m; alias of TTDspFA."
+    },
+    {
+      "name": "YawBrTDyt",
+      "description": "Yaw-bearing/tower-top side-to-side deflection from the undeflected position along tower yt, m; alias of TTDspSS."
+    }
+  ],
+  "sources": {
+    "OpenFAST": "https://openfast.readthedocs.io/en/main/source/user/index.html",
+    "MoorDyn": "https://moordyn.readthedocs.io/en/latest/inputs.html",
+    "ROSCO": "https://rosco.readthedocs.io/en/latest/source/rosco.html"
+  }
+}

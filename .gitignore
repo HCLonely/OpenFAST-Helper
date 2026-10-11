@@ -1,0 +1,10 @@
+node_modules/
+dist/
+test-results/
+*.log
+native/**/target/
+test/
+.history/
+docs/
+bin/
+out/

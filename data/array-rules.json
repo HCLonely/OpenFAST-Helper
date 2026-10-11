@@ -1,0 +1,9 @@
+{
+  "verifiedAt": "2026-10-10",
+  "rules": [
+    {"module":"ElastoDyn","name":"BldGagNd","count":"NBlGages","nodeCount":"BldNodes","maxCount":9,"versions":["4.0"],"source":"https://openfast.readthedocs.io/en/v4.0.5/source/user/elastodyn/input.html#outputs"},
+    {"module":"ElastoDyn","name":"TwrGagNd","count":"NTwGages","nodeCount":"TwrNodes","maxCount":5,"versions":["4.0"],"source":"https://openfast.readthedocs.io/en/v4.0.5/source/user/elastodyn/input.html#outputs"},
+    {"module":"AeroDyn","name":"BlOutNd","count":"NBlOuts","nodeCount":"","maxCount":9,"versions":["4.0"],"source":"https://openfast.readthedocs.io/en/v4.0.5/source/user/aerodyn/input.html#outputs"},
+    {"module":"AeroDyn","name":"TwOutNd","count":"NTwOuts","nodeCount":"NumTwrNds","maxCount":9,"versions":["4.0"],"source":"https://openfast.readthedocs.io/en/v4.0.5/source/user/aerodyn/input.html#outputs"}
+  ]
+}
