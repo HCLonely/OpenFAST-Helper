@@ -1,6 +1,6 @@
 {
   "description": "OpenFAST highlighting, bilingual explanations, validation, case comparison and direct execution.",
-  "openfast.enableFileIcons.title": "OpenFAST: Apply FST/DAT icons (keep current theme)",
+  "openfast.enableFileIcons.title": "OpenFAST: Apply OpenFAST / TurbSim / ROSCO file icons (keep current theme)",
   "openfast.setLanguage.title": "OpenFAST: Recognize current file as OpenFAST",
   "openfast.lookupParameter.title": "OpenFAST: Look up parameter descriptions",
   "openfast.chooseParameterValue.title": "OpenFAST: Choose a fixed parameter value",

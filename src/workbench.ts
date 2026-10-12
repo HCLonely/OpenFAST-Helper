@@ -36,6 +36,7 @@ import { analyze, inactiveEntries, outputChoices } from './analysis';
 import { buildGraph, crossIssues, fileReferences } from './references';
 import { CaseGraphCache, CaseSelection } from './case-graph-cache';
 import { resourceKey } from './resource-key';
+import { documentSize } from './file-formats';
 import { canReadReference } from './reference-access';
 import { compareGraphs, comparisonMarkdown } from './comparison';
 const inheritedProfiles = new Map();
@@ -149,7 +150,7 @@ function registerWorkbench(vscode, context) {
     },
   };
   const valid = (document) =>
-    document.languageId === 'openfast' && document.getText().length <= 2000000;
+    document.languageId === 'openfast' && documentSize(document) <= 2000000;
   function toDiagnostic(issue, uri) {
     const open = vscode.workspace.textDocuments.find((d) => d.uri.toString() === uri);
     const line = Math.max(

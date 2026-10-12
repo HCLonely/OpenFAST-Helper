@@ -1,0 +1,1073 @@
+{
+  "sources": [
+    "https://github.com/OpenFAST/openfast/blob/main/modules/turbsim/src/TS_FileIO.f90",
+    "https://github.com/NatLabRockies/ROSCO/blob/main/rosco/controller/rosco_registry/rosco_types.yaml"
+  ],
+  "modules": {
+    "TurbSim": {
+      "Echo": {
+        "type": "logical",
+        "array": false
+      },
+      "RandSeed1": {
+        "type": "integer",
+        "array": false
+      },
+      "RandSeed2": {
+        "type": "integer",
+        "array": false,
+        "special": ["RANLUX", "RNSNLW"]
+      },
+      "WrBHHTP": {
+        "type": "logical",
+        "array": false
+      },
+      "WrFHHTP": {
+        "type": "logical",
+        "array": false
+      },
+      "WrADHH": {
+        "type": "logical",
+        "array": false
+      },
+      "WrADFF": {
+        "type": "logical",
+        "array": false
+      },
+      "WrBLFF": {
+        "type": "logical",
+        "array": false
+      },
+      "WrADTWR": {
+        "type": "logical",
+        "array": false
+      },
+      "WrHAWCFF": {
+        "type": "logical",
+        "array": false
+      },
+      "WrFMTFF": {
+        "type": "logical",
+        "array": false
+      },
+      "WrACT": {
+        "type": "logical",
+        "array": false
+      },
+      "Clockwise": {
+        "type": "logical",
+        "array": false
+      },
+      "ScaleIEC": {
+        "type": "integer",
+        "array": false
+      },
+      "NumGrid_Z": {
+        "type": "integer",
+        "array": false
+      },
+      "NumGrid_Y": {
+        "type": "integer",
+        "array": false
+      },
+      "TimeStep": {
+        "type": "real",
+        "array": false
+      },
+      "AnalysisTime": {
+        "type": "real",
+        "array": false
+      },
+      "UsableTime": {
+        "type": "real",
+        "array": false,
+        "special": ["ALL"]
+      },
+      "HubHt": {
+        "type": "real",
+        "array": false
+      },
+      "GridHeight": {
+        "type": "real",
+        "array": false
+      },
+      "GridWidth": {
+        "type": "real",
+        "array": false
+      },
+      "VFlowAng": {
+        "type": "real",
+        "array": false
+      },
+      "HFlowAng": {
+        "type": "real",
+        "array": false
+      },
+      "TurbModel": {
+        "type": "character",
+        "array": false
+      },
+      "UserFile": {
+        "type": "character",
+        "array": false
+      },
+      "IECstandard": {
+        "type": "character",
+        "array": false
+      },
+      "IECturbc": {
+        "type": "character",
+        "array": false
+      },
+      "IEC_WindType": {
+        "type": "character",
+        "array": false
+      },
+      "ETMc": {
+        "type": "real",
+        "array": false
+      },
+      "WindProfileType": {
+        "type": "character",
+        "array": false
+      },
+      "ProfileFile": {
+        "type": "character",
+        "array": false
+      },
+      "RefHt": {
+        "type": "real",
+        "array": false
+      },
+      "URef": {
+        "type": "real",
+        "array": false
+      },
+      "ZJetMax": {
+        "type": "real",
+        "array": false
+      },
+      "PLExp": {
+        "type": "real",
+        "array": false
+      },
+      "Z0": {
+        "type": "real",
+        "array": false
+      },
+      "Latitude": {
+        "type": "real",
+        "array": false
+      },
+      "RICH_NO": {
+        "type": "real",
+        "array": false
+      },
+      "UStar": {
+        "type": "real",
+        "array": false
+      },
+      "ZI": {
+        "type": "real",
+        "array": false
+      },
+      "PC_UW": {
+        "type": "real",
+        "array": false
+      },
+      "PC_UV": {
+        "type": "real",
+        "array": false
+      },
+      "PC_VW": {
+        "type": "real",
+        "array": false
+      },
+      "SCMod1": {
+        "type": "character",
+        "array": false
+      },
+      "SCMod2": {
+        "type": "character",
+        "array": false
+      },
+      "SCMod3": {
+        "type": "character",
+        "array": false
+      },
+      "InCDec1": {
+        "type": "real",
+        "array": true,
+        "length": 2
+      },
+      "InCDec2": {
+        "type": "real",
+        "array": true,
+        "length": 2
+      },
+      "InCDec3": {
+        "type": "real",
+        "array": true,
+        "length": 2
+      },
+      "CohExp": {
+        "type": "real",
+        "array": false
+      },
+      "CTEventPath": {
+        "type": "character",
+        "array": false
+      },
+      "CTEventFile": {
+        "type": "character",
+        "array": false
+      },
+      "Randomize": {
+        "type": "logical",
+        "array": false
+      },
+      "DistScl": {
+        "type": "real",
+        "array": false
+      },
+      "CTLy": {
+        "type": "real",
+        "array": false
+      },
+      "CTLz": {
+        "type": "real",
+        "array": false
+      },
+      "CTStartTime": {
+        "type": "real",
+        "array": false
+      },
+      "NumUSRz": {
+        "type": "integer",
+        "array": false
+      },
+      "NumUSRf": {
+        "type": "integer",
+        "array": false
+      },
+      "StdScale1": {
+        "type": "real",
+        "array": false
+      },
+      "StdScale2": {
+        "type": "real",
+        "array": false
+      },
+      "StdScale3": {
+        "type": "real",
+        "array": false
+      },
+      "SpecScale1": {
+        "type": "real",
+        "array": false
+      },
+      "SpecScale2": {
+        "type": "real",
+        "array": false
+      },
+      "SpecScale3": {
+        "type": "real",
+        "array": false
+      },
+      "nComp": {
+        "type": "integer",
+        "array": false
+      },
+      "nPoints": {
+        "type": "integer",
+        "array": false
+      },
+      "RefPtID": {
+        "type": "integer",
+        "array": false
+      }
+    },
+    "ROSCO": {
+      "LoggingLevel": {
+        "type": "integer",
+        "array": false
+      },
+      "Echo": {
+        "type": "integer",
+        "array": false
+      },
+      "Ext_Interface": {
+        "type": "integer",
+        "array": false
+      },
+      "DT_Out": {
+        "type": "real",
+        "array": false
+      },
+      "F_LPFType": {
+        "type": "integer",
+        "array": false
+      },
+      "F_LPFCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "F_LPFDamping": {
+        "type": "real",
+        "array": false
+      },
+      "F_NumNotchFilts": {
+        "type": "integer",
+        "array": false
+      },
+      "F_GenSpdNotch_N": {
+        "type": "integer",
+        "array": false
+      },
+      "F_GenSpdNotch_Ind": {
+        "type": "integer",
+        "array": true
+      },
+      "F_TwrTopNotch_N": {
+        "type": "integer",
+        "array": false
+      },
+      "F_TwrTopNotch_Ind": {
+        "type": "integer",
+        "array": true
+      },
+      "F_NotchFreqs": {
+        "type": "real",
+        "array": true
+      },
+      "F_NotchBetaNum": {
+        "type": "real",
+        "array": true
+      },
+      "F_NotchBetaDen": {
+        "type": "real",
+        "array": true
+      },
+      "F_SSCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "F_WECornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "F_FlCornerFreq": {
+        "type": "real",
+        "array": true
+      },
+      "F_FlHighPassFreq": {
+        "type": "real",
+        "array": false
+      },
+      "F_YawErr": {
+        "type": "real",
+        "array": false
+      },
+      "F_FlpCornerFreq": {
+        "type": "real",
+        "array": true
+      },
+      "F_VSRefSpdCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "TRA_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "TRA_ExclSpeed": {
+        "type": "real",
+        "array": false
+      },
+      "TRA_ExclBand": {
+        "type": "real",
+        "array": false
+      },
+      "TRA_RateLimit": {
+        "type": "real",
+        "array": false
+      },
+      "TD_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "FA_HPFCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "FA_IntSat": {
+        "type": "real",
+        "array": false
+      },
+      "FA_KI": {
+        "type": "real",
+        "array": false
+      },
+      "IPC_ControlMode": {
+        "type": "integer",
+        "array": false
+      },
+      "IPC_Vramp": {
+        "type": "real",
+        "array": true
+      },
+      "IPC_IntSat": {
+        "type": "real",
+        "array": false
+      },
+      "IPC_SatMode": {
+        "type": "integer",
+        "array": false
+      },
+      "IPC_KP": {
+        "type": "real",
+        "array": true
+      },
+      "IPC_KI": {
+        "type": "real",
+        "array": true
+      },
+      "IPC_aziOffset": {
+        "type": "real",
+        "array": true
+      },
+      "IPC_CornerFreqAct": {
+        "type": "real",
+        "array": false
+      },
+      "PC_ControlMode": {
+        "type": "integer",
+        "array": false
+      },
+      "PC_GS_n": {
+        "type": "integer",
+        "array": false
+      },
+      "PC_GS_angles": {
+        "type": "real",
+        "array": true
+      },
+      "PC_GS_KP": {
+        "type": "real",
+        "array": true
+      },
+      "PC_GS_KI": {
+        "type": "real",
+        "array": true
+      },
+      "PC_GS_KD": {
+        "type": "real",
+        "array": true
+      },
+      "PC_GS_TF": {
+        "type": "real",
+        "array": true
+      },
+      "PC_MaxPit": {
+        "type": "real",
+        "array": false
+      },
+      "PC_MinPit": {
+        "type": "real",
+        "array": false
+      },
+      "PC_MaxRat": {
+        "type": "real",
+        "array": false
+      },
+      "PC_MinRat": {
+        "type": "real",
+        "array": false
+      },
+      "PC_RefSpd": {
+        "type": "real",
+        "array": false
+      },
+      "PC_FinePit": {
+        "type": "real",
+        "array": false
+      },
+      "PC_Switch": {
+        "type": "real",
+        "array": false
+      },
+      "VS_ControlMode": {
+        "type": "integer",
+        "array": false
+      },
+      "VS_ConstPower": {
+        "type": "integer",
+        "array": false
+      },
+      "VS_FBP": {
+        "type": "integer",
+        "array": false
+      },
+      "VS_GenEff": {
+        "type": "real",
+        "array": false
+      },
+      "VS_ArSatTq": {
+        "type": "real",
+        "array": false
+      },
+      "VS_MaxRat": {
+        "type": "real",
+        "array": false
+      },
+      "VS_MaxTq": {
+        "type": "real",
+        "array": false
+      },
+      "VS_MinTq": {
+        "type": "real",
+        "array": false
+      },
+      "VS_MinOMSpd": {
+        "type": "real",
+        "array": false
+      },
+      "VS_Rgn2K": {
+        "type": "real",
+        "array": false
+      },
+      "VS_RtPwr": {
+        "type": "real",
+        "array": false
+      },
+      "VS_RtTq": {
+        "type": "real",
+        "array": false
+      },
+      "VS_RefSpd": {
+        "type": "real",
+        "array": false
+      },
+      "VS_n": {
+        "type": "integer",
+        "array": false
+      },
+      "VS_KP": {
+        "type": "real",
+        "array": true
+      },
+      "VS_KI": {
+        "type": "real",
+        "array": true
+      },
+      "VS_TSRopt": {
+        "type": "real",
+        "array": false
+      },
+      "VS_FBP_n": {
+        "type": "integer",
+        "array": false
+      },
+      "VS_FBP_U": {
+        "type": "real",
+        "array": true
+      },
+      "VS_FBP_Omega": {
+        "type": "real",
+        "array": true
+      },
+      "VS_FBP_Tau": {
+        "type": "real",
+        "array": true
+      },
+      "SS_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "SS_VSGain": {
+        "type": "real",
+        "array": false
+      },
+      "SS_PCGain": {
+        "type": "real",
+        "array": false
+      },
+      "PRC_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "PRC_Comm": {
+        "type": "integer",
+        "array": false
+      },
+      "PRC_n": {
+        "type": "integer",
+        "array": false
+      },
+      "PRC_WindSpeeds": {
+        "type": "real",
+        "array": true
+      },
+      "PRC_GenSpeeds": {
+        "type": "real",
+        "array": true
+      },
+      "PRC_LPF_Freq": {
+        "type": "real",
+        "array": false
+      },
+      "PRC_R_Torque": {
+        "type": "real",
+        "array": false
+      },
+      "PRC_R_Speed": {
+        "type": "real",
+        "array": false
+      },
+      "PRC_R_Pitch": {
+        "type": "real",
+        "array": false
+      },
+      "PRC_Table_n": {
+        "type": "integer",
+        "array": false
+      },
+      "PRC_Pitch_Table": {
+        "type": "real",
+        "array": true
+      },
+      "PRC_R_Table": {
+        "type": "real",
+        "array": true
+      },
+      "WE_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "WE_BladeRadius": {
+        "type": "real",
+        "array": false
+      },
+      "WE_CP_n": {
+        "type": "integer",
+        "array": false
+      },
+      "WE_CP": {
+        "type": "real",
+        "array": true
+      },
+      "WE_Gamma": {
+        "type": "real",
+        "array": false
+      },
+      "WE_GearboxRatio": {
+        "type": "real",
+        "array": false
+      },
+      "WE_Jtot": {
+        "type": "real",
+        "array": false
+      },
+      "WE_RhoAir": {
+        "type": "real",
+        "array": false
+      },
+      "PerfFileName": {
+        "type": "character",
+        "array": false
+      },
+      "PerfTableSize": {
+        "type": "integer",
+        "array": true
+      },
+      "WE_FOPoles_N": {
+        "type": "integer",
+        "array": false
+      },
+      "WE_FOPoles_v": {
+        "type": "real",
+        "array": true
+      },
+      "WE_FOPoles": {
+        "type": "real",
+        "array": true
+      },
+      "Y_ControlMode": {
+        "type": "integer",
+        "array": false
+      },
+      "Y_uSwitch": {
+        "type": "real",
+        "array": false
+      },
+      "Y_ErrThresh": {
+        "type": "real",
+        "array": true
+      },
+      "Y_Rate": {
+        "type": "real",
+        "array": false
+      },
+      "Y_MErrSet": {
+        "type": "real",
+        "array": false
+      },
+      "Y_IPC_IntSat": {
+        "type": "real",
+        "array": false
+      },
+      "Y_IPC_KP": {
+        "type": "real",
+        "array": false
+      },
+      "Y_IPC_KI": {
+        "type": "real",
+        "array": false
+      },
+      "PS_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "PS_BldPitchMin_N": {
+        "type": "integer",
+        "array": false
+      },
+      "PS_WindSpeeds": {
+        "type": "real",
+        "array": true
+      },
+      "PS_BldPitchMin": {
+        "type": "real",
+        "array": true
+      },
+      "SU_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "SU_StartTime": {
+        "type": "real",
+        "array": false
+      },
+      "SU_FW_MinDuration": {
+        "type": "real",
+        "array": false
+      },
+      "SU_RotorSpeedThresh": {
+        "type": "real",
+        "array": false
+      },
+      "SU_RotorSpeedCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "SU_LoadStages_N": {
+        "type": "integer",
+        "array": false
+      },
+      "SU_LoadStages": {
+        "type": "real",
+        "array": true
+      },
+      "SU_LoadRampDuration": {
+        "type": "real",
+        "array": true
+      },
+      "SU_LoadHoldDuration": {
+        "type": "real",
+        "array": true
+      },
+      "SD_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "SD_TimeActivate": {
+        "type": "real",
+        "array": false
+      },
+      "SD_EnablePitch": {
+        "type": "integer",
+        "array": false
+      },
+      "SD_EnableYawError": {
+        "type": "integer",
+        "array": false
+      },
+      "SD_EnableGenSpeed": {
+        "type": "integer",
+        "array": false
+      },
+      "SD_EnableTime": {
+        "type": "integer",
+        "array": false
+      },
+      "SD_MaxPit": {
+        "type": "real",
+        "array": false
+      },
+      "SD_PitchCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "SD_MaxYawError": {
+        "type": "real",
+        "array": false
+      },
+      "SD_YawErrorCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "SD_MaxGenSpd": {
+        "type": "real",
+        "array": false
+      },
+      "SD_GenSpdCornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "SD_Time": {
+        "type": "real",
+        "array": false
+      },
+      "SD_Method": {
+        "type": "integer",
+        "array": false
+      },
+      "SD_MaxTorqueRate": {
+        "type": "real",
+        "array": true
+      },
+      "SD_MaxPitchRate": {
+        "type": "real",
+        "array": true
+      },
+      "SD_StagePitch": {
+        "type": "real",
+        "array": true
+      },
+      "SD_StageTime": {
+        "type": "real",
+        "array": true
+      },
+      "SD_Stage_N": {
+        "type": "integer",
+        "array": false
+      },
+      "Fl_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "Fl_n": {
+        "type": "integer",
+        "array": false
+      },
+      "Fl_Kp": {
+        "type": "real",
+        "array": true
+      },
+      "Fl_U": {
+        "type": "real",
+        "array": true
+      },
+      "Flp_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "Flp_Angle": {
+        "type": "real",
+        "array": false
+      },
+      "Flp_Kp": {
+        "type": "real",
+        "array": false
+      },
+      "Flp_Ki": {
+        "type": "real",
+        "array": false
+      },
+      "Flp_MaxPit": {
+        "type": "real",
+        "array": false
+      },
+      "OL_Filename": {
+        "type": "character",
+        "array": false
+      },
+      "OL_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "OL_BP_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "OL_BP_FiltFreq": {
+        "type": "real",
+        "array": false
+      },
+      "Ind_Breakpoint": {
+        "type": "integer",
+        "array": false
+      },
+      "Ind_BldPitch": {
+        "type": "integer",
+        "array": true
+      },
+      "Ind_GenTq": {
+        "type": "integer",
+        "array": false
+      },
+      "Ind_YawRate": {
+        "type": "integer",
+        "array": false
+      },
+      "Ind_R_Speed": {
+        "type": "integer",
+        "array": false
+      },
+      "Ind_R_Torque": {
+        "type": "integer",
+        "array": false
+      },
+      "Ind_R_Pitch": {
+        "type": "integer",
+        "array": false
+      },
+      "Ind_Azimuth": {
+        "type": "integer",
+        "array": false
+      },
+      "RP_Gains": {
+        "type": "real",
+        "array": true
+      },
+      "Ind_CableControl": {
+        "type": "integer",
+        "array": true
+      },
+      "Ind_StructControl": {
+        "type": "integer",
+        "array": true
+      },
+      "PA_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "PA_CornerFreq": {
+        "type": "real",
+        "array": false
+      },
+      "PA_Damping": {
+        "type": "real",
+        "array": false
+      },
+      "AWC_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "AWC_NumModes": {
+        "type": "integer",
+        "array": false
+      },
+      "AWC_n": {
+        "type": "integer",
+        "array": true
+      },
+      "AWC_harmonic": {
+        "type": "integer",
+        "array": true
+      },
+      "AWC_freq": {
+        "type": "real",
+        "array": true
+      },
+      "AWC_amp": {
+        "type": "real",
+        "array": true
+      },
+      "AWC_clockangle": {
+        "type": "real",
+        "array": true
+      },
+      "AWC_phaseoffset": {
+        "type": "real",
+        "array": false
+      },
+      "AWC_CntrGains": {
+        "type": "real",
+        "array": true
+      },
+      "PF_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "PF_Offsets": {
+        "type": "real",
+        "array": true
+      },
+      "PF_TimeStuck": {
+        "type": "real",
+        "array": true
+      },
+      "Ext_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "DLL_FileName": {
+        "type": "character",
+        "array": false
+      },
+      "DLL_InFile": {
+        "type": "character",
+        "array": false
+      },
+      "DLL_ProcName": {
+        "type": "character",
+        "array": false
+      },
+      "ZMQ_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "ZMQ_ID": {
+        "type": "integer",
+        "array": false
+      },
+      "ZMQ_CommAddress": {
+        "type": "character",
+        "array": false
+      },
+      "ZMQ_UpdatePeriod": {
+        "type": "real",
+        "array": false
+      },
+      "CC_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "CC_Group_N": {
+        "type": "integer",
+        "array": false
+      },
+      "CC_ActTau": {
+        "type": "real",
+        "array": false
+      },
+      "CC_GroupIndex": {
+        "type": "integer",
+        "array": true
+      },
+      "StC_Mode": {
+        "type": "integer",
+        "array": false
+      },
+      "StC_Group_N": {
+        "type": "integer",
+        "array": false
+      },
+      "StC_GroupIndex": {
+        "type": "integer",
+        "array": true
+      }
+    }
+  }
+}

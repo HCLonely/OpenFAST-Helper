@@ -3549,6 +3549,7 @@
   "sources": {
     "OpenFAST": "https://openfast.readthedocs.io/en/main/source/user/index.html",
     "MoorDyn": "https://moordyn.readthedocs.io/en/latest/inputs.html",
-    "ROSCO": "https://rosco.readthedocs.io/en/latest/source/rosco.html"
+    "ROSCO": "https://rosco.readthedocs.io/en/latest/",
+    "TurbSim": "https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1"
   }
 }

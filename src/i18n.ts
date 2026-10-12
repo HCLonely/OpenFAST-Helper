@@ -1,7 +1,7 @@
 import englishMessages from '../data/ui.en.json';
 import chineseMessages from '../data/ui.zh-CN.json';
 import englishCatalog from '../data/catalog.en.json';
-import { findEntry } from './catalog';
+import { findEntry, supplementalParameters } from './catalog';
 export type Language = 'zh-CN' | 'en';
 export type LanguagePreference = 'auto' | Language;
 export type MessageKey = keyof typeof chineseMessages;
@@ -105,6 +105,9 @@ export function descriptionFor(info: DescriptionContext): string {
   if (currentLanguage() === 'zh-CN') {
     return info.description ?? source?.description ?? t('description.unavailable');
   }
+  const supplemental =
+    source && supplementalParameters.get(`${source.module}:${source.name.toLowerCase()}`);
+  if (supplemental) return supplemental.descriptionEn;
   const kind =
     info.kind === 'output'
       ? 'outputs'

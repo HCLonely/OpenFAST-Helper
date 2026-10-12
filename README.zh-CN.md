@@ -8,18 +8,18 @@
 
 1. 打开 VS Code 的扩展面板。
 2. 点击右上角 `…` → **从 VSIX 安装…**。
-3. 选择 `openfast-helper-1.1.0.vsix`；若提示重新加载窗口，按提示操作。
+3. 选择 `openfast-helper-1.2.0.vsix`；若提示重新加载窗口，按提示操作。
 4. 打开 `.fst` 或相应模块 `.dat` 文件，右下角语言模式应为 **OpenFAST**。
 
 也可使用命令行：
 
 ```powershell
-code --install-extension "openfast-helper-1.1.0.vsix"
+code --install-extension "openfast-helper-1.2.0.vsix"
 ```
 
 此扩展尚未发布到扩展市场。最低 VS Code 版本为 1.85。
 
-从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.1.0) 下载 `openfast-helper-1.1.0.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
+从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.0) 下载 `openfast-helper-1.2.0.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
 
 ## 支持的文本格式
 
@@ -27,9 +27,9 @@ code --install-extension "openfast-helper-1.1.0.vsix"
 
 高亮继续使用本项目的参数/值/注释分离、语义标记和主题配色。补充 ROSCO `!` 后参数名及数组（支持没有尾部说明的记录）、TurbSim 无引号字符串选项、无引号文件名、已知表头、单位行和输出标题。
 
-通用扩展名不做全局关联，保留用户已明确选择的语言。内容依据不足的文件（包括没有标题的纯数字风场/输出文本）可通过语言模式选择器或现有“将当前文件识别为 OpenFAST 配置”命令手动启用。自动识别保留 2 MB 上限。二进制 `.outb/.bts`、DLL 和 ROSCO YAML 不在文本高亮自动识别范围内。新增高亮不代表参数词典或校验规则已完整覆盖，TurbSim 主输入文件另有一键运行入口，见下文；不支持直接启动 ROSCO。
+通用扩展名不做全局关联，保留用户已明确选择的语言。内容依据不足的文件（包括没有标题的纯数字风场/输出文本）可通过语言模式选择器或现有“将当前文件识别为 OpenFAST 配置”命令手动启用。输入文件自动识别保留 2 MB 上限；文本结果文件改用有限文件头识别，不受插件的 2 MB 输入上限限制。二进制 `.outb/.bts`、DLL 和 ROSCO YAML 不在文本高亮自动识别范围内。新增高亮不代表参数词典或校验规则已完整覆盖，TurbSim 主输入文件另有一键运行入口，见下文；不支持直接启动 ROSCO。
 
-依据官方资料补充 ROSCO `.echo/.dbg/.dbg2/.dbg3` 和转子性能表、AeroDisk/AeroAcoustics/结构控制输入标题、TurbSim 用户时序/谱/剖面输入及 `.hh/.u/.v/.w/.cts` 文本、旧版 `.ctp` 输入，以及具有已知列名的 AeroDisk 系数 `.csv` 表。自动识别仍需内容依据。对官方支持 key/value 格式的模块，补充参数名在前的编辑器高亮；支持 TurbSim `AnalysisTime-` 等紧贴连字符的参数写法、整行 `#/%` 注释和官方示例表头。新增高亮不扩展运行前严格校验或参数编辑命令对参数名在前记录的支持。
+依据官方资料补充 ROSCO `.echo/.dbg/.dbg2/.dbg3` 和转子性能表、AeroDisk/AeroAcoustics/结构控制输入标题、TurbSim 用户时序/谱/剖面输入及 `.hh/.u/.v/.w/.cts` 文本、旧版 `.ctp` 输入，以及具有已知列名的 AeroDisk 系数 `.csv` 表。除直接关联的结果扩展名外，自动识别仍需内容依据。对官方支持 key/value 格式的模块，补充参数名在前的编辑器高亮；支持 TurbSim `AnalysisTime-` 等紧贴连字符的参数写法、整行 `#/%` 注释和官方示例表头。新增高亮不扩展运行前严格校验或参数编辑命令对参数名在前记录的支持。
 
 格式重叠时优先保留已有识别和配色。其他语言模式仍受保护：VS Code 通常将 `.hh` 识别为 C++、`.cts` 识别为 TypeScript，需要手动选择 OpenFAST 启用这些文本的高亮。ROSCO 调参 YAML 继续使用 YAML 高亮。TurbSim 二进制 `.wnd/.bts/.bin/.twr` 不作为文本识别。
 
@@ -245,11 +245,25 @@ OutList 保持按英文通道名补全，不新增中文搜索。所有建议与
 
 第一次运行时若尚未配置路径，会直接打开程序选择器并保存设置。当前窗口未注册该设置或无法写入时，路径会持久保存到插件工作区存储，仍可直接运行；不必手工修改 settings.json。同一 FST 正在运行时阻止重复启动。运行前检查主文件及启用的引用配置；存在未保存修改时列出相关文件，选择“保存相关文件并检查”后保存并重新检查。已知错误、无法读取的配置或达到引用检查上限会阻止运行；一般警告需确认后继续。无关文件的修改保持原样。运行使用独立进程参数，支持含中文、空格及特殊字符的路径，不通过拼接 shell 命令执行。只在受信任的本地工作区运行，不绑定快捷键，也不会因打开或编辑文件自动运行。
 
+## 结果文件高亮与 TurbSim 诊断
+
+TurbSim 文件悬停中的文档入口为 [TurbSim v2.00 用户手册（PDF）](https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1)；ROSCO 文件使用 [ROSCO 官方文档首页](https://rosco.readthedocs.io/en/latest/)。
+
+.out/.dbg/.dbg2/.dbg3/.echo 默认使用 **OpenFAST Results** 语言模式，显示表头、单位、数字及科学计数法。其他支持的文本结果（例如 .sum/.lin/.hh/.u/.v/.w）根据文件头识别；保留用户明确选择的其他语言。无标题结果可在语言选择器中手动选择 **OpenFAST Results**。二进制 .outb/.bts 无法作为文本高亮，.outb 请使用现有结果预览入口。
+
+结果文件与输入文件采用独立的语言模式，不将数据列当作配置参数校验。自动检测最多读取前 150 行、64,000 字符；大结果的语义高亮只处理可见区域，单次最多 800 行、1,000,000 字符和 50,000 个标记，不扫描整份数据表。结果模式默认关闭 VS Code 的大文件高亮优化限制；用户设置仍可覆盖。超过 VS Code 扩展宿主同步上限时使用语法高亮，实际可打开的大小仍受编辑器和内存限制。升级前已经打开的结果文件需关闭并重新打开。
+
+内置 TurbSim 的 69 条参数说明与 ROSCO 的 199 条参数说明，提供中英文离线悬停、查询及补全说明，无需给输入文件添加注释。覆盖 TurbSim 主输入及常用用户输入字段，以及 ROSCO DISCON 的滤波、变桨、转矩、风速估计、浮式反馈和启停等参数；版本专属选项以对应版本文档为准。
+
+TurbSim 的 `WindProfileType`（如 `PL`）和 `CTEventFile`（`LES`、`DNS`、`RANDOM`）属于选项，不生成文件不存在提示或路径补全。`UserFile` 只在 USRINP/TIMESR 模型下检查，`ProfileFile` 只在 USR 剖面或 USRVKM 模型下检查。`CTEventPath` 为事件数据库目录，当前不展开检查目录中的事件文件。参数说明不代替 TurbSim 的完整输入校验。
+
+输入格式检查使用内置字段类型，覆盖 TurbSim 的 69 个字段和 ROSCO 的 195 个当前字段，不依赖行尾注释推断数值类型。支持 TurbSim 的 `UsableTime="ALL"`、`RandSeed2="RANLUX"/"RNSNLW"`、双值相干参数及 `AnalysisTime-` 紧贴分隔符的写法；检查数值、整数、固定值数量、网格点数至少为 2 和时间步长等正值。ROSCO 的 `DT_Out=0` 合法；关闭 OL_Mode、Ext_Mode 或 WE_Mode 时，不检查对应的可选引用文件。旧版字段和其他版本专属规则尚未完整覆盖，最终以相应程序的校验为准。
+
 ## 一键运行 TurbSim
 
 1. 在 VS Code 中打开受信任的本地工作区，打开 TurbSim 主输入文件（支持 .inp/.in/.dat/.txt）。识别要求文件前 150 行、64,000 字符内包含主网格参数 NumGrid_Z、NumGrid_Y、TimeStep 和 AnalysisTime；用户时序、谱、剖面等辅助文件及输出文件不能直接启动。
 2. 点击状态栏 **TurbSim 路径**，或执行 **TurbSim: 配置可执行文件路径**，选择 TurbSim 程序（例如 TurbSim_x64.exe）。设置项为 `openfast.turbSimExecutablePath`，与 OpenFAST 路径独立保存；未配置时首次运行会打开选择器，设置不可写时使用插件存储。
-3. 点击编辑器右上角 ▶，或在资源管理器右键输入文件选择 **TurbSim: 运行主输入文件**。通用扩展名的右键菜单也可能显示此命令，执行时会检查内容。同一输入文件正在运行时不会重复启动。
+3. 点击编辑器右上角 ▶，或在资源管理器右键输入文件选择 **TurbSim: 运行主输入文件**。通用扩展名的右键菜单也可能显示此命令，执行时会检查内容。同一输入文件正在运行时不会重复启动。TurbSim 输入（含辅助输入）和 ROSCO 输入不显示 OpenFAST 的检查整个工况、对比工况及运行监控工具栏按钮；OpenFAST 主文件及其模块输入保留这些入口。
 
 启动前自动保存当前主输入文件；保存失败会停止启动。工作目录为输入文件所在目录，程序通过独立参数接收输入文件完整路径，原始输出显示在 VS Code 任务终端。可通过“终端 → 终止任务”停止，非零退出会提示查看终端。此入口不进入 OpenFAST 运行队列或计算进度监控，不套用 OpenFAST 工况预检查；辅助文件的修改需自行保存，输入正确性由 TurbSim 校验。自动识别最多处理 2 MB 文本文件；打开或编辑文件不会自动运行程序。
 
@@ -313,17 +327,19 @@ OutList 保持按英文通道名补全，不新增中文搜索。所有建议与
 
 ## 配置文件图标
 
-0.1.4 使用当前 **vscode-icons** 图标主题的局部定制接口，仅替换 `.fst`、`.dat` 为“风机＋波浪”SVG 图标，适配浅色与深色背景；其他文件、文件夹和原有自定义关联保持原样。`.fstf`、DISCON.IN 等文件的图标不改变。
+执行 **OpenFAST: 设置 OpenFAST / TurbSim / ROSCO 文件图标（保留原主题）**，在当前 **vscode-icons** 主题中应用浅色/深色图标：
 
-按 `Ctrl+Shift+P`，执行 **OpenFAST: 仅设置 FST/DAT 图标（保留原主题）**。插件会将两个 SVG 写入 vscode-icons 的自定义图标目录，合并 `.fst/.dat` 关联，再调用其 **Apply Icons Customization** 命令刷新清单；不会修改 `workbench.iconTheme`。优先保存到当前工作区，没有工作区时保存到用户设置。自定义方式遵循 [vscode-icons 自定义图标文档](https://github.com/vscode-icons/vscode-icons/wiki/Custom) 和 [关联配置文档](https://github.com/vscode-icons/vscode-icons/wiki/FineTuning)。
+- OpenFAST：.fst/.fstf/.dat/.ipt/.bmi 输入和 .sum/.out/.outb/.lin/.ech 汇总、结果及回显使用风机与波浪图标。
+- TurbSim：.inp/.ctp 输入及 .bts/.wnd/.hh/.u/.v/.w/.cts/.twr 风场文件使用风场图标。
+- ROSCO：DISCON.IN 及 .echo/.dbg/.dbg2/.dbg3 使用控制器图标。
 
-目前局部定制支持 vscode-icons；其他图标主题没有统一的 VS Code 局部覆盖 API，插件会保留它们并提示暂不支持，而不会自动换成另一套主题。该操作不会修改配置文件的语言识别规则。
+已经启用 OpenFAST 图标的工作区，升级并重新加载窗口后会自动补充缺失关联；首次设置仍需执行图标命令。图标按扩展名或完整文件名关联，不读取文件内容；例如其他软件的 .inp 也会使用风场图标。通用 .in/.txt/.csv/.yaml/.yml/.bin 和动态库保留原主题的图标，DISCON.IN 按完整文件名单独关联。任意名称的 ROSCO 调参 YAML、性能表 TXT 或 TurbSim BIN 不按内容定制文件图标。图标不表示文件可以直接运行，也不表示二进制文件能文本高亮。
 
-按扩展名关联后，所有 DAT 文件（包括共享叶片、塔架、BeamDyn、翼型极曲线文件）无需先打开即可显示新图标。
+插件写入六个 SVG，合并目标关联并刷新 vscode-icons；保留其他关联，不修改当前图标主题。优先保存到工作区，无工作区时保存到用户设置。其他图标主题暂不支持局部定制，会保留原主题并提示。实现遵循 [vscode-icons 自定义图标](https://github.com/vscode-icons/vscode-icons/wiki/Custom) 和 [关联配置](https://github.com/vscode-icons/vscode-icons/wiki/FineTuning)。
 
 ## 支持范围
 
-内置 477 条参数记录（含模块特定同名字段）、161 个表格字段及 119 个输出通道记录，并动态解释任意编号的 MoorDyn 两端张力通道。重点覆盖 OpenFAST 主文件、ElastoDyn、InflowWind、ServoDyn、SeaState、HydroDyn、MoorDyn；AeroDyn、结构属性与 ROSCO 提供常用参数说明。可识别 BeamDyn、SubDyn、TurbSim 文件头，但尚未完整收录这些模块的全部参数。
+内置 750 条参数记录（含模块特定同名字段）、161 个表格字段及 119 个输出通道记录，并动态解释任意编号的 MoorDyn 两端张力通道。重点覆盖 OpenFAST 主文件、ElastoDyn、InflowWind、ServoDyn、SeaState、HydroDyn、MoorDyn；TurbSim 与 ROSCO 提供模块专属参数说明，AeroDyn、结构属性提供常用说明。可识别 BeamDyn、SubDyn 文件头，但尚未完整收录这些模块的全部参数。
 
 解释结合当前文档值，不会把原示例工况的风速、时长、转速或启用状态当作其他文件的事实。适用条件提示覆盖常见风场、控制器、线性化及部分海况/水动力开关，不是完整的版本校验器。未知字段会保留本行英文说明并标明中文库尚未收录。已有 `! 中文说明：` 行尾注释与原始说明一起归入“行尾注释”区块，完整保留所有注释内容，不覆盖内置词典，也不需要向原始配置文件写入说明。
 
@@ -364,7 +380,7 @@ OutList 保持按英文通道名补全，不新增中文搜索。所有建议与
 
 默认 `openfast.language = "auto"`，跟随 VS Code 界面语言：中文界面使用简体中文，其他界面使用英文。通过设置选择 `zh-CN` / `en`，或执行 **OpenFAST: 选择显示语言 / Select display language**，可即时更改悬浮说明、参数查询、建议、诊断及运行提示语言。命令菜单、设置标题和视图名称由 VS Code 根据界面语言加载 `package.nls`，手动覆盖扩展语言不会更改 VS Code 界面。
 
-477 条参数、161 个表格字段及 119 个通道均内置中英文说明。文件内已有的注释保留原文：中文模式显示“内置说明”和“行尾注释”，英文模式显示“Built-in description”和“Line comments”。英文、中文及混合注释均完整显示，包括“中文说明：”之前的文本；即使与内置说明重复也不会省略。`openfast.showOriginalDescription` 控制整个行尾注释区块。
+750 条参数、161 个表格字段及 119 个通道均内置中英文说明。文件内已有的注释保留原文：中文模式显示“内置说明”和“行尾注释”，英文模式显示“Built-in description”和“Line comments”。英文、中文及混合注释均完整显示，包括“中文说明：”之前的文本；即使与内置说明重复也不会省略。`openfast.showOriginalDescription` 控制整个行尾注释区块。
 
 扩展生成的查询标签、固定选项、表格说明、诊断、运行提示和新建差异报告均支持中英双语。配置文件自身的注释、分节名称、路径、参数/通道/模块名称、官方章节原名以及 OpenFAST/操作系统返回的内容保留原文。已生成或导出的报告保持生成时的语言；切换语言后重新比较可生成对应语言报告。
 

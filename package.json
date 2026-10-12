@@ -2,7 +2,7 @@
   "name": "openfast-helper",
   "displayName": "OpenFAST Helper",
   "description": "%description%",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "HCLonely",
   "license": "MIT",
   "engines": {
@@ -49,11 +49,31 @@
           ".fstf"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "openfast-output",
+        "aliases": [
+          "OpenFAST Results",
+          "ROSCO / TurbSim Results"
+        ],
+        "configuration": "./language-configuration.json",
+        "extensions": [
+          ".out",
+          ".dbg",
+          ".dbg2",
+          ".dbg3",
+          ".echo"
+        ]
       }
     ],
     "grammars": [
       {
         "language": "openfast",
+        "scopeName": "source.openfast",
+        "path": "./syntaxes/openfast.tmLanguage.json"
+      },
+      {
+        "language": "openfast-output",
         "scopeName": "source.openfast",
         "path": "./syntaxes/openfast.tmLanguage.json"
       }
@@ -566,6 +586,47 @@
             "constant.numeric.exponent.openfast"
           ]
         }
+      },
+      {
+        "language": "openfast-output",
+        "scopes": {
+          "parameter": [
+            "variable.parameter.openfast"
+          ],
+          "property": [
+            "variable.other.member.openfast"
+          ],
+          "enumMember": [
+            "support.constant.output.openfast"
+          ],
+          "number": [
+            "constant.numeric.openfast"
+          ],
+          "string": [
+            "string.quoted.double.openfast"
+          ],
+          "keyword": [
+            "keyword.control.openfast"
+          ],
+          "openfastPath": [
+            "string.other.link.openfast"
+          ],
+          "openfastDefinition": [
+            "entity.name.type.openfast"
+          ],
+          "openfastReference": [
+            "variable.other.openfast"
+          ],
+          "openfastUnresolved": [
+            "invalid.deprecated.openfast"
+          ],
+          "openfastNumericSign": [
+            "keyword.operator.arithmetic.openfast"
+          ],
+          "openfastNumericExponent": [
+            "constant.numeric.exponent.openfast"
+          ]
+        }
       }
     ],
     "configurationDefaults": {
@@ -578,6 +639,10 @@
           "strings": "on"
         },
         "editor.suggest.insertMode": "replace"
+      },
+      "[openfast-output]": {
+        "editor.semanticHighlighting.enabled": true,
+        "editor.largeFileOptimizations": false
       }
     },
     "views": {
@@ -669,12 +734,12 @@
         },
         {
           "command": "openfast.checkCase",
-          "when": "editorLangId == openfast",
+          "when": "editorLangId == openfast && openfast.caseInput",
           "group": "navigation@10"
         },
         {
           "command": "openfast.compareCases",
-          "when": "editorLangId == openfast",
+          "when": "editorLangId == openfast && openfast.caseInput",
           "group": "navigation@11"
         },
         {
@@ -684,7 +749,7 @@
         },
         {
           "command": "openfast.showRunMonitor",
-          "when": "editorLangId == openfast",
+          "when": "editorLangId == openfast && openfast.caseInput",
           "group": "navigation@2"
         },
         {
@@ -802,7 +867,7 @@
     "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.js\"",
     "test": "npm run compile && node --test test/*.test.js",
     "vscode:prepublish": "npm run compile",
-    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.1.0.vsix",
+    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.2.0.vsix",
     "build:doc-links": "node scripts/build-doc-links.mjs",
     "benchmark:editor": "npm run compile && node scripts/editor-benchmark.cjs"
   },

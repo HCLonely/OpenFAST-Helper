@@ -154,21 +154,20 @@ function parseDocument(text: string): ParsedDocument {
       matrix = null;
       continue;
     }
-    if (!items.length || /^\(/.test(trimmed)) {
-      continue;
-    }
-    if (
-      module === 'ROSCO' &&
-      items.every(
-        (item) =>
-          VALUE.test(item.text) ||
-          /[/\\]/.test(item.text) ||
-          /^[\w.-]+\.[A-Za-z0-9]+$/.test(item.text),
-      ) &&
-      scanned.comment
-    ) {
+    if (/^\s*[#%]/.test(source)) continue;
+    if (module === 'ROSCO' && scanned.comment) {
       const match = /^([A-Za-z]\w*(?:\(\d+\))?)\s*(?:[-–]\s*(.*))?$/.exec(scanned.comment);
-      if (match) {
+      if (
+        match &&
+        (findEntry(match[1], module) ||
+          (items.length > 0 &&
+            items.every(
+              (item) =>
+                VALUE.test(item.text) ||
+                /[/\\]/.test(item.text) ||
+                /^[\w.-]+\.[A-Za-z0-9]+$/.test(item.text),
+            )))
+      ) {
         const start = source.indexOf(match[1], scanned.commentStart + 1);
         const entry = {
           name: match[1],
@@ -185,6 +184,9 @@ function parseDocument(text: string): ParsedDocument {
         }
         continue;
       }
+    }
+    if (!items.length || /^\(/.test(trimmed) || /^\s*[#%]/.test(source)) {
+      continue;
     }
     if (output) {
       const dash = items.find((x) => x.text === '-' || x.text === '–');
@@ -230,8 +232,8 @@ function parseDocument(text: string): ParsedDocument {
     const label = items.findIndex(
       (x, index) =>
         index > 0 &&
-        NAME.test(x.text) &&
-        (findEntry(x.text, module) ||
+        NAME.test(module === 'TurbSim' ? x.text.replace(/[-–]$/, '') : x.text) &&
+        (findEntry(module === 'TurbSim' ? x.text.replace(/[-–]$/, '') : x.text, module) ||
           items[index + 1]?.text === '-' ||
           items[index + 1]?.text === '–' ||
           (index === items.length - 1 && scanned.commentStart < source.length)),
@@ -243,7 +245,8 @@ function parseDocument(text: string): ParsedDocument {
         /[/\\]/.test(items[0].text) ||
         items.slice(0, label).every((item) => /^[A-Za-z][\w.+:/\\-]*$/.test(item.text)))
     ) {
-      const name = items[label].text;
+      const name =
+        module === 'TurbSim' ? items[label].text.replace(/[-–]$/, '') : items[label].text;
       const value = source.slice(0, items[label].start).trim();
       const original = source
         .slice(items[label].end, scanned.commentStart)
@@ -261,7 +264,13 @@ function parseDocument(text: string): ParsedDocument {
       };
       parameters.set(name, entry);
       records.push(entry);
-      put(items[label], line, 'parameter', name, entry);
+      put(
+        { ...items[label], end: items[label].start + name.length },
+        line,
+        'parameter',
+        name,
+        entry,
+      );
       if (/^Add(?:F0|CLin|BLin|BQuad)$/.test(name)) {
         matrix = { name, row: 1 };
         matrixTokens(items.slice(0, label), line, matrix, put, { comments: entry.comments });
@@ -315,6 +324,15 @@ function tokenAt(parsed: ParsedDocument, line: number, character: number): Confi
 function dependencyRules(parsed: ParsedDocument, name: string) {
   name = findEntry(name, parsed.module)?.name || name;
   const rules = [];
+  if (parsed.module === 'ROSCO') {
+    const files = {
+      OL_Filename: 'OL_Mode',
+      PerfFileName: 'WE_Mode',
+      DLL_FileName: 'Ext_Mode',
+      DLL_InFile: 'Ext_Mode',
+    };
+    if (files[name]) rules.push([files[name], undefined]);
+  }
   const wind = {
     '1': ['HWindSpeed', 'RefHt', 'PLexp'],
     '2': ['Filename_Uni', 'RefHt_Uni', 'RefLength'],

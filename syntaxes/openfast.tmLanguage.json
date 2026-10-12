@@ -30,6 +30,10 @@
       ]
     },
     {
+      "match": "(?i)^\\s*Generated[^\\n]*(?:by|using)\\s+(?:ROSCO|TurbSim)\\b.*$",
+      "name": "markup.heading.openfast"
+    },
+    {
       "match": "(?i)^\\s*!?\\s*(?:(?:Predictions|Results|These predictions)[^\\n]*generated[^\\n]*(?:OpenFAST|MoorDyn)|(?:OpenFAST|FAST\\.Farm)[^\\n]*linearization[^\\n]*(?:output|file)|Summary (?:file|of)[^\\n]*(?:OpenFAST|AeroDyn|ElastoDyn|HydroDyn|MoorDyn|BeamDyn|SubDyn|TurbSim)|(?:TurbSim|ROSCO)[^\\n]*(?:input|parameter)[^\\n]*|Controller parameter input file[^\\n]*).*$",
       "name": "markup.heading.openfast"
     },
@@ -38,7 +42,7 @@
       "name": "markup.heading.openfast"
     },
     {
-      "match": "^\\s*(?:\\([^()\\r\\n]+\\)\\s*){2,}(?:!.*)?$",
+      "match": "^\\s*(?:(?:\\([^()\\r\\n]+\\)|\\[[^\\[\\]\\r\\n]+\\])\\s*){2,}(?:!.*)?$",
       "name": "comment.line.description.openfast"
     },
     {

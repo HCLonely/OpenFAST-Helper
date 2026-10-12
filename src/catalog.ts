@@ -1,6 +1,21 @@
 import catalogData from '../data/catalog.json';
+import moduleParameters from '../data/module-parameters.json';
 import type { Catalog, CatalogEntry } from './types';
-const catalog: Catalog = catalogData;
+const supplementalParameters = new Map(
+  moduleParameters.parameters.map((entry) => [
+    `${entry.module}:${entry.name.toLowerCase()}`,
+    entry,
+  ]),
+);
+const catalog: Catalog = {
+  ...catalogData,
+  parameters: [
+    ...catalogData.parameters.filter(
+      (entry) => !supplementalParameters.has(`${entry.module}:${entry.name.toLowerCase()}`),
+    ),
+    ...moduleParameters.parameters,
+  ],
+};
 import documentation from '../data/doc-links.json';
 const normalize = (x) => x.toLowerCase();
 const parameters = new Map();
@@ -43,4 +58,4 @@ function findDocumentation(name, module) {
     documentation.entries[`${module}:${normalize(name.replace(/\(\d+\)$/, ''))}`]
   );
 }
-export { catalog, findEntry, findDocumentation, documentation };
+export { catalog, findEntry, findDocumentation, documentation, supplementalParameters };

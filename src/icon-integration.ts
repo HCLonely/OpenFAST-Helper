@@ -1,8 +1,24 @@
 import { t } from './i18n';
 import * as path from 'node:path';
 import * as os from 'node:os';
-const TARGETS = new Set(['fst', 'dat']);
-const ICON = 'openfast_config';
+const ICON_GROUPS = [
+  {
+    icon: 'openfast_config',
+    source: 'openfast',
+    extensions: ['fst', 'fstf', 'dat', 'ipt', 'bmi', 'sum', 'out', 'outb', 'lin', 'ech'],
+  },
+  {
+    icon: 'turbsim_config',
+    source: 'turbsim',
+    extensions: ['inp', 'ctp', 'bts', 'wnd', 'hh', 'u', 'v', 'w', 'cts', 'twr'],
+  },
+  { icon: 'rosco_config', source: 'rosco', extensions: ['echo', 'dbg', 'dbg2', 'dbg3'] },
+  { icon: 'rosco_config', source: 'rosco', extensions: ['discon.in'], filename: true },
+];
+const TARGETS = new Set(
+  ICON_GROUPS.filter((group) => !group.filename).flatMap((group) => group.extensions),
+);
+const FILENAMES = new Set(['discon.in']);
 function mergeAssociations(previous) {
   const result = [];
   for (const entry of previous || []) {
@@ -12,16 +28,21 @@ function mergeAssociations(previous) {
     }
     const extensions = entry.extensions.filter((extension) => {
       const name = String(extension).toLowerCase().replace(/^\./, '');
-      return !TARGETS.has(entry.filename ? name.split('.').pop() : name);
+      return (
+        !(entry.filename && FILENAMES.has(name)) &&
+        !TARGETS.has(entry.filename ? name.split('.').pop() : name)
+      );
     });
     if (extensions.length || entry.extensions.length === 0) {
       result.push({ ...entry, extensions });
     }
   }
-  result.push({ icon: ICON, extensions: ['fst', 'dat'], format: 'svg', light: true });
+  result.push(
+    ...ICON_GROUPS.map(({ source, ...group }) => ({ ...group, format: 'svg', light: true })),
+  );
   return result;
 }
-async function enableFileIcons(vscode, context) {
+async function enableFileIcons(vscode, context, silent = false) {
   const config = vscode.workspace.getConfiguration();
   if (config.get('workbench.iconTheme') !== 'vscode-icons') {
     void vscode.window.showInformationMessage(t('icons.unsupportedTheme'));
@@ -65,14 +86,20 @@ async function enableFileIcons(vscode, context) {
   }
   const dir = vscode.Uri.file(path.join(base, 'vsicons-custom-icons'));
   await vscode.workspace.fs.createDirectory(dir);
-  for (const [source, dest] of [
-    ['openfast-dark.svg', `file_type_${ICON}.svg`],
-    ['openfast-light.svg', `file_type_light_${ICON}.svg`],
-  ]) {
-    const bytes = await vscode.workspace.fs.readFile(
-      vscode.Uri.joinPath(context.extensionUri, 'icons', source),
-    );
-    await vscode.workspace.fs.writeFile(vscode.Uri.joinPath(dir, dest), bytes);
+  for (const { icon, source } of ICON_GROUPS.filter((group) => !group.filename)) {
+    for (const light of [false, true]) {
+      const bytes = await vscode.workspace.fs.readFile(
+        vscode.Uri.joinPath(
+          context.extensionUri,
+          'icons',
+          `${source}-${light ? 'light' : 'dark'}.svg`,
+        ),
+      );
+      await vscode.workspace.fs.writeFile(
+        vscode.Uri.joinPath(dir, `file_type_${light ? 'light_' : ''}${icon}.svg`),
+        bytes,
+      );
+    }
   }
   if (!configured) {
     await config.update('vsicons.customIconFolderPath', base, scope);
@@ -83,7 +110,16 @@ async function enableFileIcons(vscode, context) {
     scope,
   );
   await vscode.commands.executeCommand('vscode-icons.regenerateIcons');
-  void vscode.window.showInformationMessage(t('icons.configured'));
+  if (!silent) void vscode.window.showInformationMessage(t('icons.configured'));
   return true;
 }
-export { mergeAssociations, enableFileIcons };
+/** Upgrade workspaces that already opted into our icons, preserving the current theme. */
+async function refreshExistingFileIcons(vscode, context) {
+  const config = vscode.workspace.getConfiguration();
+  if (config.get('workbench.iconTheme') !== 'vscode-icons') return false;
+  const previous = config.get('vsicons.associations.files', []);
+  if (!previous.some((entry) => entry.icon === 'openfast_config')) return false;
+  if (JSON.stringify(previous) === JSON.stringify(mergeAssociations(previous))) return false;
+  return enableFileIcons(vscode, context, true);
+}
+export { mergeAssociations, enableFileIcons, refreshExistingFileIcons };

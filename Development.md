@@ -22,9 +22,9 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json points to `https://github.com/HCLonely/OpenFAST-Helper`. Run `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.1.0/"` to link release documentation to its tag. GitHub Actions supplies a commit-specific content URL.
+package.json points to `https://github.com/HCLonely/OpenFAST-Helper`. Run `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.0/"` to link release documentation to its tag. GitHub Actions supplies a commit-specific content URL.
 
-Run `npm run build:doc-links` to maintain the official section index (network access required). HTML fetch records and build reports are written to `test-results/docs` and excluded from the package. The parameter catalog and section index are stored separately in `data/catalog.json` and `data/doc-links.json`; rebuilding the catalog does not overwrite the link index.
+Run `npm run build:doc-links` to maintain the official section index (network access required). HTML fetch records and build reports are written to `test-results/docs` and excluded from the package. The parameter catalog and section index are stored separately in `data/catalog.json` and `data/doc-links.json`; rebuilding the catalog does not overwrite the link index. Maintain module documentation entry points in catalog sources, `scripts/build_catalog.py` and the English catalog. TurbSim uses the NLR v2.00 PDF and ROSCO uses its latest documentation homepage; neither receives an additional OpenFAST-version documentation link.
 
 Open the extension folder in VS Code and press F5 to launch the Extension Development Host. On Windows, `scripts/run-host-test.ps1` runs real editor tests with separate user and extension directories, without installing into your everyday VS Code environment. Results are written to `test-results/host-result.json`.
 
@@ -88,12 +88,12 @@ Comparison requires matching scenario hashes, report format, Node.js major versi
 
 ## GitHub Releases
 
-For 1.1.0, run the checks and native probe build above, then package with the `v1.1.0` content URL. Commit and push the source, create and push the `v1.1.0` tag, then publish a GitHub Release with `dist/openfast-helper-1.1.0.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.
+For 1.2.0, run the checks and native probe build above, then package with the `v1.2.0` content URL. Commit and push the source, create and push the `v1.2.0` tag, then publish a GitHub Release with `dist/openfast-helper-1.2.0.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.
 
-## TurbSim launch commands
+## Maintaining TurbSim and result support
 
-`src/turbsim-runner.ts` registers separate run and executable configuration commands; `src/run-input.ts` checks the primary input signature. The editor action uses the `openfast.runnableTurbSim` context, refreshed on edits and editor switches. Explorer actions filter by extension and validate contents on execution. Shared task/path helpers receive the TurbSim program identifier; the setting is `openfast.turbSimExecutablePath` and fallback storage is `turbsim.runner.path:<folder URI>`, independent of OpenFAST.
+`src/turbsim-runner.ts` and `src/run-input.ts` implement TurbSim execution using the separate `openfast.turbSimExecutablePath`. Shared task helpers pass process arguments and the input directory independently. Trust, save results, executable files and duplicate tasks are checked before launch; this path does not enter OpenFAST preflight, queues or monitoring.
 
-TurbSim uses ProcessExecution with a separate input argument and input-directory cwd, without a shell. It does not use the FST preflight, queue or monitor. Trust, saving, executable-file checks and duplicate-task protection run before launch. ROSCO has no launch command.
+`data/module-parameters.json` contains the module-specific bilingual catalog; `data/input-value-rules.json` contains field types and special values, loaded through the catalog and `src/input-value-rules.ts`. Path classification is in `src/parameter-paths.ts`. The result language is registered in package.json and visible-region semantic tokens are in `src/result-highlights.ts`. Run the full checks above after changes. Local focused tests include `test/turbsim-runner.test.js`, `test/format-support.test.js`, `test/module-parameters.test.js` and `test/input-validation.test.js`. Apart from the tracked TurbSim test, these tests remain subject to local ignore rules.
 
-From the project root, run `npm run check`, `npm run compile`, then `node --test test/turbsim-runner.test.js test/runner.test.js test/i18n.test.js`. These mocked-task regressions cover path isolation, primary versus auxiliary inputs, arguments/cwd, save failures, duplicate launches and bilingual resources without requiring TurbSim. The new TurbSim test is tracked through a narrow .gitignore exception; older local tests remain ignored. Real simulation requires an installed TurbSim executable and a primary input in VS Code.
+Validation for 1.2.0: with external fixtures configured, 294 of 300 local tests pass. Five preflight tests and one logic-performance test also fail on the unchanged baseline commit `98034b2`, covering strict mode, revalidation during edits and forced cross-file checks. These six existing failures remain unresolved. Focused real VS Code checks for formats, result highlighting and module parameter help pass.

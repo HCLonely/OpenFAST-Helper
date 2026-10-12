@@ -1,6 +1,6 @@
 import { documentSnapshot, textSnapshot } from './editor-snapshot';
 import { tableReferenceChoices } from './editor-context';
-import { findEntry } from './catalog';
+import { findEntry, catalog } from './catalog';
 import { correctedNames } from './editor-rules';
 import { applicability, dependencyRules } from './parser';
 import { expandedFields } from './table-layout';
@@ -9,6 +9,8 @@ import { t, localizeApplicability } from './i18n';
 import { currentRevision } from './editor-input-state';
 
 const pending = new WeakMap<object, () => any>();
+// A module with no dedicated dictionary cannot support meaningful spelling feedback.
+const documentedModules = new Set(catalog.parameters.map((entry) => entry.module));
 export function deferDocumentation(item, build, document?) {
   const revision = document?.version;
   pending.set(item, () => (!document || currentRevision(document, revision) ? build() : undefined));
@@ -193,6 +195,7 @@ export function tokenFeedback(text: string) {
   for (const token of snapshot.parsed.tokens) {
     if (
       token.kind !== 'parameter' ||
+      !documentedModules.has(snapshot.parsed.module) ||
       token.name === 'OutList' ||
       findEntry(token.name, snapshot.parsed.module)
     )

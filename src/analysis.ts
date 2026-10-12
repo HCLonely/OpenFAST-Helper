@@ -7,6 +7,7 @@ import { versionIssues } from './versions';
 import { readTables, tableIssues, isNumber } from './tables';
 import { normalizedOutput } from './output-names';
 import { strictFileLists } from './editor-lists';
+import { inputValueRule } from './input-value-rules';
 const number = (value: unknown): number =>
   isNumber(String(value)) ? Number(String(value).replace(/[dD]/, 'e')) : NaN;
 function scalarRecords(
@@ -22,7 +23,7 @@ function scalarRecords(
     if (
       used.has(line) ||
       tableLines.has(line) ||
-      /^\s*[!(=-]/.test(source) ||
+      /^\s*[!#%(=-]/.test(source) ||
       /^\s*(OutList|END)\b/i.test(source)
     ) {
       return;
@@ -132,12 +133,13 @@ function analyze(
     if (inactive.has(entry.line)) {
       continue;
     }
-    if (!entry.value) {
+    if (!entry.value.replace(/^["']|["']$/g, '').trim()) {
       add(entry, 'missing-value', t('diagnostic.missingValue', entry.name));
       continue;
     }
     const original = entry.original || '';
     const value = entry.value.replace(/^["']|["']$/g, '');
+    const valueRule = inputValueRule(parsed.module, entry.name);
     const options = optionsFor({ ...entry, module: parsed.module, profile });
     if (options.length && !/1P[-+]?\d+(?:\.\d+)?$/i.test(value)) {
       const bool = options.every((x) => /^(true|false)$/i.test(x.value));
@@ -161,15 +163,16 @@ function analyze(
           ),
         );
       }
-    } else if (/\bflag\b/i.test(original) && !/^(true|false|t|f|0|1)$/i.test(value)) {
+    } else if (!valueRule && /\bflag\b/i.test(original) && !/^(true|false|t|f|0|1)$/i.test(value)) {
       add(entry, 'boolean', t('diagnostic.booleanRequired', entry.name));
     } else if (
+      !valueRule &&
       !/^(default|ranlux|rnsnlw)$/i.test(value) &&
       !/(?:File|Names|ProcName|AbortLevel|OutFmt)/i.test(entry.name) &&
       !/(?:quoted|string)/i.test(original) &&
       /\b(integer|int)\b|\(s\)|\(m\)|\(kg\)|\(rpm\)|\(-\)/i.test(original)
     ) {
-      const parts = entry.value.split(/[\s,]+/);
+      const parts = value.split(/[\s,]+/);
       if (parts.some((x) => !isNumber(x)) && !/^WaveMod$/i.test(entry.name)) {
         add(entry, 'numeric', t('diagnostic.numericValueRequired', entry.name, entry.value));
       }
@@ -181,12 +184,54 @@ function analyze(
       }
     }
     if (
+      valueRule &&
+      !/^default$/i.test(value) &&
+      !valueRule.special?.some((allowed) => allowed.toLowerCase() === value.toLowerCase())
+    ) {
+      const parts = value.trim().split(/[\s,]+/);
+      if (['real', 'integer'].includes(valueRule.type)) {
+        if (parts.some((part) => !isNumber(part) || !Number.isFinite(number(part)))) {
+          add(entry, 'numeric', t('diagnostic.numericValueRequired', entry.name, entry.value));
+        } else if (
+          valueRule.type === 'integer' &&
+          parts.some((part) => !Number.isInteger(number(part)))
+        ) {
+          add(entry, 'integer', t('diagnostic.integerRequired', entry.name));
+        }
+        const length = valueRule.array ? valueRule.length : 1;
+        if (length !== undefined && parts.length !== length)
+          add(entry, 'value-count', t('diagnostic.valueCount', entry.name, length, parts.length));
+      } else if (
+        valueRule.type === 'logical' &&
+        !/^(?:true|false|t|f|0|1)$/i.test(value) &&
+        !options.length
+      ) {
+        add(entry, 'boolean', t('diagnostic.booleanRequired', entry.name));
+      }
+    }
+    if (
       /^(?:DT|DT_Out|WaveDT|TMax|WaveTMax|RefHt|RefHt_Uni|RefLength|WaveTp)$/.test(entry.name) &&
       !/^default$/i.test(value) &&
+      !(parsed.module === 'ROSCO' && entry.name === 'DT_Out' && number(value) === 0) &&
       Number.isFinite(number(value)) &&
       number(value) <= 0
     ) {
       add(entry, 'positive', t('diagnostic.positiveRequired', entry.name));
+    }
+    if (parsed.module === 'TurbSim') {
+      if (
+        /^(?:TimeStep|AnalysisTime|UsableTime|GridHeight|GridWidth|HubHt)$/i.test(entry.name) &&
+        Number.isFinite(number(value)) &&
+        number(value) <= 0
+      )
+        add(entry, 'positive', t('diagnostic.positiveRequired', entry.name));
+      if (
+        /^NumGrid_[ZY]$/i.test(entry.name) &&
+        Number.isInteger(number(value)) &&
+        number(value) >= 0 &&
+        number(value) < 2
+      )
+        add(entry, 'minimum', t('diagnostic.minimumRequired', entry.name, 2));
     }
     if (/^WaveHs$/.test(entry.name) && number(value) < 0) {
       add(entry, 'nonnegative', t('diagnostic.negativeWaveHeight'));

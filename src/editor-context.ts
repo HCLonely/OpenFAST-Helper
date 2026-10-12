@@ -12,14 +12,10 @@ import { correctedNames } from './editor-rules';
 
 import { outputChoices, number } from './analysis';
 import type { ConfigToken } from './types';
+import { isPathParameter } from './parameter-paths';
+export { isPathParameter } from './parameter-paths';
 
 export const SPECIAL_VALUE = /^(?:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n\/a)$/i;
-export function isPathParameter(name: string): boolean {
-  return (
-    !/^(?:Num|OutFile|DLL_ProcName)/i.test(name) &&
-    /(?:File|AFNames|FilenameRoot|PotFile|BldFile|TwrFile)/i.test(name)
-  );
-}
 
 export function tokenType(token: ConfigToken, source: string): string {
   if (token.kind === 'parameter') return token.name === 'OutList' ? 'keyword' : 'parameter';
@@ -68,7 +64,7 @@ export function scalarContext(text: string, line: number, character: number) {
   // path label immediately preceding the standard description separator.
   if (!label) {
     for (const match of source.matchAll(/\b([A-Za-z][\w]*(?:\(\d+\))?)\s+[-–]\s/g)) {
-      if (isPathParameter(match[1]) && findEntry(match[1], parsed.module)) {
+      if (isPathParameter(match[1], parsed.module) && findEntry(match[1], parsed.module)) {
         label = { text: match[1], start: match.index, end: match.index + match[1].length };
       }
     }
@@ -105,7 +101,7 @@ export function pathContext(text: string, line: number, character: number) {
   if (!context && list?.module) context = list as any;
   if (context && list)
     context = { ...context, listIndex: list.index, listCount: list.count } as any;
-  if (!context || !isPathParameter(context.name)) return null;
+  if (!context || !isPathParameter(context.name, context.module)) return null;
   if (!/^["']/.test(context.value) && /\s/.test(context.value)) return null;
   const quote = /^["']/.exec(context.value)?.[0] || '"';
   const value = context.value.replace(/^["']|["']$/g, '');

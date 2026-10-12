@@ -4,6 +4,7 @@ import { errorMessage } from './errors';
 import { readTables } from './tables';
 import { number } from './analysis';
 import { fileListRules, strictFileLists } from './editor-lists';
+import { isPathParameter, turbSimFileActive } from './parameter-paths';
 function fileReferences(parsed, text) {
   const result = [];
   const lines = text.split(/\r?\n/);
@@ -36,7 +37,7 @@ function fileReferences(parsed, text) {
       continue;
     }
     if (
-      !/(?:File|Files|AFNames|FilenameRoot|PotFile|BldFile|TwrFile)/i.test(entry.name) ||
+      !isPathParameter(entry.name, parsed.module) ||
       (/ProcName|FileFmt|OutFile|TowerFile$/i.test(entry.name) &&
         /^(true|false|0|1)$/i.test(entry.value))
     ) {
@@ -48,6 +49,7 @@ function fileReferences(parsed, text) {
     const occurrence = entry.list ? 1 : (counts.get(entry.name) || 0) + 1;
     counts.set(entry.name, occurrence);
     let active = !/此参数所属选项未启用/.test(applicability(parsed, entry.name));
+    if (parsed.module === 'TurbSim') active &&= turbSimFileActive(parsed, entry.name);
     const control = controls[entry.name];
     if (control && parsed.parameters.has(control[0])) {
       active &&= control[1].includes(number(parsed.parameters.get(control[0]).value));

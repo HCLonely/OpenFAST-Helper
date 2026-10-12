@@ -3,6 +3,7 @@ import { createRunTask, readExecutable, saveExecutable } from './runner';
 import { isTurbSimInput } from './run-input';
 import { errorMessage } from './errors';
 import { t } from './i18n';
+import { documentHeader } from './file-formats';
 
 /** TurbSim uses its own primary input and executable, without OpenFAST case checks. */
 export function registerTurbSimRunner(vscode, context) {
@@ -105,7 +106,7 @@ export function registerTurbSimRunner(vscode, context) {
   const refresh = () => {
     const doc = vscode.window.activeTextEditor?.document;
     const runnable =
-      !!doc && doc.uri.scheme === 'file' && isTurbSimInput(doc.uri.path, doc.getText());
+      !!doc && doc.uri.scheme === 'file' && isTurbSimInput(doc.uri.path, documentHeader(doc));
     void vscode.commands.executeCommand('setContext', 'openfast.runnableTurbSim', runnable);
     status.text = t('turbSimRunner.statusPath');
     status.tooltip = t('turbSimRunner.statusTooltip');

@@ -1,0 +1,1618 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    "https://github.com/OpenFAST/r-test/blob/main/glue-codes/openfast/5MW_Baseline/Wind/90m_12mps_twr.inp",
+    "https://github.com/OpenFAST/openfast/blob/main/modules/turbsim/src/TS_FileIO.f90",
+    "https://github.com/NatLabRockies/ROSCO/blob/main/rosco/controller/rosco_registry/rosco_types.yaml"
+  ],
+  "parameters": [
+    {
+      "name": "Echo",
+      "module": "TurbSim",
+      "description": "是否将读取的输入参数写入 .ech 回显文件；True 开启，False 关闭。",
+      "descriptionEn": "Write the parsed inputs to an .ech echo file when True."
+    },
+    {
+      "name": "RandSeed1",
+      "module": "TurbSim",
+      "description": "第一个随机数种子，取 32 位有符号整数；用于复现湍流风场。",
+      "descriptionEn": "First signed 32-bit random seed, used to reproduce the turbulent field."
+    },
+    {
+      "name": "RandSeed2",
+      "module": "TurbSim",
+      "description": "第二个随机数种子，或随机数发生器名称 RANLUX、RNSNLW；并非文件路径。",
+      "descriptionEn": "Second random seed, or the RANLUX/RNSNLW generator name; not a file path."
+    },
+    {
+      "name": "WrBHHTP",
+      "module": "TurbSim",
+      "description": "是否输出二进制轮毂高度湍流数据 .bin。",
+      "descriptionEn": "Enable binary hub-height turbulence output (.bin)."
+    },
+    {
+      "name": "WrFHHTP",
+      "module": "TurbSim",
+      "description": "是否输出文本轮毂高度湍流数据 .dat。",
+      "descriptionEn": "Enable formatted hub-height turbulence output (.dat)."
+    },
+    {
+      "name": "WrADHH",
+      "module": "TurbSim",
+      "description": "是否输出 AeroDyn 轮毂高度风文件 .hh。",
+      "descriptionEn": "Enable AeroDyn hub-height wind output (.hh)."
+    },
+    {
+      "name": "WrADFF",
+      "module": "TurbSim",
+      "description": "是否输出 AeroDyn 全场风文件 .bts。",
+      "descriptionEn": "Enable AeroDyn full-field wind output (.bts)."
+    },
+    {
+      "name": "WrBLFF",
+      "module": "TurbSim",
+      "description": "是否输出 BLADED 格式全场风文件 .wnd。",
+      "descriptionEn": "Enable BLADED full-field wind output (.wnd)."
+    },
+    {
+      "name": "WrADTWR",
+      "module": "TurbSim",
+      "description": "是否输出塔架风场文件 .twr。",
+      "descriptionEn": "Enable tower wind output (.twr)."
+    },
+    {
+      "name": "WrHAWCFF",
+      "module": "TurbSim",
+      "description": "是否输出 HAWC 格式的三个速度分量二进制文件。",
+      "descriptionEn": "Enable HAWC-format binary output for all three velocity components."
+    },
+    {
+      "name": "WrFMTFF",
+      "module": "TurbSim",
+      "description": "是否输出全场速度分量文本文件 .u、.v、.w。",
+      "descriptionEn": "Enable formatted full-field component files (.u, .v, .w)."
+    },
+    {
+      "name": "WrACT",
+      "module": "TurbSim",
+      "description": "是否输出相干湍流时间步文件 .cts；相干事件参数用于非 IEC 模型。",
+      "descriptionEn": "Enable coherent-turbulence time-step output (.cts), for non-IEC models."
+    },
+    {
+      "name": "Clockwise",
+      "module": "TurbSim",
+      "description": "旧版 BLADED 风场的旋转方向标志；True 为顺时针。",
+      "descriptionEn": "Legacy BLADED wind-field rotation flag; True means clockwise."
+    },
+    {
+      "name": "ScaleIEC",
+      "module": "TurbSim",
+      "description": "IEC 湍流强度缩放方式：0 不缩放，1 按轮毂高度统一缩放，2 各网格点独立缩放。",
+      "descriptionEn": "IEC turbulence scaling: 0 disabled, 1 uniform hub-based scaling, 2 pointwise scaling."
+    },
+    {
+      "name": "NumGrid_Z",
+      "module": "TurbSim",
+      "description": "垂直方向网格点数。",
+      "descriptionEn": "Number of grid points in the vertical direction."
+    },
+    {
+      "name": "NumGrid_Y",
+      "module": "TurbSim",
+      "description": "水平方向网格点数。",
+      "descriptionEn": "Number of grid points in the lateral direction."
+    },
+    {
+      "name": "TimeStep",
+      "module": "TurbSim",
+      "description": "风场时间步长，单位 s。",
+      "descriptionEn": "Wind-field time increment, in s."
+    },
+    {
+      "name": "AnalysisTime",
+      "module": "TurbSim",
+      "description": "分析时长，单位 s；实际时长还受可用时长和风场平移所需时间约束。",
+      "descriptionEn": "Analysis duration in s; usable duration and field advection may require a longer simulation."
+    },
+    {
+      "name": "UsableTime",
+      "module": "TurbSim",
+      "description": "可用风场时长，单位 s；ALL 表示使用完整分析时段。",
+      "descriptionEn": "Usable duration in s; ALL selects the entire analysis period."
+    },
+    {
+      "name": "HubHt",
+      "module": "TurbSim",
+      "description": "轮毂高度，单位 m；须高于网格高度的一半。",
+      "descriptionEn": "Hub height in m; must exceed half the grid height."
+    },
+    {
+      "name": "GridHeight",
+      "module": "TurbSim",
+      "description": "全场网格的垂直高度，单位 m。",
+      "descriptionEn": "Vertical extent of the full-field grid, in m."
+    },
+    {
+      "name": "GridWidth",
+      "module": "TurbSim",
+      "description": "全场网格的水平宽度，单位 m。",
+      "descriptionEn": "Lateral extent of the full-field grid, in m."
+    },
+    {
+      "name": "VFlowAng",
+      "module": "TurbSim",
+      "description": "平均流的垂直倾角，单位 deg。",
+      "descriptionEn": "Vertical mean-flow angle, in deg."
+    },
+    {
+      "name": "HFlowAng",
+      "module": "TurbSim",
+      "description": "平均流的水平偏角，单位 deg。",
+      "descriptionEn": "Horizontal mean-flow angle, in deg."
+    },
+    {
+      "name": "TurbModel",
+      "module": "TurbSim",
+      "description": "湍流谱模型，如 IECKAI、IECVKM、GP_LLJ、NWTCUP、SMOOTH、WF_UPW、WF_07D、WF_14D、TIDAL、API、USRINP、TIMESR、NONE。",
+      "descriptionEn": "Turbulence spectrum model, including IECKAI, IECVKM, GP_LLJ, NWTCUP, SMOOTH, wake models, TIDAL, API, USRINP, TIMESR and NONE."
+    },
+    {
+      "name": "UserFile",
+      "module": "TurbSim",
+      "description": "用户自定义谱或时间序列输入文件路径；仅 TurbModel 为 USRINP 或 TIMESR 时使用，相对路径基于主输入文件目录。",
+      "descriptionEn": "User spectrum or time-series file, used with USRINP or TIMESR; relative to the main input directory."
+    },
+    {
+      "name": "IECstandard",
+      "module": "TurbSim",
+      "description": "IEC 标准编号 1、2、3；IEC 61400-1 可通过 1-ED2、1-ED3 指定版本。",
+      "descriptionEn": "IEC standard identifier 1, 2 or 3; 1-ED2 and 1-ED3 select IEC 61400-1 editions."
+    },
+    {
+      "name": "IECturbc",
+      "module": "TurbSim",
+      "description": "IEC 湍流类别 A、B、C，或指定湍流强度百分数；具体可用值取决于模型。",
+      "descriptionEn": "IEC turbulence category A, B or C, or a turbulence-intensity percentage, depending on the model."
+    },
+    {
+      "name": "IEC_WindType",
+      "module": "TurbSim",
+      "description": "IEC 风况类型：NTM、xETM、xEWM1、xEWM50，其中 x 为风机等级 1、2、3。",
+      "descriptionEn": "IEC wind condition: NTM, xETM, xEWM1 or xEWM50, with turbine class x = 1, 2 or 3."
+    },
+    {
+      "name": "ETMc",
+      "module": "TurbSim",
+      "description": "IEC 极端湍流模型 ETM 的 c 参数，单位 m/s；可用 DEFAULT。",
+      "descriptionEn": "ETM c parameter, in m/s; accepts DEFAULT."
+    },
+    {
+      "name": "WindProfileType",
+      "module": "TurbSim",
+      "description": "平均风速剖面类型：PL 幂律，LOG 对数律，H2L 潮流剖面，JET 低空急流，IEC 组合剖面，API 海上剖面，USR 用户剖面，TS 时间序列，DEFAULT 模型默认值。此参数为选项，不是文件路径。",
+      "descriptionEn": "Mean profile selector: PL power law, LOG logarithmic, H2L tidal, JET low-level jet, IEC combined, API offshore, USR user profile, TS time series, or DEFAULT. Not a file path."
+    },
+    {
+      "name": "ProfileFile",
+      "module": "TurbSim",
+      "description": "用户剖面文件路径；WindProfileType 为 USR 或 TurbModel 为 USRVKM 时使用，相对路径基于主输入文件目录。",
+      "descriptionEn": "User profile file, used for WindProfileType=USR or TurbModel=USRVKM; relative to the main input directory."
+    },
+    {
+      "name": "RefHt",
+      "module": "TurbSim",
+      "description": "参考风速对应的高度，单位 m。",
+      "descriptionEn": "Height of the reference wind speed, in m."
+    },
+    {
+      "name": "URef",
+      "module": "TurbSim",
+      "description": "参考高度处的平均风速，单位 m/s；API 使用 1 小时平均，其余模型通常使用分析时段平均。",
+      "descriptionEn": "Mean wind speed at RefHt, in m/s; API uses a one-hour mean, other models normally use the analysis-period mean."
+    },
+    {
+      "name": "ZJetMax",
+      "module": "TurbSim",
+      "description": "低空急流最大风速高度，单位 m；用于 GP_LLJ，可用 DEFAULT。",
+      "descriptionEn": "Height of peak jet speed for GP_LLJ, in m; accepts DEFAULT."
+    },
+    {
+      "name": "PLExp",
+      "module": "TurbSim",
+      "description": "幂律风切变指数，无量纲；用于 PL 或 IEC 剖面，可用 DEFAULT。",
+      "descriptionEn": "Dimensionless power-law shear exponent for PL/IEC profiles; accepts DEFAULT."
+    },
+    {
+      "name": "Z0",
+      "module": "TurbSim",
+      "description": "地表粗糙度长度，单位 m；可用 DEFAULT。",
+      "descriptionEn": "Surface roughness length in m; accepts DEFAULT."
+    },
+    {
+      "name": "Latitude",
+      "module": "TurbSim",
+      "description": "地理纬度，单位 deg；可用 DEFAULT。",
+      "descriptionEn": "Geographical latitude in deg; accepts DEFAULT."
+    },
+    {
+      "name": "RICH_NO",
+      "module": "TurbSim",
+      "description": "梯度 Richardson 数，无量纲，用于表征大气稳定度。",
+      "descriptionEn": "Dimensionless gradient Richardson number describing atmospheric stability."
+    },
+    {
+      "name": "UStar",
+      "module": "TurbSim",
+      "description": "摩擦速度，单位 m/s；可用 DEFAULT。",
+      "descriptionEn": "Friction velocity in m/s; accepts DEFAULT."
+    },
+    {
+      "name": "ZI",
+      "module": "TurbSim",
+      "description": "混合层高度，单位 m；可用 DEFAULT。",
+      "descriptionEn": "Mixing-layer depth in m; accepts DEFAULT."
+    },
+    {
+      "name": "PC_UW",
+      "module": "TurbSim",
+      "description": "u-w 速度分量的 Reynolds 应力，单位 m²/s²；可用 DEFAULT。",
+      "descriptionEn": "u-w Reynolds stress in m²/s²; accepts DEFAULT."
+    },
+    {
+      "name": "PC_UV",
+      "module": "TurbSim",
+      "description": "u-v 速度分量的 Reynolds 应力，单位 m²/s²；可用 DEFAULT。",
+      "descriptionEn": "u-v Reynolds stress in m²/s²; accepts DEFAULT."
+    },
+    {
+      "name": "PC_VW",
+      "module": "TurbSim",
+      "description": "v-w 速度分量的 Reynolds 应力，单位 m²/s²；可用 DEFAULT。",
+      "descriptionEn": "v-w Reynolds stress in m²/s²; accepts DEFAULT."
+    },
+    {
+      "name": "SCMod1",
+      "module": "TurbSim",
+      "description": "纵向速度 u 的空间相干模型：GENERAL、IEC、API、NONE 或 DEFAULT；API 仅用于 u 分量。",
+      "descriptionEn": "Spatial coherence model for u: GENERAL, IEC, API, NONE or DEFAULT; API is restricted to u."
+    },
+    {
+      "name": "SCMod2",
+      "module": "TurbSim",
+      "description": "横向速度 v 的空间相干模型：GENERAL、IEC、NONE 或 DEFAULT。",
+      "descriptionEn": "Spatial coherence model for v: GENERAL, IEC, NONE or DEFAULT."
+    },
+    {
+      "name": "SCMod3",
+      "module": "TurbSim",
+      "description": "垂向速度 w 的空间相干模型：GENERAL、IEC、NONE 或 DEFAULT。",
+      "descriptionEn": "Spatial coherence model for w: GENERAL, IEC, NONE or DEFAULT."
+    },
+    {
+      "name": "InCDec1",
+      "module": "TurbSim",
+      "description": "u 分量的两个相干衰减系数，通常以引号包围的一对数值输入，或使用 DEFAULT。",
+      "descriptionEn": "Two coherence-decay coefficients for u, supplied as a quoted pair or DEFAULT."
+    },
+    {
+      "name": "InCDec2",
+      "module": "TurbSim",
+      "description": "v 分量的两个相干衰减系数，通常以引号包围的一对数值输入，或使用 DEFAULT。",
+      "descriptionEn": "Two coherence-decay coefficients for v, supplied as a quoted pair or DEFAULT."
+    },
+    {
+      "name": "InCDec3",
+      "module": "TurbSim",
+      "description": "w 分量的两个相干衰减系数，通常以引号包围的一对数值输入，或使用 DEFAULT。",
+      "descriptionEn": "Two coherence-decay coefficients for w, supplied as a quoted pair or DEFAULT."
+    },
+    {
+      "name": "CohExp",
+      "module": "TurbSim",
+      "description": "空间相干模型指数，无量纲；可用 DEFAULT。",
+      "descriptionEn": "Dimensionless spatial-coherence exponent; accepts DEFAULT."
+    },
+    {
+      "name": "CTEventPath",
+      "module": "TurbSim",
+      "description": "相干湍流事件数据库所在目录；在非 IEC 模型且 WrACT=True 时使用。",
+      "descriptionEn": "Directory containing coherent-event data, used with non-IEC models and WrACT=True."
+    },
+    {
+      "name": "CTEventFile",
+      "module": "TurbSim",
+      "description": "相干事件数据类型：LES、DNS 或 RANDOM；RANDOM 随机选择 LES/DNS。程序在 CTEventPath 中查找 Events.les 或 Events.dns；此参数不是文件路径。",
+      "descriptionEn": "Coherent-event selector LES, DNS or RANDOM; RANDOM chooses between LES/DNS datasets under CTEventPath. Not a file path."
+    },
+    {
+      "name": "Randomize",
+      "module": "TurbSim",
+      "description": "是否随机确定相干事件的尺度和位置；True 时忽略 DistScl、CTLy、CTLz。",
+      "descriptionEn": "Randomize coherent-event scale and position; True overrides DistScl, CTLy and CTLz."
+    },
+    {
+      "name": "DistScl",
+      "module": "TurbSim",
+      "description": "相干扰动高度与转子直径之比；Randomize=True 时忽略。",
+      "descriptionEn": "Coherent-disturbance height divided by rotor diameter; ignored when Randomize=True."
+    },
+    {
+      "name": "CTLy",
+      "module": "TurbSim",
+      "description": "塔架中心在相干事件中的横向相对位置；Randomize=True 时忽略。",
+      "descriptionEn": "Relative lateral location of the tower in the coherent event; ignored when Randomize=True."
+    },
+    {
+      "name": "CTLz",
+      "module": "TurbSim",
+      "description": "轮毂在相干事件中的垂向相对位置；Randomize=True 时忽略。",
+      "descriptionEn": "Relative vertical location of the hub in the coherent event; ignored when Randomize=True."
+    },
+    {
+      "name": "CTStartTime",
+      "module": "TurbSim",
+      "description": "相干湍流事件允许开始的最早时间，单位 s。",
+      "descriptionEn": "Earliest permitted coherent-event start time, in s."
+    },
+    {
+      "name": "NumUSRz",
+      "module": "TurbSim",
+      "description": "用户定义风剖面的高度采样点数。",
+      "descriptionEn": "Number of height samples in a user-defined wind profile."
+    },
+    {
+      "name": "NumUSRf",
+      "module": "TurbSim",
+      "description": "用户定义湍流谱的频率采样点数。",
+      "descriptionEn": "Number of frequency samples in a user-defined spectrum."
+    },
+    {
+      "name": "StdScale1",
+      "module": "TurbSim",
+      "description": "用户风剖面 u 分量的标准差缩放因子。",
+      "descriptionEn": "Standard-deviation scale factor for user profile component u."
+    },
+    {
+      "name": "StdScale2",
+      "module": "TurbSim",
+      "description": "用户风剖面 v 分量的标准差缩放因子。",
+      "descriptionEn": "Standard-deviation scale factor for user profile component v."
+    },
+    {
+      "name": "StdScale3",
+      "module": "TurbSim",
+      "description": "用户风剖面 w 分量的标准差缩放因子。",
+      "descriptionEn": "Standard-deviation scale factor for user profile component w."
+    },
+    {
+      "name": "SpecScale1",
+      "module": "TurbSim",
+      "description": "用户湍流谱 u 分量的谱密度缩放因子。",
+      "descriptionEn": "Spectral-density scale factor for user spectrum component u."
+    },
+    {
+      "name": "SpecScale2",
+      "module": "TurbSim",
+      "description": "用户湍流谱 v 分量的谱密度缩放因子。",
+      "descriptionEn": "Spectral-density scale factor for user spectrum component v."
+    },
+    {
+      "name": "SpecScale3",
+      "module": "TurbSim",
+      "description": "用户湍流谱 w 分量的谱密度缩放因子。",
+      "descriptionEn": "Spectral-density scale factor for user spectrum component w."
+    },
+    {
+      "name": "LoggingLevel",
+      "module": "ROSCO",
+      "description": "控制器调试输出级别：0 不输出，1 输出 .dbg，2 增加完整 avrSWAP 数组 .dbg2；可用级别随版本变化。",
+      "descriptionEn": "Controller logging level: 0 disabled, 1 .dbg output, 2 also full avrSWAP .dbg2; additional levels depend on version."
+    },
+    {
+      "name": "Echo",
+      "module": "ROSCO",
+      "description": "输入回显开关：0 关闭，1 将读取的参数写入 .echo 文件。",
+      "descriptionEn": "Input echo switch: 0 disabled, 1 write parsed parameters to .echo."
+    },
+    {
+      "name": "Ext_Interface",
+      "module": "ROSCO",
+      "description": "Bladed 接口类型：0 标准接口，1 扩展接口；扩展接口需要兼容的 OpenFAST 版本。",
+      "descriptionEn": "Bladed interface: 0 standard, 1 extended; requires a compatible OpenFAST version."
+    },
+    {
+      "name": "DT_Out",
+      "module": "ROSCO",
+      "description": "控制器调试文件输出时间间隔，单位 s。",
+      "descriptionEn": "Controller debug-output interval, in s."
+    },
+    {
+      "name": "F_LPFType",
+      "module": "ROSCO",
+      "description": "转子和发电机转速低通滤波器阶数：1 一阶，2 二阶。",
+      "descriptionEn": "Rotor/generator speed low-pass filter: 1 first order, 2 second order."
+    },
+    {
+      "name": "F_LPFCornerFreq",
+      "module": "ROSCO",
+      "description": "转速低通滤波器的截止角频率，单位 rad/s。",
+      "descriptionEn": "Speed low-pass cutoff angular frequency, in rad/s."
+    },
+    {
+      "name": "F_LPFDamping",
+      "module": "ROSCO",
+      "description": "二阶转速低通滤波器的阻尼比；F_LPFType=2 时使用。",
+      "descriptionEn": "Damping ratio of the second-order speed filter, used when F_LPFType=2."
+    },
+    {
+      "name": "F_NumNotchFilts",
+      "module": "ROSCO",
+      "description": "陷波滤波器数量。",
+      "descriptionEn": "Number of notch filters."
+    },
+    {
+      "name": "F_GenSpdNotch_N",
+      "module": "ROSCO",
+      "description": "作用于发电机转速信号的陷波滤波器数量。",
+      "descriptionEn": "Number of notch filters applied to generator speed."
+    },
+    {
+      "name": "F_GenSpdNotch_Ind",
+      "module": "ROSCO",
+      "description": "发电机转速陷波滤波器在公共滤波器数组中的索引。",
+      "descriptionEn": "Indices of generator-speed notch filters in the shared filter arrays."
+    },
+    {
+      "name": "F_TwrTopNotch_N",
+      "module": "ROSCO",
+      "description": "作用于塔顶运动信号的陷波滤波器数量。",
+      "descriptionEn": "Number of notch filters applied to tower-top motion."
+    },
+    {
+      "name": "F_TwrTopNotch_Ind",
+      "module": "ROSCO",
+      "description": "塔顶运动陷波滤波器在公共滤波器数组中的索引。",
+      "descriptionEn": "Indices of tower-top notch filters in the shared filter arrays."
+    },
+    {
+      "name": "F_NotchFreqs",
+      "module": "ROSCO",
+      "description": "陷波滤波器固有角频率数组，单位 rad/s。",
+      "descriptionEn": "Notch-filter natural angular frequencies, in rad/s."
+    },
+    {
+      "name": "F_NotchBetaNum",
+      "module": "ROSCO",
+      "description": "陷波滤波器分子阻尼系数数组。",
+      "descriptionEn": "Numerator damping coefficients of the notch filters."
+    },
+    {
+      "name": "F_NotchBetaDen",
+      "module": "ROSCO",
+      "description": "陷波滤波器分母阻尼系数数组。",
+      "descriptionEn": "Denominator damping coefficients of the notch filters."
+    },
+    {
+      "name": "F_NotchType",
+      "module": "ROSCO",
+      "description": "旧版陷波滤波器应用模式；具体取值请按对应 ROSCO 版本核对。",
+      "descriptionEn": "Legacy notch-filter application mode; consult the matching ROSCO version for values."
+    },
+    {
+      "name": "F_NotchCornerFreq",
+      "module": "ROSCO",
+      "description": "旧版陷波滤波器中心角频率，单位 rad/s。",
+      "descriptionEn": "Legacy notch-filter center angular frequency, in rad/s."
+    },
+    {
+      "name": "F_NotchBetaNumDen",
+      "module": "ROSCO",
+      "description": "旧版陷波滤波器分子、分母阻尼系数对。",
+      "descriptionEn": "Legacy notch-filter numerator/denominator damping pair."
+    },
+    {
+      "name": "F_SSCornerFreq",
+      "module": "ROSCO",
+      "description": "设定值平滑器低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Setpoint-smoother low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "F_WECornerFreq",
+      "module": "ROSCO",
+      "description": "估计风速低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Estimated-wind-speed low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "F_FlCornerFreq",
+      "module": "ROSCO",
+      "description": "浮式反馈的塔顶前后运动二阶低通滤波参数：截止角频率 rad/s 和阻尼比。",
+      "descriptionEn": "Second-order tower-top fore-aft filter parameters for floating feedback: cutoff in rad/s and damping ratio."
+    },
+    {
+      "name": "F_FlHighPassFreq",
+      "module": "ROSCO",
+      "description": "浮式反馈的机舱前后运动高通滤波角频率，单位 rad/s。",
+      "descriptionEn": "Nacelle fore-aft high-pass frequency for floating feedback, in rad/s."
+    },
+    {
+      "name": "F_YawErr",
+      "module": "ROSCO",
+      "description": "偏航误差信号低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Yaw-error low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "F_FlpCornerFreq",
+      "module": "ROSCO",
+      "description": "襟翼控制叶根弯矩二阶低通滤波参数：截止角频率 rad/s 和阻尼比。",
+      "descriptionEn": "Blade-root moment second-order filter parameters for flap control: cutoff in rad/s and damping ratio."
+    },
+    {
+      "name": "F_VSRefSpdCornerFreq",
+      "module": "ROSCO",
+      "description": "叶尖速比跟踪转矩控制中转速参考值的低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Generator-speed reference low-pass cutoff for TSR tracking, in rad/s."
+    },
+    {
+      "name": "TRA_Mode",
+      "module": "ROSCO",
+      "description": "塔架前后振动控制：0 关闭，1 阻尼控制，2 转速避振区，3 同时启用。",
+      "descriptionEn": "Tower fore-aft control: 0 off, 1 damping, 2 speed exclusion zone, 3 both."
+    },
+    {
+      "name": "TRA_ExclSpeed",
+      "module": "ROSCO",
+      "description": "转速避振区中心的低速轴转速，单位 rad/s。",
+      "descriptionEn": "Low-speed shaft speed at the exclusion-zone center, in rad/s."
+    },
+    {
+      "name": "TRA_ExclBand",
+      "module": "ROSCO",
+      "description": "转速避振区的半宽，单位 rad/s。",
+      "descriptionEn": "Half-width of the speed exclusion zone, in rad/s."
+    },
+    {
+      "name": "TRA_RateLimit",
+      "module": "ROSCO",
+      "description": "避振区内控制增益变化的时间常数，单位 s。",
+      "descriptionEn": "Gain-transition time constant inside the exclusion zone, in s."
+    },
+    {
+      "name": "TD_Mode",
+      "module": "ROSCO",
+      "description": "旧版塔架阻尼控制模式；具体选项随 ROSCO 版本变化。",
+      "descriptionEn": "Legacy tower-damping mode; supported options depend on ROSCO version."
+    },
+    {
+      "name": "FA_HPFCornerFreq",
+      "module": "ROSCO",
+      "description": "塔架前后加速度高通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Tower fore-aft acceleration high-pass cutoff, in rad/s."
+    },
+    {
+      "name": "FA_IntSat",
+      "module": "ROSCO",
+      "description": "塔架前后阻尼控制积分项的变桨贡献限幅，单位 rad。",
+      "descriptionEn": "Pitch-contribution limit of the tower fore-aft damping integrator, in rad."
+    },
+    {
+      "name": "FA_KI",
+      "module": "ROSCO",
+      "description": "塔架前后阻尼控制积分增益，单位 rad·s/m；-1 关闭控制。",
+      "descriptionEn": "Tower fore-aft damping integral gain in rad·s/m; -1 disables control."
+    },
+    {
+      "name": "IPC_ControlMode",
+      "module": "ROSCO",
+      "description": "独立变桨控制：0 关闭，1 降低 1P 载荷，2 同时降低 1P、2P 载荷。",
+      "descriptionEn": "Individual pitch control: 0 off, 1 reduce 1P loads, 2 reduce both 1P and 2P loads."
+    },
+    {
+      "name": "IPC_Vramp",
+      "module": "ROSCO",
+      "description": "独立变桨控制渐入区间的风速，单位 m/s。",
+      "descriptionEn": "Wind-speed range for ramping in individual pitch control, in m/s."
+    },
+    {
+      "name": "IPC_IntSat",
+      "module": "ROSCO",
+      "description": "独立变桨控制积分项的变桨幅值限幅。",
+      "descriptionEn": "Pitch-amplitude limit of the individual pitch control integrator."
+    },
+    {
+      "name": "IPC_SatMode",
+      "module": "ROSCO",
+      "description": "独立变桨限幅：0 仅物理下限，1 按削峰下限，2 按物理下限软限幅，3 按削峰下限软限幅。",
+      "descriptionEn": "IPC saturation: 0 physical minimum only, 1 peak-shaving minimum, 2 soft physical minimum, 3 soft peak-shaving minimum."
+    },
+    {
+      "name": "IPC_KP",
+      "module": "ROSCO",
+      "description": "独立变桨控制比例增益数组。",
+      "descriptionEn": "Individual pitch proportional gains."
+    },
+    {
+      "name": "IPC_KI",
+      "module": "ROSCO",
+      "description": "独立变桨控制积分增益数组。",
+      "descriptionEn": "Individual pitch integral gains."
+    },
+    {
+      "name": "IPC_aziOffset",
+      "module": "ROSCO",
+      "description": "独立变桨控制的方位角相位偏置，单位 rad。",
+      "descriptionEn": "Azimuth phase offsets for individual pitch control, in rad."
+    },
+    {
+      "name": "IPC_CornerFreqAct",
+      "module": "ROSCO",
+      "description": "独立变桨执行器一阶模型的截止角频率，单位 rad/s；0 关闭。",
+      "descriptionEn": "First-order IPC actuator cutoff in rad/s; 0 disables the model."
+    },
+    {
+      "name": "PC_ControlMode",
+      "module": "ROSCO",
+      "description": "集体变桨控制：0 固定在细桨距角，1 启用 PI 变桨控制。",
+      "descriptionEn": "Collective pitch control: 0 fixed fine pitch, 1 PI pitch control."
+    },
+    {
+      "name": "PC_GS_n",
+      "module": "ROSCO",
+      "description": "变桨增益调度表的条目数；角度及各增益数组长度应一致。",
+      "descriptionEn": "Number of pitch gain-schedule entries; angle and gain arrays must have matching lengths."
+    },
+    {
+      "name": "PC_GS_angles",
+      "module": "ROSCO",
+      "description": "变桨增益调度表的桨距角数组，单位 rad。",
+      "descriptionEn": "Pitch-angle breakpoints of the gain schedule, in rad."
+    },
+    {
+      "name": "PC_GS_KP",
+      "module": "ROSCO",
+      "description": "各调度桨距角对应的变桨比例增益。",
+      "descriptionEn": "Pitch proportional gains at the scheduled pitch angles."
+    },
+    {
+      "name": "PC_GS_KI",
+      "module": "ROSCO",
+      "description": "各调度桨距角对应的变桨积分增益。",
+      "descriptionEn": "Pitch integral gains at the scheduled pitch angles."
+    },
+    {
+      "name": "PC_GS_KD",
+      "module": "ROSCO",
+      "description": "各调度桨距角对应的变桨微分增益。",
+      "descriptionEn": "Pitch derivative gains at the scheduled pitch angles."
+    },
+    {
+      "name": "PC_GS_TF",
+      "module": "ROSCO",
+      "description": "变桨微分项滤波器的调度时间常数。",
+      "descriptionEn": "Scheduled time constants of the pitch derivative filter."
+    },
+    {
+      "name": "PC_MaxPit",
+      "module": "ROSCO",
+      "description": "物理最大桨距角，单位 rad。",
+      "descriptionEn": "Maximum physical blade pitch, in rad."
+    },
+    {
+      "name": "PC_MinPit",
+      "module": "ROSCO",
+      "description": "物理最小桨距角，单位 rad。",
+      "descriptionEn": "Minimum physical blade pitch, in rad."
+    },
+    {
+      "name": "PC_MaxRat",
+      "module": "ROSCO",
+      "description": "最大变桨速率限制，单位 rad/s。",
+      "descriptionEn": "Maximum pitch-rate limit, in rad/s."
+    },
+    {
+      "name": "PC_MinRat",
+      "module": "ROSCO",
+      "description": "最小变桨速率限制，单位 rad/s。",
+      "descriptionEn": "Minimum pitch-rate limit, in rad/s."
+    },
+    {
+      "name": "PC_RefSpd",
+      "module": "ROSCO",
+      "description": "变桨控制器参考发电机高速轴转速，单位 rad/s。",
+      "descriptionEn": "Reference high-speed shaft generator speed for pitch control, in rad/s."
+    },
+    {
+      "name": "PC_FinePit",
+      "module": "ROSCO",
+      "description": "额定以下细桨距角设定值；Bladed 接口使用 deg，请核对目标版本。",
+      "descriptionEn": "Below-rated fine-pitch setpoint; the Bladed interface uses deg, so check the target version."
+    },
+    {
+      "name": "PC_Switch",
+      "module": "ROSCO",
+      "description": "转矩和变桨控制切换时，相对于最小桨距角的偏移量，单位 rad。",
+      "descriptionEn": "Pitch offset above minimum pitch for torque/pitch switching, in rad."
+    },
+    {
+      "name": "VS_ControlMode",
+      "module": "ROSCO",
+      "description": "额定以下转矩控制：0 关闭，1 Kω² 加 PI 过渡，2 风速估计 TSR 跟踪，3 功率 TSR 跟踪，4 转矩 TSR 跟踪。",
+      "descriptionEn": "Below-rated torque mode: 0 off, 1 Kω² with PI transitions, 2 wind-estimate TSR tracking, 3 power TSR tracking, 4 torque TSR tracking."
+    },
+    {
+      "name": "VS_ConstPower",
+      "module": "ROSCO",
+      "description": "额定以上恒功率转矩控制开关；0 恒转矩，1 恒功率。",
+      "descriptionEn": "Above-rated torque law: 0 constant torque, 1 constant power."
+    },
+    {
+      "name": "VS_FBP",
+      "module": "ROSCO",
+      "description": "固定桨距额定以上控制：0 使用常规变桨控制，1 功率/转速超速控制，2 风速查表 PI，3 转矩查表 PI。",
+      "descriptionEn": "Above-rated fixed-pitch mode: 0 normal pitch control, 1 power/speed overspeed law, 2 wind lookup PI, 3 torque lookup PI."
+    },
+    {
+      "name": "VS_GenEff",
+      "module": "ROSCO",
+      "description": "发电机机械功率到电功率的转换效率；输入约定请按对应 ROSCO 版本核对。",
+      "descriptionEn": "Mechanical-to-electrical generator efficiency; check the input convention for the target ROSCO version."
+    },
+    {
+      "name": "VS_ArSatTq",
+      "module": "ROSCO",
+      "description": "额定以上发电机转矩 PI 控制的饱和限值，单位 N·m。",
+      "descriptionEn": "Above-rated generator torque PI saturation limit, in N·m."
+    },
+    {
+      "name": "VS_MaxRat",
+      "module": "ROSCO",
+      "description": "发电机转矩最大变化速率，单位 N·m/s。",
+      "descriptionEn": "Maximum generator torque slew rate, in N·m/s."
+    },
+    {
+      "name": "VS_MaxTq",
+      "module": "ROSCO",
+      "description": "高速轴侧最大发电机转矩，单位 N·m。",
+      "descriptionEn": "Maximum high-speed shaft generator torque, in N·m."
+    },
+    {
+      "name": "VS_MinTq",
+      "module": "ROSCO",
+      "description": "高速轴侧最小发电机转矩，单位 N·m。",
+      "descriptionEn": "Minimum high-speed shaft generator torque, in N·m."
+    },
+    {
+      "name": "VS_MinOMSpd",
+      "module": "ROSCO",
+      "description": "最优运行区间的最小转速，单位 rad/s。",
+      "descriptionEn": "Minimum speed for optimal operation, in rad/s."
+    },
+    {
+      "name": "VS_Rgn2K",
+      "module": "ROSCO",
+      "description": "区域 2 的高速轴转矩系数 K，转矩为 Kω²，单位 N·m/(rad/s)²。",
+      "descriptionEn": "Region-2 high-speed shaft coefficient in torque Kω², in N·m/(rad/s)²."
+    },
+    {
+      "name": "VS_RtPwr",
+      "module": "ROSCO",
+      "description": "风机额定功率，单位 W。",
+      "descriptionEn": "Rated turbine power, in W."
+    },
+    {
+      "name": "VS_RtTq",
+      "module": "ROSCO",
+      "description": "发电机额定转矩，单位 N·m。",
+      "descriptionEn": "Rated generator torque, in N·m."
+    },
+    {
+      "name": "VS_RefSpd",
+      "module": "ROSCO",
+      "description": "额定发电机转速，单位 rad/s。",
+      "descriptionEn": "Rated generator speed, in rad/s."
+    },
+    {
+      "name": "VS_n",
+      "module": "ROSCO",
+      "description": "发电机转矩控制增益数量。",
+      "descriptionEn": "Number of generator torque controller gains."
+    },
+    {
+      "name": "VS_KP",
+      "module": "ROSCO",
+      "description": "发电机 PI 转矩控制器比例增益，用于过渡区。",
+      "descriptionEn": "Generator PI torque proportional gains for transition regions."
+    },
+    {
+      "name": "VS_KI",
+      "module": "ROSCO",
+      "description": "发电机 PI 转矩控制器积分增益，用于过渡区。",
+      "descriptionEn": "Generator PI torque integral gains for transition regions."
+    },
+    {
+      "name": "VS_TSRopt",
+      "module": "ROSCO",
+      "description": "区域 2 最大功率对应的最优叶尖速比，无量纲。",
+      "descriptionEn": "Dimensionless optimal tip-speed ratio for maximum power in region 2."
+    },
+    {
+      "name": "VS_FBP_n",
+      "module": "ROSCO",
+      "description": "固定桨距运行调度表条目数。",
+      "descriptionEn": "Number of fixed-pitch operating-schedule entries."
+    },
+    {
+      "name": "VS_FBP_U",
+      "module": "ROSCO",
+      "description": "固定桨距运行调度表风速，单位 m/s。",
+      "descriptionEn": "Fixed-pitch schedule wind speeds, in m/s."
+    },
+    {
+      "name": "VS_FBP_Omega",
+      "module": "ROSCO",
+      "description": "固定桨距运行调度表发电机转速，单位 rad/s。",
+      "descriptionEn": "Fixed-pitch schedule generator speeds, in rad/s."
+    },
+    {
+      "name": "VS_FBP_Tau",
+      "module": "ROSCO",
+      "description": "固定桨距运行调度表发电机转矩，单位 N·m。",
+      "descriptionEn": "Fixed-pitch schedule generator torques, in N·m."
+    },
+    {
+      "name": "SS_Mode",
+      "module": "ROSCO",
+      "description": "设定值平滑：0 关闭，1 开启。",
+      "descriptionEn": "Setpoint smoothing: 0 off, 1 on."
+    },
+    {
+      "name": "SS_VSGain",
+      "module": "ROSCO",
+      "description": "转矩控制设定值平滑器增益。",
+      "descriptionEn": "Torque-controller setpoint-smoother gain."
+    },
+    {
+      "name": "SS_PCGain",
+      "module": "ROSCO",
+      "description": "集体变桨设定值平滑器增益。",
+      "descriptionEn": "Collective-pitch setpoint-smoother gain."
+    },
+    {
+      "name": "PRC_Mode",
+      "module": "ROSCO",
+      "description": "功率参考跟踪：0 标准转速设定值，1 使用功率参考控制的转速设定值。",
+      "descriptionEn": "Power-reference tracking: 0 standard speed setpoints, 1 PRC speed setpoints."
+    },
+    {
+      "name": "PRC_Comm",
+      "module": "ROSCO",
+      "description": "功率参考来源：0 DISCON 固定输入，1 开环输入，2 ZeroMQ 输入。",
+      "descriptionEn": "Power-reference source: 0 fixed DISCON inputs, 1 open-loop inputs, 2 ZeroMQ."
+    },
+    {
+      "name": "PRC_n",
+      "module": "ROSCO",
+      "description": "功率参考风速与转速查表数组的条目数。",
+      "descriptionEn": "Number of entries in the PRC wind/speed lookup arrays."
+    },
+    {
+      "name": "PRC_WindSpeeds",
+      "module": "ROSCO",
+      "description": "功率参考查表的风速数组，单位 m/s。",
+      "descriptionEn": "PRC lookup-table wind speeds, in m/s."
+    },
+    {
+      "name": "PRC_GenSpeeds",
+      "module": "ROSCO",
+      "description": "与 PRC_WindSpeeds 对应的转速参考值数组。",
+      "descriptionEn": "Speed-reference array corresponding to PRC_WindSpeeds."
+    },
+    {
+      "name": "PRC_LPF_Freq",
+      "module": "ROSCO",
+      "description": "功率参考控制使用的风速低通滤波角频率，单位 rad/s。",
+      "descriptionEn": "Wind-estimate low-pass frequency for PRC, in rad/s."
+    },
+    {
+      "name": "PRC_R_Torque",
+      "module": "ROSCO",
+      "description": "通过额定转矩调整功率的比例系数，通常默认 1。",
+      "descriptionEn": "Rated-torque power-scaling factor, normally 1."
+    },
+    {
+      "name": "PRC_R_Speed",
+      "module": "ROSCO",
+      "description": "通过额定发电机转速调整功率的比例系数，通常默认 1。",
+      "descriptionEn": "Rated-generator-speed power-scaling factor, normally 1."
+    },
+    {
+      "name": "PRC_R_Pitch",
+      "module": "ROSCO",
+      "description": "通过细桨距角调整额定以下功率的比例系数，通常默认 1。",
+      "descriptionEn": "Below-rated power-scaling factor through fine pitch, normally 1."
+    },
+    {
+      "name": "PRC_Table_n",
+      "module": "ROSCO",
+      "description": "功率比例与细桨距角查表条目数。",
+      "descriptionEn": "Number of power-rating/fine-pitch lookup entries."
+    },
+    {
+      "name": "PRC_Pitch_Table",
+      "module": "ROSCO",
+      "description": "与功率比例表对应的细桨距角数组，单位 rad。",
+      "descriptionEn": "Fine-pitch lookup values corresponding to power ratings, in rad."
+    },
+    {
+      "name": "PRC_R_Table",
+      "module": "ROSCO",
+      "description": "与细桨距角表对应的功率比例数组。",
+      "descriptionEn": "Power-rating factors corresponding to the fine-pitch lookup table."
+    },
+    {
+      "name": "WE_Mode",
+      "module": "ROSCO",
+      "description": "风速估计器模式：0 滤波轮毂风速，1 浸入与不变性估计器，2 扩展 Kalman 滤波器；可用模式随版本变化。",
+      "descriptionEn": "Wind estimation: 0 filtered hub wind, 1 immersion/invariance estimator, 2 extended Kalman filter; availability depends on version."
+    },
+    {
+      "name": "WE_BladeRadius",
+      "module": "ROSCO",
+      "description": "风速估计器使用的转子半径，单位 m。",
+      "descriptionEn": "Rotor radius used by the wind estimator, in m."
+    },
+    {
+      "name": "WE_CP_n",
+      "module": "ROSCO",
+      "description": "参数化功率系数函数的系数数量。",
+      "descriptionEn": "Number of coefficients in the parameterized power-coefficient function."
+    },
+    {
+      "name": "WE_CP",
+      "module": "ROSCO",
+      "description": "参数化功率系数 Cp 函数的系数数组。",
+      "descriptionEn": "Coefficients of the parameterized Cp function."
+    },
+    {
+      "name": "WE_Gamma",
+      "module": "ROSCO",
+      "description": "风速估计器自适应增益，单位 m/rad。",
+      "descriptionEn": "Wind-estimator adaptation gain, in m/rad."
+    },
+    {
+      "name": "WE_GearboxRatio",
+      "module": "ROSCO",
+      "description": "齿轮箱传动比，高速轴转速与低速轴转速之比。",
+      "descriptionEn": "Gearbox ratio of high-speed to low-speed shaft speed."
+    },
+    {
+      "name": "WE_Jtot",
+      "module": "ROSCO",
+      "description": "折算到低速轴的总传动链转动惯量，单位 kg·m²。",
+      "descriptionEn": "Total drivetrain inertia referred to the low-speed shaft, in kg·m²."
+    },
+    {
+      "name": "WE_RhoAir",
+      "module": "ROSCO",
+      "description": "风速估计器使用的空气密度，单位 kg/m³。",
+      "descriptionEn": "Air density used by the wind estimator, in kg/m³."
+    },
+    {
+      "name": "PerfFileName",
+      "module": "ROSCO",
+      "description": "转子性能表文件路径，包含 Cp、Ct、Cq 数据；不是控制器 DLL。",
+      "descriptionEn": "Rotor performance-table file containing Cp, Ct and Cq data."
+    },
+    {
+      "name": "PerfTableSize",
+      "module": "ROSCO",
+      "description": "转子性能表尺寸：第一个数为桨距角数量，第二个数为叶尖速比数量。",
+      "descriptionEn": "Performance-table dimensions: pitch-angle count followed by tip-speed-ratio count."
+    },
+    {
+      "name": "WE_FOPoles_N",
+      "module": "ROSCO",
+      "description": "扩展 Kalman 滤波器的一阶系统极点表条目数。",
+      "descriptionEn": "Number of first-order pole entries for the extended Kalman filter."
+    },
+    {
+      "name": "WE_FOPoles_v",
+      "module": "ROSCO",
+      "description": "一阶系统极点表对应的风速数组，单位 m/s。",
+      "descriptionEn": "Wind speeds corresponding to the first-order system poles, in m/s."
+    },
+    {
+      "name": "WE_FOPoles",
+      "module": "ROSCO",
+      "description": "风速估计器的一阶系统极点数组。",
+      "descriptionEn": "First-order system poles used by the wind estimator."
+    },
+    {
+      "name": "Y_ControlMode",
+      "module": "ROSCO",
+      "description": "偏航控制：0 关闭，1 偏航速率控制；其他模式请核对目标版本。",
+      "descriptionEn": "Yaw control: 0 off, 1 yaw-rate control; consult the target version for other modes."
+    },
+    {
+      "name": "Y_uSwitch",
+      "module": "ROSCO",
+      "description": "两组偏航误差阈值切换的风速，单位 m/s；0 表示只使用第一组。",
+      "descriptionEn": "Wind-speed threshold for switching yaw-error limits, in m/s; 0 uses only the first limit."
+    },
+    {
+      "name": "Y_ErrThresh",
+      "module": "ROSCO",
+      "description": "触发偏航的误差阈值数组，单位 rad。",
+      "descriptionEn": "Yaw-error thresholds that trigger yaw motion, in rad."
+    },
+    {
+      "name": "Y_Rate",
+      "module": "ROSCO",
+      "description": "偏航角速度，单位 rad/s。",
+      "descriptionEn": "Yaw angular rate, in rad/s."
+    },
+    {
+      "name": "Y_MErrSet",
+      "module": "ROSCO",
+      "description": "偏航对准误差设定值，可用于尾流转向，单位 rad。",
+      "descriptionEn": "Yaw-alignment error setpoint for wake steering, in rad."
+    },
+    {
+      "name": "Y_IPC_IntSat",
+      "module": "ROSCO",
+      "description": "通过独立变桨实现偏航时的积分项限幅。",
+      "descriptionEn": "Integrator limit for yaw control through individual pitch."
+    },
+    {
+      "name": "Y_IPC_KP",
+      "module": "ROSCO",
+      "description": "独立变桨偏航控制比例增益。",
+      "descriptionEn": "Proportional gain for yaw-by-IPC control."
+    },
+    {
+      "name": "Y_IPC_KI",
+      "module": "ROSCO",
+      "description": "独立变桨偏航控制积分增益。",
+      "descriptionEn": "Integral gain for yaw-by-IPC control."
+    },
+    {
+      "name": "PS_Mode",
+      "module": "ROSCO",
+      "description": "削峰变桨限幅：0 关闭，1 开启。",
+      "descriptionEn": "Peak-shaving pitch saturation: 0 off, 1 on."
+    },
+    {
+      "name": "PS_BldPitchMin_N",
+      "module": "ROSCO",
+      "description": "最小桨距角查表条目数。",
+      "descriptionEn": "Number of minimum-pitch lookup entries."
+    },
+    {
+      "name": "PS_WindSpeeds",
+      "module": "ROSCO",
+      "description": "最小桨距角表对应的风速数组，单位 m/s。",
+      "descriptionEn": "Wind speeds of the minimum-pitch lookup table, in m/s."
+    },
+    {
+      "name": "PS_BldPitchMin",
+      "module": "ROSCO",
+      "description": "削峰控制最小桨距角数组，单位 rad。",
+      "descriptionEn": "Minimum pitch angles for peak shaving, in rad."
+    },
+    {
+      "name": "SU_Mode",
+      "module": "ROSCO",
+      "description": "启动程序：0 关闭，1 开启。",
+      "descriptionEn": "Startup procedure: 0 off, 1 on."
+    },
+    {
+      "name": "SU_StartTime",
+      "module": "ROSCO",
+      "description": "启动程序开始时间，单位 s。",
+      "descriptionEn": "Startup procedure activation time, in s."
+    },
+    {
+      "name": "SU_FW_MinDuration",
+      "module": "ROSCO",
+      "description": "自由转动阶段最短持续时间，单位 s。",
+      "descriptionEn": "Minimum freewheeling duration, in s."
+    },
+    {
+      "name": "SU_RotorSpeedThresh",
+      "module": "ROSCO",
+      "description": "从自由转动转入加载阶段的转子转速阈值，单位 rad/s。",
+      "descriptionEn": "Rotor-speed threshold for leaving freewheel and applying load, in rad/s."
+    },
+    {
+      "name": "SU_RotorSpeedCornerFreq",
+      "module": "ROSCO",
+      "description": "启动转子转速低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Startup rotor-speed low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "SU_LoadStages_N",
+      "module": "ROSCO",
+      "description": "启动部分加载阶段的数量。",
+      "descriptionEn": "Number of startup partial-load stages."
+    },
+    {
+      "name": "SU_LoadStages",
+      "module": "ROSCO",
+      "description": "各启动加载阶段的转矩与全额发电机转矩之比。",
+      "descriptionEn": "Torque fractions of full generator torque for startup load stages."
+    },
+    {
+      "name": "SU_LoadRampDuration",
+      "module": "ROSCO",
+      "description": "各启动加载阶段的转矩爬升时长数组，单位 s。",
+      "descriptionEn": "Torque-ramp durations of startup load stages, in s."
+    },
+    {
+      "name": "SU_LoadHoldDuration",
+      "module": "ROSCO",
+      "description": "各启动加载阶段的保持时长数组，单位 s。",
+      "descriptionEn": "Hold durations of startup load stages, in s."
+    },
+    {
+      "name": "SD_Mode",
+      "module": "ROSCO",
+      "description": "停机程序：0 关闭，1 开启。",
+      "descriptionEn": "Shutdown procedure: 0 off, 1 on."
+    },
+    {
+      "name": "SD_TimeActivate",
+      "module": "ROSCO",
+      "description": "停机检测逻辑开始启用的时间，单位 s。",
+      "descriptionEn": "Time when shutdown detection becomes active, in s."
+    },
+    {
+      "name": "SD_EnablePitch",
+      "module": "ROSCO",
+      "description": "是否按集体桨距角阈值触发停机。",
+      "descriptionEn": "Enable shutdown triggered by the collective-pitch threshold."
+    },
+    {
+      "name": "SD_EnableYawError",
+      "module": "ROSCO",
+      "description": "是否按偏航误差阈值触发停机。",
+      "descriptionEn": "Enable shutdown triggered by the yaw-error threshold."
+    },
+    {
+      "name": "SD_EnableGenSpeed",
+      "module": "ROSCO",
+      "description": "是否按发电机转速阈值触发停机。",
+      "descriptionEn": "Enable shutdown triggered by the generator-speed threshold."
+    },
+    {
+      "name": "SD_EnableTime",
+      "module": "ROSCO",
+      "description": "是否按预定时间触发停机。",
+      "descriptionEn": "Enable shutdown at a predefined time."
+    },
+    {
+      "name": "SD_MaxPit",
+      "module": "ROSCO",
+      "description": "触发停机的最大桨距角，单位 rad。",
+      "descriptionEn": "Pitch-angle threshold for shutdown, in rad."
+    },
+    {
+      "name": "SD_PitchCornerFreq",
+      "module": "ROSCO",
+      "description": "停机桨距角低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Shutdown pitch-angle low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "SD_MaxYawError",
+      "module": "ROSCO",
+      "description": "触发停机的最大偏航误差，单位 deg。",
+      "descriptionEn": "Yaw-error threshold for shutdown, in deg."
+    },
+    {
+      "name": "SD_YawErrorCornerFreq",
+      "module": "ROSCO",
+      "description": "停机偏航误差低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Shutdown yaw-error low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "SD_MaxGenSpd",
+      "module": "ROSCO",
+      "description": "触发停机的最大发电机转速，单位 rad/s。",
+      "descriptionEn": "Generator-speed threshold for shutdown, in rad/s."
+    },
+    {
+      "name": "SD_GenSpdCornerFreq",
+      "module": "ROSCO",
+      "description": "停机发电机转速低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Shutdown generator-speed low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "SD_Time",
+      "module": "ROSCO",
+      "description": "预定停机时刻，单位 s。",
+      "descriptionEn": "Scheduled shutdown time, in s."
+    },
+    {
+      "name": "SD_Method",
+      "module": "ROSCO",
+      "description": "停机方法；1 表示降低发电机转矩并增大桨距角。",
+      "descriptionEn": "Shutdown method; 1 reduces generator torque and increases pitch."
+    },
+    {
+      "name": "SD_MaxTorqueRate",
+      "module": "ROSCO",
+      "description": "停机期间转矩变化速率限制，单位 N·m/s。",
+      "descriptionEn": "Shutdown torque slew-rate limit, in N·m/s."
+    },
+    {
+      "name": "SD_MaxPitchRate",
+      "module": "ROSCO",
+      "description": "停机期间变桨速率限制，单位 rad/s。",
+      "descriptionEn": "Shutdown pitch-rate limit, in rad/s."
+    },
+    {
+      "name": "SD_StagePitch",
+      "module": "ROSCO",
+      "description": "各停机阶段目标桨距角数组，单位 rad。",
+      "descriptionEn": "Target pitch angles of shutdown stages, in rad."
+    },
+    {
+      "name": "SD_StageTime",
+      "module": "ROSCO",
+      "description": "各停机阶段持续时间数组，单位 s。",
+      "descriptionEn": "Durations of shutdown stages, in s."
+    },
+    {
+      "name": "SD_Stage_N",
+      "module": "ROSCO",
+      "description": "停机阶段数量。",
+      "descriptionEn": "Number of shutdown stages."
+    },
+    {
+      "name": "SD_CornerFreq",
+      "module": "ROSCO",
+      "description": "旧版停机桨距角低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Legacy shutdown pitch-angle low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "Fl_Mode",
+      "module": "ROSCO",
+      "description": "浮式风机反馈控制：0 关闭，1 机舱速度反馈。",
+      "descriptionEn": "Floating feedback: 0 off, 1 nacelle-velocity feedback."
+    },
+    {
+      "name": "Fl_n",
+      "module": "ROSCO",
+      "description": "浮式反馈增益调度表条目数。",
+      "descriptionEn": "Number of floating-feedback gain-schedule entries."
+    },
+    {
+      "name": "Fl_Kp",
+      "module": "ROSCO",
+      "description": "机舱速度比例反馈增益，单位 s。",
+      "descriptionEn": "Nacelle-velocity proportional feedback gains, in s."
+    },
+    {
+      "name": "Fl_U",
+      "module": "ROSCO",
+      "description": "浮式反馈增益调度对应的风速数组，单位 m/s。",
+      "descriptionEn": "Wind speeds of the floating-feedback gain schedule, in m/s."
+    },
+    {
+      "name": "Flp_Mode",
+      "module": "ROSCO",
+      "description": "襟翼执行器：0 关闭，1 固定襟翼角，2 PI 控制。",
+      "descriptionEn": "Flap mode: 0 off, 1 fixed flap angle, 2 PI flap control."
+    },
+    {
+      "name": "Flp_Angle",
+      "module": "ROSCO",
+      "description": "固定襟翼角，单位 deg。",
+      "descriptionEn": "Fixed flap angle, in deg."
+    },
+    {
+      "name": "Flp_Kp",
+      "module": "ROSCO",
+      "description": "襟翼 PI 控制比例增益。",
+      "descriptionEn": "Proportional gain of the flap PI controller."
+    },
+    {
+      "name": "Flp_Ki",
+      "module": "ROSCO",
+      "description": "襟翼 PI 控制积分增益。",
+      "descriptionEn": "Integral gain of the flap PI controller."
+    },
+    {
+      "name": "Flp_MaxPit",
+      "module": "ROSCO",
+      "description": "襟翼角正负幅值限制，单位 rad。",
+      "descriptionEn": "Positive/negative flap-angle amplitude limit, in rad."
+    },
+    {
+      "name": "OL_Filename",
+      "module": "ROSCO",
+      "description": "开环控制时间序列文件路径。",
+      "descriptionEn": "Open-loop control time-series file path."
+    },
+    {
+      "name": "OL_Mode",
+      "module": "ROSCO",
+      "description": "开环控制模式：0 关闭，1 按时间，2 按风速。",
+      "descriptionEn": "Open-loop control: 0 off, 1 by time, 2 by wind speed."
+    },
+    {
+      "name": "OL_BP_Mode",
+      "module": "ROSCO",
+      "description": "开环断点控制模式；具体取值请核对目标 ROSCO 版本。",
+      "descriptionEn": "Open-loop breakpoint mode; consult the target ROSCO version for values."
+    },
+    {
+      "name": "OL_BP_FiltFreq",
+      "module": "ROSCO",
+      "description": "开环断点信号一阶低通滤波截止角频率，单位 rad/s。",
+      "descriptionEn": "Open-loop breakpoint first-order low-pass cutoff, in rad/s."
+    },
+    {
+      "name": "Ind_Breakpoint",
+      "module": "ROSCO",
+      "description": "开环输入文件中断点变量所在列；按时间控制时为时间列。",
+      "descriptionEn": "Column of the open-loop breakpoint variable; the time column for time-based control."
+    },
+    {
+      "name": "Ind_BldPitch",
+      "module": "ROSCO",
+      "description": "开环输入文件中三个叶片桨距角所在列，角度单位 rad。",
+      "descriptionEn": "Open-loop column indices for blade pitch angles, in rad."
+    },
+    {
+      "name": "Ind_GenTq",
+      "module": "ROSCO",
+      "description": "开环输入文件中发电机转矩所在列，转矩单位 N·m。",
+      "descriptionEn": "Open-loop generator torque column, with torque in N·m."
+    },
+    {
+      "name": "Ind_YawRate",
+      "module": "ROSCO",
+      "description": "开环输入文件中偏航速率所在列。",
+      "descriptionEn": "Open-loop yaw-rate column index."
+    },
+    {
+      "name": "Ind_R_Speed",
+      "module": "ROSCO",
+      "description": "开环输入文件中转速功率比例系数所在列。",
+      "descriptionEn": "Open-loop column for speed-based power rating."
+    },
+    {
+      "name": "Ind_R_Torque",
+      "module": "ROSCO",
+      "description": "开环输入文件中转矩功率比例系数所在列。",
+      "descriptionEn": "Open-loop column for torque-based power rating."
+    },
+    {
+      "name": "Ind_R_Pitch",
+      "module": "ROSCO",
+      "description": "开环输入文件中桨距功率比例系数所在列。",
+      "descriptionEn": "Open-loop column for pitch-based power rating."
+    },
+    {
+      "name": "Ind_Azimuth",
+      "module": "ROSCO",
+      "description": "开环输入文件中目标转子方位角所在列，单位 rad。",
+      "descriptionEn": "Open-loop target rotor-azimuth column, with angles in rad."
+    },
+    {
+      "name": "RP_Gains",
+      "module": "ROSCO",
+      "description": "转子位置 PID 控制增益及微分滤波时间常数。",
+      "descriptionEn": "Rotor-position PID gains and derivative-filter time constant."
+    },
+    {
+      "name": "Ind_CableControl",
+      "module": "ROSCO",
+      "description": "开环输入文件中缆绳控制量所在列，单位 m。",
+      "descriptionEn": "Open-loop cable-control column indices, with inputs in m."
+    },
+    {
+      "name": "Ind_StructControl",
+      "module": "ROSCO",
+      "description": "开环输入文件中结构控制量所在列，单位取决于控制装置。",
+      "descriptionEn": "Open-loop structural-control column indices; units depend on the device."
+    },
+    {
+      "name": "PA_Mode",
+      "module": "ROSCO",
+      "description": "变桨执行器模型：0 不使用，1 一阶，2 二阶。",
+      "descriptionEn": "Pitch-actuator model: 0 disabled, 1 first order, 2 second order."
+    },
+    {
+      "name": "PA_CornerFreq",
+      "module": "ROSCO",
+      "description": "变桨执行器带宽或截止角频率，单位 rad/s。",
+      "descriptionEn": "Pitch-actuator bandwidth/cutoff, in rad/s."
+    },
+    {
+      "name": "PA_Damping",
+      "module": "ROSCO",
+      "description": "二阶变桨执行器阻尼比；一阶模型忽略。",
+      "descriptionEn": "Second-order pitch-actuator damping ratio; ignored by the first-order model."
+    },
+    {
+      "name": "AWC_Mode",
+      "module": "ROSCO",
+      "description": "主动尾流控制：0 关闭，1 复数方法，2 Coleman 变换方法。",
+      "descriptionEn": "Active wake control: 0 off, 1 complex-number method, 2 Coleman transform method."
+    },
+    {
+      "name": "AWC_NumModes",
+      "module": "ROSCO",
+      "description": "主动尾流控制的模态数量。",
+      "descriptionEn": "Number of active wake-control modes."
+    },
+    {
+      "name": "AWC_n",
+      "module": "ROSCO",
+      "description": "主动尾流控制方位模态编号数组。",
+      "descriptionEn": "Azimuthal mode indices for active wake control."
+    },
+    {
+      "name": "AWC_harmonic",
+      "module": "ROSCO",
+      "description": "主动尾流控制 Coleman 变换谐波编号数组。",
+      "descriptionEn": "Coleman-transform harmonic indices for active wake control."
+    },
+    {
+      "name": "AWC_freq",
+      "module": "ROSCO",
+      "description": "主动尾流控制激励频率数组，单位 Hz。",
+      "descriptionEn": "Active wake-control excitation frequencies, in Hz."
+    },
+    {
+      "name": "AWC_amp",
+      "module": "ROSCO",
+      "description": "主动尾流控制激励幅值数组，单位 deg。",
+      "descriptionEn": "Active wake-control excitation amplitudes, in deg."
+    },
+    {
+      "name": "AWC_clockangle",
+      "module": "ROSCO",
+      "description": "主动尾流控制钟向角数组，单位 deg。",
+      "descriptionEn": "Active wake-control clocking angles, in deg."
+    },
+    {
+      "name": "AWC_phaseoffset",
+      "module": "ROSCO",
+      "description": "主动尾流控制 Coleman 变换方位偏移，单位 deg。",
+      "descriptionEn": "Active wake-control Coleman azimuth offsets, in deg."
+    },
+    {
+      "name": "AWC_CntrGains",
+      "module": "ROSCO",
+      "description": "主动尾流控制的比例与积分或谐振增益。",
+      "descriptionEn": "Active wake-control proportional and integral/resonant gains."
+    },
+    {
+      "name": "PF_Mode",
+      "module": "ROSCO",
+      "description": "变桨执行器故障模式：0 关闭，1 叶片偏置。",
+      "descriptionEn": "Pitch-actuator fault mode: 0 off, 1 blade offsets."
+    },
+    {
+      "name": "PF_Offsets",
+      "module": "ROSCO",
+      "description": "三个叶片的变桨故障偏置；单位约定请按目标版本核对。",
+      "descriptionEn": "Pitch fault offsets for the three blades; check units in the target version."
+    },
+    {
+      "name": "PF_TimeStuck",
+      "module": "ROSCO",
+      "description": "三个叶片变桨执行器卡死故障时刻，单位 s。",
+      "descriptionEn": "Pitch-actuator stuck-fault times for the three blades, in s."
+    },
+    {
+      "name": "Ext_Mode",
+      "module": "ROSCO",
+      "description": "外部控制库调用：0 关闭，1 开启。",
+      "descriptionEn": "External controller library: 0 off, 1 enabled."
+    },
+    {
+      "name": "DLL_FileName",
+      "module": "ROSCO",
+      "description": "外部控制动态库路径。",
+      "descriptionEn": "External controller dynamic-library path."
+    },
+    {
+      "name": "DLL_InFile",
+      "module": "ROSCO",
+      "description": "传递给外部控制动态库的参数文件路径。",
+      "descriptionEn": "Parameter-file path passed to the external controller library."
+    },
+    {
+      "name": "DLL_ProcName",
+      "module": "ROSCO",
+      "description": "动态库导出的控制函数名称，通常为 DISCON；不是文件路径。",
+      "descriptionEn": "Exported controller procedure name, usually DISCON; not a file path."
+    },
+    {
+      "name": "ZMQ_Mode",
+      "module": "ROSCO",
+      "description": "ZeroMQ 外部通信开关；支持的控制通道随版本变化。",
+      "descriptionEn": "ZeroMQ communication switch; supported channels depend on version."
+    },
+    {
+      "name": "ZMQ_ID",
+      "module": "ROSCO",
+      "description": "ZeroMQ 控制器标识，范围 0000–9999。",
+      "descriptionEn": "ZeroMQ controller identifier, from 0000 to 9999."
+    },
+    {
+      "name": "ZMQ_CommAddress",
+      "module": "ROSCO",
+      "description": "ZeroMQ 通信地址，例如 tcp://localhost:5555；不是本地文件路径。",
+      "descriptionEn": "ZeroMQ endpoint such as tcp://localhost:5555; not a local file path."
+    },
+    {
+      "name": "ZMQ_UpdatePeriod",
+      "module": "ROSCO",
+      "description": "ZeroMQ 通信更新周期；单位与约定请按目标版本核对。",
+      "descriptionEn": "ZeroMQ update period; check units and convention in the target version."
+    },
+    {
+      "name": "CC_Mode",
+      "module": "ROSCO",
+      "description": "缆绳控制模式；0 关闭，其他取值请按目标版本核对。",
+      "descriptionEn": "Cable-control mode; 0 disables it, other values depend on the target version."
+    },
+    {
+      "name": "CC_Group_N",
+      "module": "ROSCO",
+      "description": "缆绳控制组数量。",
+      "descriptionEn": "Number of cable-control groups."
+    },
+    {
+      "name": "CC_ActTau",
+      "module": "ROSCO",
+      "description": "缆绳执行器时间常数，单位 s。",
+      "descriptionEn": "Cable-actuator time constant, in s."
+    },
+    {
+      "name": "CC_GroupIndex",
+      "module": "ROSCO",
+      "description": "各缆绳控制组的索引数组。",
+      "descriptionEn": "Cable-control group indices."
+    },
+    {
+      "name": "StC_Mode",
+      "module": "ROSCO",
+      "description": "结构控制模式；0 关闭，其他取值请按目标版本核对。",
+      "descriptionEn": "Structural-control mode; 0 disables it, other values depend on the target version."
+    },
+    {
+      "name": "StC_Group_N",
+      "module": "ROSCO",
+      "description": "结构控制组数量。",
+      "descriptionEn": "Number of structural-control groups."
+    },
+    {
+      "name": "StC_GroupIndex",
+      "module": "ROSCO",
+      "description": "各结构控制组的索引数组。",
+      "descriptionEn": "Structural-control group indices."
+    },
+    {
+      "name": "nComp",
+      "module": "TurbSim",
+      "description": "用户时间序列包含的速度分量数。",
+      "descriptionEn": "Number of velocity components in the user time series."
+    },
+    {
+      "name": "nPoints",
+      "module": "TurbSim",
+      "description": "用户时间序列包含的空间采样点数。",
+      "descriptionEn": "Number of spatial sample points in the user time series."
+    },
+    {
+      "name": "RefPtID",
+      "module": "TurbSim",
+      "description": "用户时间序列中参考采样点的编号。",
+      "descriptionEn": "Reference sample-point index in the user time series."
+    }
+  ]
+}

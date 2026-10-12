@@ -128,7 +128,8 @@ catalog = {'schemaVersion':1,'parameters':params,'tables':[{'name':k,'descriptio
            'outputs':[{'name':k,'description':v} for k,v in sorted(outputs.items())],
            'sources':{'OpenFAST':'https://openfast.readthedocs.io/en/main/source/user/index.html',
                       'MoorDyn':'https://moordyn.readthedocs.io/en/latest/inputs.html',
-                      'ROSCO':'https://rosco.readthedocs.io/en/latest/source/rosco.html'}}
+                      'ROSCO':'https://rosco.readthedocs.io/en/latest/',
+                      'TurbSim':'https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1'}}
 (HERE/'data').mkdir(exist_ok=True)
 (HERE/'data'/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(f"Catalog: {len(params)} parameters, {len(tables)} table fields, {len(outputs)} outputs")

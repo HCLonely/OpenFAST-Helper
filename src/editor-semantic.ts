@@ -2,6 +2,7 @@ import { documentSnapshot, textSnapshot } from './editor-snapshot';
 import { numericParts, symbolRoles } from './editor-visuals';
 import { largeContext } from './editor-large-context';
 import { timed } from './editor-performance';
+import { resultHighlightTokens } from './result-highlights';
 
 /** One bounded edit, aligned to token records. Applying it recreates next exactly. */
 export function semanticDelta(previous: Uint32Array, next: Uint32Array) {
@@ -42,7 +43,7 @@ export function registerSemanticAssistance(vscode, context, types, classify) {
       vscode.window.onDidChangeTextEditorVisibleRanges((event) => {
         const doc = event.textEditor.document;
         if (
-          doc.languageId === 'openfast' &&
+          ['openfast', 'openfast-output'].includes(doc.languageId) &&
           doc.offsetAt(
             new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length),
           ) > LARGE_DOCUMENT
@@ -70,7 +71,22 @@ export function registerSemanticAssistance(vscode, context, types, classify) {
     let tokens,
       lines,
       shift = 0;
-    if (large) {
+    if (document.languageId === 'openfast-output') {
+      const result = resultHighlightTokens(
+        document,
+        large
+          ? ranges
+          : [
+              requested || {
+                start: { line: 0 },
+                end: { line: last },
+              },
+            ],
+        token,
+      );
+      tokens = result.tokens;
+      lines = result.lines;
+    } else if (large) {
       tokens = [];
       lines = [];
       const seen = new Set();
@@ -103,7 +119,9 @@ export function registerSemanticAssistance(vscode, context, types, classify) {
     const config = vscode.workspace?.getConfiguration?.('openfast', document.uri);
     const components = config?.get('highlightNumericParts', false);
     const roles =
-      !large && config?.get('highlightSymbolRoles', false)
+      !large &&
+      document.languageId !== 'openfast-output' &&
+      config?.get('highlightSymbolRoles', false)
         ? new Map(
             symbolRoles(documentSnapshot(document).text).map((c) => [
               c.line + ':' + c.start,
@@ -135,7 +153,7 @@ export function registerSemanticAssistance(vscode, context, types, classify) {
     timed('highlight.semantic', () => buildTokens(document, token, requested));
   context.subscriptions.push(
     vscode.languages.registerDocumentSemanticTokensProvider(
-      { language: 'openfast' },
+      [{ language: 'openfast' }, { language: 'openfast-output' }],
       {
         onDidChangeSemanticTokens: changes?.event,
         provideDocumentSemanticTokens(document, token) {
@@ -162,7 +180,7 @@ export function registerSemanticAssistance(vscode, context, types, classify) {
   );
   context.subscriptions.push(
     vscode.languages.registerDocumentRangeSemanticTokensProvider(
-      { language: 'openfast' },
+      [{ language: 'openfast' }, { language: 'openfast-output' }],
       {
         provideDocumentRangeSemanticTokens(document, range, token) {
           return build(document, token, range);

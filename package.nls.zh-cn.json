@@ -1,6 +1,6 @@
 {
   "description": "OpenFAST 配置高亮、中文解释、参数检查、工况比较与直接运行。",
-  "openfast.enableFileIcons.title": "OpenFAST: 仅设置 FST/DAT 图标（保留原主题）",
+  "openfast.enableFileIcons.title": "OpenFAST: 设置 OpenFAST / TurbSim / ROSCO 文件图标（保留原主题）",
   "openfast.setLanguage.title": "OpenFAST: 将当前文件识别为 OpenFAST 配置",
   "openfast.lookupParameter.title": "OpenFAST: 查询参数说明",
   "openfast.chooseParameterValue.title": "OpenFAST: 选择当前参数的固定选项",

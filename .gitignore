@@ -4,7 +4,6 @@ test-results/
 *.log
 native/**/target/
 test/*
-!test/turbsim-runner.test.js
 .history/
 docs/
 bin/

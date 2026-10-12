@@ -8,18 +8,18 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.1.0.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.2.0.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.1.0.vsix"
+code --install-extension "openfast-helper-1.2.0.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.1.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.1.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.2.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
 
 ## Supported text formats
 
@@ -27,9 +27,9 @@ Download `openfast-helper-1.1.0.vsix` from [GitHub Releases](https://github.com/
 
 Highlighting retains this project's existing parameter/value/comment separation, semantic tokens and theme colors. It covers ROSCO values and arrays with parameter names after `!`, including records without a trailing description; TurbSim bare string choices; unquoted filenames; known table headers, units rows and output titles.
 
-Generic extensions are not globally reassigned. Explicitly selected languages remain in place. Files without enough content evidence, including headerless numeric wind/output files, can be opened through **OpenFAST: Recognize current file as OpenFAST** or the language-mode picker. Automatic detection retains the 2 MB limit. Binary `.outb`/`.bts`, DLLs and ROSCO YAML are outside this text-highlighting detection. Additional highlighting does not imply complete parameter documentation, validation or support for launching ROSCO. TurbSim primary inputs have a separate run command described below.
+Generic extensions are not globally reassigned. Explicitly selected languages remain in place. Files without enough content evidence, including headerless numeric wind/output files, can be opened through **OpenFAST: Recognize current file as OpenFAST** or the language-mode picker. Automatic input detection retains its 2 MB limit; text results use bounded header detection independently of that limit. Binary `.outb`/`.bts`, DLLs and ROSCO YAML are outside this text-highlighting detection. Additional highlighting does not imply complete parameter documentation, validation or support for launching ROSCO. TurbSim primary inputs have a separate run command described below.
 
-Official-document additions cover ROSCO `.echo/.dbg/.dbg2/.dbg3` and rotor-performance tables; AeroDisk, AeroAcoustics and structural-control input titles; TurbSim user time series, spectra and profiles, plus `.hh/.u/.v/.w/.cts` text and legacy `.ctp` input; and AeroDisk coefficient `.csv` tables with recognized columns. Recognition still requires content evidence. Key-first records in documented key/value modules and compact TurbSim labels such as `AnalysisTime-` receive supplementary editor highlighting. Full-line `#/%` comments and the documented table headers retain existing theme styles. These additions do not extend strict pre-run validation or editing commands to key-first records.
+Official-document additions cover ROSCO `.echo/.dbg/.dbg2/.dbg3` and rotor-performance tables; AeroDisk, AeroAcoustics and structural-control input titles; TurbSim user time series, spectra and profiles, plus `.hh/.u/.v/.w/.cts` text and legacy `.ctp` input; and AeroDisk coefficient `.csv` tables with recognized columns. Apart from directly associated result extensions, recognition still requires content evidence. Key-first records in documented key/value modules and compact TurbSim labels such as `AnalysisTime-` receive supplementary editor highlighting. Full-line `#/%` comments and the documented table headers retain existing theme styles. These additions do not extend strict pre-run validation or editing commands to key-first records.
 
 Existing recognition and coloring take precedence when formats overlap. Other language modes remain protected: VS Code normally opens `.hh` as C++ and `.cts` as TypeScript; manually select OpenFAST to highlight these text files. ROSCO tuning YAML keeps YAML highlighting. TurbSim binary `.wnd/.bts/.bin/.twr` files remain outside text detection.
 
@@ -244,11 +244,25 @@ Existing channels are marked as already added and ranked lower; the channel curr
 
 If no executable is configured, the first run opens a picker and saves the path. If the setting is unavailable or cannot be written in the current window, workspace extension storage retains it as a fallback; manual settings.json edits are unnecessary. The same FST cannot start twice concurrently. Pre-run checks cover the main file and enabled references. Relevant unsaved files are listed; choosing to save and check saves them and repeats validation. Known errors, unreadable configurations and reference limits block execution; ordinary warnings require confirmation. Unrelated modified files remain untouched. Separate process arguments support Chinese, spaces and special characters without constructing a shell command. Execution requires a trusted local workspace, has no assigned shortcut and is never triggered by opening or editing a file.
 
+## Result highlighting and TurbSim diagnostics
+
+Documentation links in TurbSim hovers open the [TurbSim v2.00 user guide (PDF)](https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1); ROSCO files link to the [ROSCO documentation homepage](https://rosco.readthedocs.io/en/latest/).
+
+.out/.dbg/.dbg2/.dbg3/.echo default to the **OpenFAST Results** language, highlighting headers, units, numbers and scientific notation. Other supported text results (.sum/.lin/.hh/.u/.v/.w, for example) use content-based detection, preserving explicitly selected languages. For headerless results, select **OpenFAST Results** manually. Binary .outb/.bts files cannot receive text highlighting; use the existing result preview for .outb.
+
+Results use a separate language from inputs and do not validate data columns as configuration parameters. Detection reads at most 150 lines and 64,000 characters. Large-result semantic highlighting reads visible rows only, bounded to 800 lines per range, 1,000,000 characters and 50,000 tokens per request. Result mode defaults to disabling VS Code's large-file highlighting optimization; user settings can override this. Files beyond the extension-host synchronization limit use syntax highlighting. Editor and memory limits still apply. Close and reopen result files already open before upgrading.
+
+The extension ships 69 TurbSim and 199 ROSCO parameter descriptions in Chinese and English for offline hover, lookup and completion, without modifying input comments. Coverage includes TurbSim main inputs and common user-input fields, and ROSCO DISCON filters, pitch/torque control, wind estimation, floating feedback and startup/shutdown. Version-specific choices follow the matching solver documentation.
+
+TurbSim `WindProfileType` (such as `PL`) and `CTEventFile` (`LES`, `DNS`, `RANDOM`) are selectors and do not trigger missing-file diagnostics or path completion. `UserFile` is checked for USRINP/TIMESR models; `ProfileFile` for USR profiles or the USRVKM model. `CTEventPath` is a database directory; its event files are not individually checked. These descriptions do not replace TurbSim input validation.
+
+Input checks use built-in field types for 69 TurbSim fields and 195 current ROSCO fields, independently of trailing comments. TurbSim supports `UsableTime="ALL"`, `RandSeed2="RANLUX"/"RNSNLW"`, two-value coherence parameters and compact labels such as `AnalysisTime-`. Checks cover numeric/integer types, fixed value counts, at least two grid points and positive time steps and dimensions. ROSCO accepts `DT_Out=0`; disabled OL_Mode, Ext_Mode and WE_Mode suppress checks for their optional file references. Legacy fields and version-specific rules remain incomplete; the respective program provides final validation.
+
 ## Running TurbSim with one click
 
 1. Open a trusted local workspace and a TurbSim primary input (.inp/.in/.dat/.txt). Detection requires NumGrid_Z, NumGrid_Y, TimeStep and AnalysisTime within the first 150 lines and 64,000 characters. Auxiliary time-series, spectrum and profile inputs, and output files cannot run directly.
 2. Click **TurbSim path** in the status bar or use **TurbSim: Configure executable path** to select the program (for example TurbSim_x64.exe). The setting `openfast.turbSimExecutablePath` is independent of the OpenFAST path. The first run opens a picker if unset; extension storage provides a fallback when settings cannot be written.
-3. Click ▶ in the editor title or use **TurbSim: Run primary input file** from the Explorer context menu. This menu may also appear on other files with the same generic extensions; execution validates their contents. A running input cannot be started twice.
+3. Click ▶ in the editor title or use **TurbSim: Run primary input file** from the Explorer context menu. This menu may also appear on other files with the same generic extensions; execution validates their contents. A running input cannot be started twice. TurbSim primary/auxiliary inputs and ROSCO inputs hide the OpenFAST case-check, case-comparison and run-monitor editor buttons. OpenFAST main and module inputs retain these actions.
 
 The current primary input is saved before launch; a failed save blocks execution. The program receives the full input path as a separate argument and runs in its directory. Raw output appears in a VS Code task terminal; use **Terminal → Terminate Task** to stop it. Nonzero exits display an error pointing to the terminal. TurbSim tasks do not enter the OpenFAST queue or progress monitor and do not use OpenFAST case preflight checks. Save modified auxiliary files yourself; TurbSim validates the actual inputs. Detection accepts text files up to 2 MB. Opening or editing a file never starts execution.
 
@@ -312,17 +326,19 @@ The configuration-tree line-chart icon also selects outputs; `.out/.outb` editor
 
 ## Configuration file icons
 
-Since 0.1.4, local customization of the active **vscode-icons** theme replaces only `.fst/.dat` icons with turbine-and-wave SVGs for light/dark backgrounds. Other files, folders and custom associations are preserved. `.fstf` and DISCON.IN icons are unchanged.
+Run **OpenFAST: Apply OpenFAST / TurbSim / ROSCO file icons (keep current theme)** to apply light/dark variants in the current **vscode-icons** theme:
 
-Run **OpenFAST: Apply FST/DAT icons (keep current theme)**. It writes two SVGs into the vscode-icons custom directory, merges `.fst/.dat` associations and invokes **Apply Icons Customization**, without changing `workbench.iconTheme`. Settings prefer the current workspace, falling back to user scope. The approach follows [vscode-icons custom icons](https://github.com/vscode-icons/vscode-icons/wiki/Custom) and [association configuration](https://github.com/vscode-icons/vscode-icons/wiki/FineTuning).
+- OpenFAST: .fst/.fstf/.dat/.ipt/.bmi inputs and .sum/.out/.outb/.lin/.ech summaries, results and echoes use turbine-and-wave icons.
+- TurbSim: .inp/.ctp inputs and .bts/.wnd/.hh/.u/.v/.w/.cts/.twr wind files use wind-field icons.
+- ROSCO: DISCON.IN and .echo/.dbg/.dbg2/.dbg3 use controller icons.
 
-Only vscode-icons currently supports this local customization. Other themes lack a unified VS Code partial-override API, so they are preserved and reported as unsupported rather than replaced. Icon changes do not alter language detection.
+Workspaces that already enabled OpenFAST icons automatically receive missing associations after upgrading and reloading the window. First-time setup still uses the icon command. Associations use extensions or exact filenames, not file contents: other applications' .inp files also receive wind icons. Generic .in/.txt/.csv/.yaml/.yml/.bin files and dynamic libraries retain the current theme's icons; DISCON.IN has an exact filename association. Arbitrarily named ROSCO tuning YAML/performance TXT and TurbSim BIN files do not receive content-based custom icons. Icons do not imply direct execution or text highlighting for binary files.
 
-Extension-based associations show the new icon for all DAT files, including shared blade/tower, BeamDyn and airfoil-polar files, without opening them first.
+The command writes six SVGs, merges the target associations and regenerates vscode-icons while preserving other associations and the active theme. Settings prefer workspace scope, falling back to user scope. Other icon themes remain unchanged and are reported as unsupported. See [vscode-icons custom icons](https://github.com/vscode-icons/vscode-icons/wiki/Custom) and [association configuration](https://github.com/vscode-icons/vscode-icons/wiki/FineTuning).
 
 ## Supported scope
 
-The built-in catalog contains 477 parameter records (including module-specific namesakes), 161 table fields and 119 output records, plus dynamic explanations for arbitrarily numbered MoorDyn end-tension channels. Coverage focuses on OpenFAST main files, ElastoDyn, InflowWind, ServoDyn, SeaState, HydroDyn and MoorDyn. AeroDyn, structural properties and ROSCO have common descriptions. BeamDyn, SubDyn and TurbSim headers are recognized, but their full parameter sets are not cataloged.
+The built-in catalog contains 750 parameter records (including module-specific namesakes), 161 table fields and 119 output records, plus dynamic explanations for arbitrarily numbered MoorDyn end-tension channels. Coverage focuses on OpenFAST main files, ElastoDyn, InflowWind, ServoDyn, SeaState, HydroDyn and MoorDyn. TurbSim and ROSCO have dedicated module descriptions; AeroDyn and structural properties have common descriptions. BeamDyn and SubDyn headers are recognized, but their full parameter sets are not cataloged.
 
 Explanations use actual current-document values, never assuming example-case wind speeds, durations, rotor speeds or activation states apply elsewhere. Applicability hints cover common wind, controller, linearization and some sea/hydrodynamic switches, not complete version validation. Unknown fields retain original English descriptions and identify missing catalog coverage. Existing `! 中文说明：` comments join original descriptions in **Line comments**, preserving all text without overriding built-ins or requiring translated text in source configurations.
 
@@ -362,7 +378,7 @@ Run **OpenFAST: Open all extension settings**, or search `@ext:hclonely.openfast
 
 `openfast.language = "auto"` follows the VS Code interface: Simplified Chinese for Chinese interfaces, English otherwise. Select `zh-CN` or `en` in settings, or run **OpenFAST: Select display language**, to change hover, lookup, suggestions, diagnostics and run messages immediately. Command menus, settings titles and view names use VS Code's interface-language `package.nls` resources; overriding extension runtime language does not change the VS Code interface.
 
-All 477 parameters, 161 table fields and 119 channels include English and Chinese descriptions. Existing file comments retain their original language. Chinese mode labels blocks “内置说明” and “行尾注释”; English mode uses **Built-in description** and **Line comments**. English, Chinese and mixed comments are shown in full, including text before “中文说明：”, even when they repeat the built-in explanation. `openfast.showOriginalDescription` controls the entire line-comments block.
+All 750 parameters, 161 table fields and 119 channels include English and Chinese descriptions. Existing file comments retain their original language. Chinese mode labels blocks “内置说明” and “行尾注释”; English mode uses **Built-in description** and **Line comments**. English, Chinese and mixed comments are shown in full, including text before “中文说明：”, even when they repeat the built-in explanation. `openfast.showOriginalDescription` controls the entire line-comments block.
 
 Generated lookup labels, fixed choices, table descriptions, diagnostics, run messages and new comparison reports support both languages. File comments, section headings, paths, parameter/channel/module names, original official section titles and OpenFAST/OS output retain their original text. Existing/exported reports retain their generation language; compare again after switching to create a report in the selected language.
 

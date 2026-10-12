@@ -16,10 +16,15 @@ import { lineComments } from './comments';
 import type { ConfigToken, ParsedDocument, ParameterExplanation } from './types';
 import * as vscode from 'vscode';
 import { errorMessage } from './errors';
-import { lex, tokenAt, explainToken } from './parser';
-import { isOpenFASTTextFile } from './file-formats';
+import { lex, tokenAt, explainToken, detectModule } from './parser';
+import {
+  isOpenFASTTextFile,
+  isSimulationResultFile,
+  documentHeader,
+  documentSize,
+} from './file-formats';
 import { catalog, findDocumentation, documentation } from './catalog';
-import { enableFileIcons } from './icon-integration';
+import { enableFileIcons, refreshExistingFileIcons } from './icon-integration';
 import { optionsFor, valueContext } from './value-options';
 import { registerWorkbench, profileFor } from './workbench';
 import { resolveVersion, documentationUrl, versionOptions } from './versions';
@@ -132,7 +137,7 @@ function markdown(info: ParameterExplanation): vscode.MarkdownString {
       : url;
     md.appendMarkdown(t('hover.generalDocumentation', fallback));
   }
-  if (info.profile.known && info.profile.major < 5) {
+  if (!['TurbSim', 'ROSCO'].includes(info.module) && info.profile.known && info.profile.major < 5) {
     md.appendMarkdown(
       t(
         'hover.versionDocumentation',
@@ -149,8 +154,12 @@ async function autoDetect(document: vscode.TextDocument): Promise<void> {
   if (document.languageId !== 'plaintext') {
     return;
   }
-  if (isOpenFASTTextFile(document.uri.path, document.getText())) {
-    await vscode.languages.setTextDocumentLanguage(document, 'openfast');
+  const header = documentHeader(document);
+  if (isOpenFASTTextFile(document.uri.path, header, documentSize(document))) {
+    await vscode.languages.setTextDocumentLanguage(
+      document,
+      isSimulationResultFile(document.uri.path, header) ? 'openfast-output' : 'openfast',
+    );
   }
 }
 function semanticType(token, source?: string) {
@@ -252,6 +261,28 @@ function activate(context: vscode.ExtensionContext) {
   );
   const selector = { language: 'openfast' };
   const register = (x) => context.subscriptions.push(x);
+  const refreshCaseInput = () => {
+    const document = vscode.window.activeTextEditor?.document;
+    const module = document?.languageId === 'openfast' && detectModule(documentHeader(document));
+    void vscode.commands.executeCommand(
+      'setContext',
+      'openfast.caseInput',
+      !!module && module !== 'TurbSim' && module !== 'ROSCO',
+    );
+  };
+  register(vscode.window.onDidChangeActiveTextEditor(refreshCaseInput));
+  register(
+    vscode.workspace.onDidChangeTextDocument((event) => {
+      if (
+        event.document === vscode.window.activeTextEditor?.document &&
+        event.contentChanges.some((change) => change.range.start.line < 150)
+      )
+        refreshCaseInput();
+    }),
+  );
+  // Opening also covers automatic language changes of the active document.
+  register(vscode.workspace.onDidOpenTextDocument(refreshCaseInput));
+  refreshCaseInput();
   const safelyDetect = (doc) => {
     void autoDetect(doc).catch((error) => console.warn('OpenFAST detection:', error.message));
   };
@@ -280,6 +311,17 @@ function activate(context: vscode.ExtensionContext) {
         void vscode.window.showErrorMessage(t('icons.configurationFailed', errorMessage(error)));
         return false;
       }
+    }),
+  );
+  const refreshIcons = () => {
+    void refreshExistingFileIcons(vscode, context).catch((error) =>
+      console.warn('OpenFAST file icons:', errorMessage(error)),
+    );
+  };
+  refreshIcons();
+  register(
+    vscode.workspace.onDidChangeConfiguration((event) => {
+      if (event.affectsConfiguration('workbench.iconTheme')) refreshIcons();
     }),
   );
   register(
@@ -590,7 +632,12 @@ function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('openfast.setLanguage', async () => {
       const document = vscode.window.activeTextEditor?.document;
       if (document) {
-        await vscode.languages.setTextDocumentLanguage(document, 'openfast');
+        await vscode.languages.setTextDocumentLanguage(
+          document,
+          isSimulationResultFile(document.uri.path, documentHeader(document))
+            ? 'openfast-output'
+            : 'openfast',
+        );
       }
     }),
   );

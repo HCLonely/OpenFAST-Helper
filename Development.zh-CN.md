@@ -22,9 +22,9 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.1.0/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
+package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.0/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
 
-维护官方章节索引时运行 `npm run build:doc-links`（需要联网）；HTML 抓取记录与构建报告位于 `test-results/docs`，不进入安装包。参数词典与章节索引分别保存在 `data/catalog.json`、`data/doc-links.json`，构建参数词典不会覆盖链接索引。
+维护官方章节索引时运行 `npm run build:doc-links`（需要联网）；HTML 抓取记录与构建报告位于 `test-results/docs`，不进入安装包。参数词典与章节索引分别保存在 `data/catalog.json`、`data/doc-links.json`，构建参数词典不会覆盖链接索引。模块文档入口维护在 catalog 的 sources 中，并同步 `scripts/build_catalog.py` 与英文词典；TurbSim 使用 NLR 的 v2.00 PDF，ROSCO 使用其 latest 文档首页，两者不附加 OpenFAST 版本文档入口。
 
 用 VS Code 打开插件目录并按 F5 启动扩展开发宿主。Windows 上也可运行 `scripts/run-host-test.ps1`，它使用独立用户目录和扩展目录执行真实编辑器测试，不安装到日常 VS Code 环境；结果位于 `test-results/host-result.json`。
 
@@ -88,12 +88,12 @@ npm run benchmark:editor -- --baseline test-results/editor-benchmark-baseline.js
 
 ## GitHub Releases 发布
 
-发布 1.1.0 时，先执行上述检查和原生探针构建，再使用 `v1.1.0` 内容 URL 打包。提交并推送源码，创建和推送 `v1.1.0` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.1.0.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
+发布 1.2.0 时，先执行上述检查和原生探针构建，再使用 `v1.2.0` 内容 URL 打包。提交并推送源码，创建和推送 `v1.2.0` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.2.0.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
 
-## TurbSim 启动入口
+## TurbSim 与结果文件维护
 
-`src/turbsim-runner.ts` 注册独立的运行和路径配置命令，`src/run-input.ts` 检查主输入特征。编辑器按钮使用 `openfast.runnableTurbSim` 上下文，文件修改或切换时刷新；资源管理器按扩展名提供入口，执行时再次校验内容。与 OpenFAST 共用 `createRunTask` 和路径存储函数，传入 TurbSim 程序标识，设置为 `openfast.turbSimExecutablePath`，备用存储为 `turbsim.runner.path:<folder URI>`，不覆盖既有 OpenFAST 路径。
+TurbSim 启动由 `src/turbsim-runner.ts` 与 `src/run-input.ts` 实现，使用独立的 `openfast.turbSimExecutablePath`；通过共享任务接口传入独立进程参数和输入所在目录，不进入 OpenFAST 预检查、队列或监控。启动前检查工作区信任、保存结果、程序文件与重复任务。
 
-TurbSim 使用 ProcessExecution 独立传递输入路径并设置 cwd，不经 shell，不接入仅针对 FST 的预检查、队列或监控。工作区信任、保存、程序文件检查及重复任务保护在启动前执行。只新增 TurbSim 启动，ROSCO 仍无运行入口。
+`data/module-parameters.json` 保存模块专属双语词典，`data/input-value-rules.json` 保存字段类型及特殊值，分别由 catalog 与 `src/input-value-rules.ts` 加载；路径判断位于 `src/parameter-paths.ts`。结果语言模式注册在 package.json，可见区域语义标记位于 `src/result-highlights.ts`。修改后运行上述完整检查；本地专项测试包括 `test/turbsim-runner.test.js`、`test/format-support.test.js`、`test/module-parameters.test.js` 与 `test/input-validation.test.js`。除已跟踪的 TurbSim 测试外，其他测试仍受本地忽略规则限制。
 
-在项目根目录运行 `npm run check`、`npm run compile`，然后运行 `node --test test/turbsim-runner.test.js test/runner.test.js test/i18n.test.js`，验证路径隔离、主/辅助输入区分、参数与工作目录、保存失败、重复启动及中英文资源。测试使用模拟任务接口，不需要实际 TurbSim；新增 TurbSim 测试通过 .gitignore 的单文件例外纳入版本管理，其他已有本地测试仍被忽略。实际计算需用户安装 TurbSim，并在 VS Code 中使用真实主输入验证。
+本次 1.2.0 发布验证：配置外部工况后，完整本地测试共 300 项，294 项通过。`test/preflight.test.js` 的 5 项与 `test/logic-performance.test.js` 的 1 项运行前检查测试在修改前提交 `98034b2` 中同样失败，涉及严格模式、编辑期间重验和强制跨文件检查；这 6 项既有失败尚未修复。真实 VS Code 的格式、结果高亮与模块参数帮助专项检查通过。

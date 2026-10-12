@@ -6,6 +6,7 @@ import { RunQueue } from './run-queue';
 import { executeManaged } from './run-process';
 import { RunMonitor } from './run-monitor';
 import { isTurbSimInput } from './run-input';
+import { documentHeader } from './file-formats';
 function executablePath(value) {
   const text = String(value || '').trim();
   const clean = /^(["']).*\1$/.test(text) ? text.slice(1, -1) : text;
@@ -336,7 +337,7 @@ function registerRunner(vscode, context, workbench = undefined) {
       const doc = vscode.window.activeTextEditor?.document;
       if (
         doc &&
-        !isTurbSimInput(doc.uri.path, doc.getText()) &&
+        !isTurbSimInput(doc.uri.path, documentHeader(doc)) &&
         (doc.languageId === 'openfast' || /\.(fst|fstf)$/i.test(doc.uri.path))
       ) {
         status.show();
