@@ -80,5 +80,9 @@
   "openfast.showEditorPerformance.title": "OpenFAST: Show Editor Performance",
   "openfast.highlightTableFieldGroups.description": "Use themed dotted underlines to distinguish definition, reference, geometry and coefficient fields in visible tables; values and semantic colors are preserved.",
   "openfast.explainSuggestions.title": "OpenFAST: Explain Suggestions Here",
-  "openfast.suggestWithExplanation.title": "OpenFAST: Show Suggestions with Empty-result Explanation"
+  "openfast.suggestWithExplanation.title": "OpenFAST: Show Suggestions with Empty-result Explanation",
+  "openfast.configureTurbSimExecutable.title": "TurbSim: Configure executable path",
+  "openfast.runTurbSim.title": "TurbSim: Run primary input file",
+  "openfast.turbSimExecutablePath.description": "Full path to the TurbSim executable. If unset, the first run opens a file picker. Stored separately from the OpenFAST executable.",
+  "task.turbSimInput": "TurbSim primary input file URI."
 }

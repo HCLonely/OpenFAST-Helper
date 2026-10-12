@@ -89,3 +89,11 @@ npm run benchmark:editor -- --baseline test-results/editor-benchmark-baseline.js
 ## GitHub Releases 发布
 
 发布 1.1.0 时，先执行上述检查和原生探针构建，再使用 `v1.1.0` 内容 URL 打包。提交并推送源码，创建和推送 `v1.1.0` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.1.0.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
+
+## TurbSim 启动入口
+
+`src/turbsim-runner.ts` 注册独立的运行和路径配置命令，`src/run-input.ts` 检查主输入特征。编辑器按钮使用 `openfast.runnableTurbSim` 上下文，文件修改或切换时刷新；资源管理器按扩展名提供入口，执行时再次校验内容。与 OpenFAST 共用 `createRunTask` 和路径存储函数，传入 TurbSim 程序标识，设置为 `openfast.turbSimExecutablePath`，备用存储为 `turbsim.runner.path:<folder URI>`，不覆盖既有 OpenFAST 路径。
+
+TurbSim 使用 ProcessExecution 独立传递输入路径并设置 cwd，不经 shell，不接入仅针对 FST 的预检查、队列或监控。工作区信任、保存、程序文件检查及重复任务保护在启动前执行。只新增 TurbSim 启动，ROSCO 仍无运行入口。
+
+在项目根目录运行 `npm run check`、`npm run compile`，然后运行 `node --test test/turbsim-runner.test.js test/runner.test.js test/i18n.test.js`，验证路径隔离、主/辅助输入区分、参数与工作目录、保存失败、重复启动及中英文资源。测试使用模拟任务接口，不需要实际 TurbSim；新增 TurbSim 测试通过 .gitignore 的单文件例外纳入版本管理，其他已有本地测试仍被忽略。实际计算需用户安装 TurbSim，并在 VS Code 中使用真实主输入验证。

@@ -547,5 +547,20 @@
   "references.listCount": "{0} must be a nonnegative integer.",
   "references.listMissing": "Expected {0} file entries; the list is missing or truncated.",
   "references.listQuoted": "Each file entry must contain exactly one complete quoted path.",
-  "references.listLimit": "File list {0} exceeds the extension checking limit of 10000 entries; preflight verification cannot be completed."
+  "references.listLimit": "File list {0} exceeds the extension checking limit of 10000 entries; preflight verification cannot be completed.",
+  "turbSimRunner.trustRequired": "Trust this workspace before running TurbSim.",
+  "turbSimRunner.selectExecutable": "Select the TurbSim executable (for example TurbSim_x64.exe)",
+  "turbSimRunner.localExecutableRequired": "Select a local TurbSim executable.",
+  "turbSimRunner.pathSaved": "TurbSim executable path saved.",
+  "turbSimRunner.pathSavedFallback": "TurbSim path saved in extension storage; the setting is not registered or writable in this window.",
+  "turbSimRunner.inputRequired": "Select a saved local TurbSim primary input (.inp/.in/.dat/.txt) containing NumGrid_Z, NumGrid_Y, TimeStep and AnalysisTime. Auxiliary and output files cannot run directly.",
+  "turbSimRunner.workspaceRequired": "Open the folder containing the TurbSim input in VS Code before running a task.",
+  "turbSimRunner.alreadyRunning": "This TurbSim input is already running. View output or stop it in the task terminal.",
+  "turbSimRunner.absolutePathRequired": "Use the absolute path to the TurbSim executable.",
+  "turbSimRunner.executableNotFound": "TurbSim executable not found. Configure its executable path again.",
+  "turbSimRunner.fileRequired": "The TurbSim path must point to an executable file, not a directory.",
+  "turbSimRunner.saveFailed": "Could not save the TurbSim input; run cancelled.",
+  "turbSimRunner.exitCode": "TurbSim exited with code {0}. See the task terminal for details.",
+  "turbSimRunner.statusPath": "$(gear) TurbSim path",
+  "turbSimRunner.statusTooltip": "Select and persist the TurbSim executable."
 }

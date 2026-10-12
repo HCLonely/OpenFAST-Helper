@@ -3,7 +3,8 @@ dist/
 test-results/
 *.log
 native/**/target/
-test/
+test/*
+!test/turbsim-runner.test.js
 .history/
 docs/
 bin/

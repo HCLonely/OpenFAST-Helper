@@ -27,7 +27,7 @@ Download `openfast-helper-1.1.0.vsix` from [GitHub Releases](https://github.com/
 
 Highlighting retains this project's existing parameter/value/comment separation, semantic tokens and theme colors. It covers ROSCO values and arrays with parameter names after `!`, including records without a trailing description; TurbSim bare string choices; unquoted filenames; known table headers, units rows and output titles.
 
-Generic extensions are not globally reassigned. Explicitly selected languages remain in place. Files without enough content evidence, including headerless numeric wind/output files, can be opened through **OpenFAST: Recognize current file as OpenFAST** or the language-mode picker. Automatic detection retains the 2 MB limit. Binary `.outb`/`.bts`, DLLs and ROSCO YAML are outside this text-highlighting detection. Additional highlighting does not imply complete parameter documentation, validation or support for launching ROSCO/TurbSim executables.
+Generic extensions are not globally reassigned. Explicitly selected languages remain in place. Files without enough content evidence, including headerless numeric wind/output files, can be opened through **OpenFAST: Recognize current file as OpenFAST** or the language-mode picker. Automatic detection retains the 2 MB limit. Binary `.outb`/`.bts`, DLLs and ROSCO YAML are outside this text-highlighting detection. Additional highlighting does not imply complete parameter documentation, validation or support for launching ROSCO. TurbSim primary inputs have a separate run command described below.
 
 Official-document additions cover ROSCO `.echo/.dbg/.dbg2/.dbg3` and rotor-performance tables; AeroDisk, AeroAcoustics and structural-control input titles; TurbSim user time series, spectra and profiles, plus `.hh/.u/.v/.w/.cts` text and legacy `.ctp` input; and AeroDisk coefficient `.csv` tables with recognized columns. Recognition still requires content evidence. Key-first records in documented key/value modules and compact TurbSim labels such as `AnalysisTime-` receive supplementary editor highlighting. Full-line `#/%` comments and the documented table headers retain existing theme styles. These additions do not extend strict pre-run validation or editing commands to key-first records.
 
@@ -244,6 +244,14 @@ Existing channels are marked as already added and ranked lower; the channel curr
 
 If no executable is configured, the first run opens a picker and saves the path. If the setting is unavailable or cannot be written in the current window, workspace extension storage retains it as a fallback; manual settings.json edits are unnecessary. The same FST cannot start twice concurrently. Pre-run checks cover the main file and enabled references. Relevant unsaved files are listed; choosing to save and check saves them and repeats validation. Known errors, unreadable configurations and reference limits block execution; ordinary warnings require confirmation. Unrelated modified files remain untouched. Separate process arguments support Chinese, spaces and special characters without constructing a shell command. Execution requires a trusted local workspace, has no assigned shortcut and is never triggered by opening or editing a file.
 
+## Running TurbSim with one click
+
+1. Open a trusted local workspace and a TurbSim primary input (.inp/.in/.dat/.txt). Detection requires NumGrid_Z, NumGrid_Y, TimeStep and AnalysisTime within the first 150 lines and 64,000 characters. Auxiliary time-series, spectrum and profile inputs, and output files cannot run directly.
+2. Click **TurbSim path** in the status bar or use **TurbSim: Configure executable path** to select the program (for example TurbSim_x64.exe). The setting `openfast.turbSimExecutablePath` is independent of the OpenFAST path. The first run opens a picker if unset; extension storage provides a fallback when settings cannot be written.
+3. Click ▶ in the editor title or use **TurbSim: Run primary input file** from the Explorer context menu. This menu may also appear on other files with the same generic extensions; execution validates their contents. A running input cannot be started twice.
+
+The current primary input is saved before launch; a failed save blocks execution. The program receives the full input path as a separate argument and runs in its directory. Raw output appears in a VS Code task terminal; use **Terminal → Terminate Task** to stop it. Nonzero exits display an error pointing to the terminal. TurbSim tasks do not enter the OpenFAST queue or progress monitor and do not use OpenFAST case preflight checks. Save modified auxiliary files yourself; TurbSim validates the actual inputs. Detection accepts text files up to 2 MB. Opening or editing a file never starts execution.
+
 ## Run workflow (0.5.0)
 
 - **Shared pre-run checks**: single and batch runs use the same case graph for relevant unsaved edits, enabled references, known parameter rules and cross-file constraints. References are rediscovered after saving. Save failures, errors and incomplete reads block execution; related save/check dialogs are handled sequentially.
@@ -320,7 +328,7 @@ Explanations use actual current-document values, never assuming example-case win
 
 The official link index contains 408 module-parameter entries, based on the [OpenFAST documentation](https://openfast.readthedocs.io/en/main/source/this_doc.html) main branch and referenced MoorDyn inputs, verified on 2026-10-09. It records actual sections containing descriptive paragraphs, tables or definition lists, without fabricating anchors from parameter names. It is not a complete site/PDF index; an absent link means only that the current index lacks it. Catalogs and links are packaged for offline hover/search; only opening an external link accesses the web.
 
-Parameter choices and formats vary by OpenFAST version. Original file descriptions and official documentation for your version take priority. Explanations/checks are offline; only explicit run actions invoke the configured executable. A running model may load its configured controller DLLs.
+Parameter choices and formats vary by OpenFAST version. Original file descriptions and official documentation for your version take priority. Explanations/checks are offline; only explicit run actions invoke the configured OpenFAST or TurbSim executable. A running model may load its configured controller DLLs.
 
 Fixed choices prioritize current-line `{1=...; 2=...}`, `[1=..., 2=...]` or parenthesized descriptions, including booleans and groups such as `[10, 11, or 12]`. Without them, common built-in module choices are marked for version review. Continuous quantities, matrices, arrays and paths without closed choice sets receive no fixed-choice menu. For example, `NumCrctn`'s `0=no correction` is a special value, not a full enum. The current seven-file local case has 102 selectable scalar fields. The fixed-choice menu does not currently support ROSCO values before `! parameter-name`, or variable-phase expressions such as `WaveMod=1P#`; enter these manually.
 
@@ -340,6 +348,7 @@ Run **OpenFAST: Open all extension settings**, or search `@ext:hclonely.openfast
 | `openfast.showOriginalDescription` | `true` | Complete line comments |
 | `openfast.enableValueSuggestions` | `true` | Fixed-choice suggestions and lightbulb selector |
 | `openfast.executablePath` | Empty | Full OpenFAST executable path |
+| `openfast.turbSimExecutablePath` | Empty | Full TurbSim executable path, independent of OpenFAST |
 | `openfast.runConcurrency` | `1` | Concurrent runs (1–16); applies on next submission |
 | `openfast.enableDiagnostics` | `true` | Live diagnostics |
 | `openfast.dimInactiveParameters` | `true` | Dim inactive parameters |

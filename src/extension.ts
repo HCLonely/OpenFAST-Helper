@@ -24,6 +24,7 @@ import { optionsFor, valueContext } from './value-options';
 import { registerWorkbench, profileFor } from './workbench';
 import { resolveVersion, documentationUrl, versionOptions } from './versions';
 import { registerRunner } from './runner';
+import { registerTurbSimRunner } from './turbsim-runner';
 import { registerSweep } from './sweep-view';
 import { registerResults } from './results-view';
 import { registerEditorAssistance } from './editor-assistance';
@@ -626,6 +627,7 @@ function activate(context: vscode.ExtensionContext) {
   registerEditorAssistance(vscode, context, profileFor, workbench.editorContext);
   registerEditorTools(vscode, context, workbench.editorContext);
   const runner = registerRunner(vscode, context, workbench);
+  registerTurbSimRunner(vscode, context);
   registerSweep(vscode, context, workbench);
   registerResults(vscode, context);
   return { workbench, runner };

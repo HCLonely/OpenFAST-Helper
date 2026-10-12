@@ -89,3 +89,11 @@ Comparison requires matching scenario hashes, report format, Node.js major versi
 ## GitHub Releases
 
 For 1.1.0, run the checks and native probe build above, then package with the `v1.1.0` content URL. Commit and push the source, create and push the `v1.1.0` tag, then publish a GitHub Release with `dist/openfast-helper-1.1.0.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.
+
+## TurbSim launch commands
+
+`src/turbsim-runner.ts` registers separate run and executable configuration commands; `src/run-input.ts` checks the primary input signature. The editor action uses the `openfast.runnableTurbSim` context, refreshed on edits and editor switches. Explorer actions filter by extension and validate contents on execution. Shared task/path helpers receive the TurbSim program identifier; the setting is `openfast.turbSimExecutablePath` and fallback storage is `turbsim.runner.path:<folder URI>`, independent of OpenFAST.
+
+TurbSim uses ProcessExecution with a separate input argument and input-directory cwd, without a shell. It does not use the FST preflight, queue or monitor. Trust, saving, executable-file checks and duplicate-task protection run before launch. ROSCO has no launch command.
+
+From the project root, run `npm run check`, `npm run compile`, then `node --test test/turbsim-runner.test.js test/runner.test.js test/i18n.test.js`. These mocked-task regressions cover path isolation, primary versus auxiliary inputs, arguments/cwd, save failures, duplicate launches and bilingual resources without requiring TurbSim. The new TurbSim test is tracked through a narrow .gitignore exception; older local tests remain ignored. Real simulation requires an installed TurbSim executable and a primary input in VS Code.

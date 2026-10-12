@@ -80,5 +80,9 @@
   "openfast.showEditorPerformance.title": "OpenFAST: 查看编辑性能诊断",
   "openfast.highlightTableFieldGroups.description": "使用主题点线轻微区分当前可见表格中的定义、引用、几何和系数字段；不改变数值或语义颜色。",
   "openfast.explainSuggestions.title": "OpenFAST: 查看当前位置的建议原因",
-  "openfast.suggestWithExplanation.title": "OpenFAST: 显示输入建议及空结果原因"
+  "openfast.suggestWithExplanation.title": "OpenFAST: 显示输入建议及空结果原因",
+  "openfast.configureTurbSimExecutable.title": "TurbSim: 配置可执行文件路径",
+  "openfast.runTurbSim.title": "TurbSim: 运行主输入文件",
+  "openfast.turbSimExecutablePath.description": "TurbSim 可执行文件完整路径；未设置时首次运行会打开程序选择器。与 OpenFAST 程序路径独立保存。",
+  "task.turbSimInput": "TurbSim 主输入文件 URI。"
 }

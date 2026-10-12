@@ -547,5 +547,20 @@
   "references.listCount": "{0} 必须是非负整数。",
   "references.listMissing": "应有 {0} 个文件项，列表缺失或提前结束。",
   "references.listQuoted": "每个文件项必须是一个完整的带引号路径。",
-  "references.listLimit": "文件列表 {0} 超出插件单列表检查上限（10000 项），无法完成运行前核验。"
+  "references.listLimit": "文件列表 {0} 超出插件单列表检查上限（10000 项），无法完成运行前核验。",
+  "turbSimRunner.trustRequired": "请先信任此工作区，再运行 TurbSim。",
+  "turbSimRunner.selectExecutable": "选择 TurbSim 可执行文件（如 TurbSim_x64.exe）",
+  "turbSimRunner.localExecutableRequired": "请选择本地 TurbSim 可执行文件。",
+  "turbSimRunner.pathSaved": "TurbSim 路径已保存。",
+  "turbSimRunner.pathSavedFallback": "TurbSim 路径已保存到插件存储；当前窗口的设置项尚未加载或无法写入。",
+  "turbSimRunner.inputRequired": "请选择已保存到本地的 TurbSim 主输入文件（.inp/.in/.dat/.txt），需包含 NumGrid_Z、NumGrid_Y、TimeStep 和 AnalysisTime。辅助文件和输出文件不能直接运行。",
+  "turbSimRunner.workspaceRequired": "请先在 VS Code 中打开 TurbSim 输入文件所在文件夹，再运行任务。",
+  "turbSimRunner.alreadyRunning": "此 TurbSim 输入已在运行。可在任务终端查看输出或停止任务。",
+  "turbSimRunner.absolutePathRequired": "TurbSim 路径必须为可执行文件的完整路径。",
+  "turbSimRunner.executableNotFound": "TurbSim 可执行文件不存在，请重新配置程序路径。",
+  "turbSimRunner.fileRequired": "TurbSim 路径必须指向可执行文件，不能是文件夹。",
+  "turbSimRunner.saveFailed": "TurbSim 输入文件保存失败，已取消运行。",
+  "turbSimRunner.exitCode": "TurbSim 任务退出，退出码 {0}。请查看任务终端中的输出。",
+  "turbSimRunner.statusPath": "$(gear) TurbSim 路径",
+  "turbSimRunner.statusTooltip": "选择并保存 TurbSim 可执行文件路径。"
 }

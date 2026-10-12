@@ -5,6 +5,7 @@ import { prepareCase } from './preflight';
 import { RunQueue } from './run-queue';
 import { executeManaged } from './run-process';
 import { RunMonitor } from './run-monitor';
+import { isTurbSimInput } from './run-input';
 function executablePath(value) {
   const text = String(value || '').trim();
   const clean = /^(["']).*\1$/.test(text) ? text.slice(1, -1) : text;
@@ -16,16 +17,16 @@ function executablePath(value) {
   }
   return clean;
 }
-function createRunTask(vscode, uri, executable) {
+function createRunTask(vscode, uri, executable, program = 'OpenFAST') {
   const folder = vscode.workspace.getWorkspaceFolder(uri) || vscode.workspace.workspaceFolders?.[0];
   const execution = new vscode.ProcessExecution(executable, [uri.fsPath], {
     cwd: path.dirname(uri.fsPath),
   });
   const task = new vscode.Task(
-    { type: 'openfast', input: uri.toString() },
+    { type: program.toLowerCase(), input: uri.toString() },
     folder || vscode.TaskScope.Workspace,
     t('runner.taskName', path.basename(uri.fsPath)),
-    'OpenFAST',
+    program,
     execution,
     [],
   );
@@ -36,29 +37,29 @@ function createRunTask(vscode, uri, executable) {
   };
   return task;
 }
-function pathStore(vscode, context, uri) {
+function pathStore(vscode, context, uri, program = 'OpenFAST') {
   const folder = uri && vscode.workspace.getWorkspaceFolder(uri);
   return {
     state: vscode.workspace.workspaceFolders?.length ? context.workspaceState : context.globalState,
-    key: 'openfast.runner.path:' + (folder?.uri.toString() || 'default'),
+    key: program.toLowerCase() + '.runner.path:' + (folder?.uri.toString() || 'default'),
   };
 }
-function readExecutable(vscode, context, uri) {
-  const configured = vscode.workspace.getConfiguration('openfast', uri).get('executablePath', '');
-  const { state, key } = pathStore(vscode, context, uri);
-  const saved =
-    state?.get(key) ||
-    state?.get('openfast.runner.path:default') ||
-    context.globalState?.get('openfast.runner.path:default');
+function readExecutable(vscode, context, uri, program = 'OpenFAST') {
+  const setting = program === 'OpenFAST' ? 'executablePath' : 'turbSimExecutablePath';
+  const fallbackKey = program.toLowerCase() + '.runner.path:default';
+  const configured = vscode.workspace.getConfiguration('openfast', uri).get(setting, '');
+  const { state, key } = pathStore(vscode, context, uri, program);
+  const saved = state?.get(key) || state?.get(fallbackKey) || context.globalState?.get(fallbackKey);
   return saved && (!configured || configured === saved.previous) ? saved.path : configured;
 }
-async function saveExecutable(vscode, context, uri, value) {
+async function saveExecutable(vscode, context, uri, value, program = 'OpenFAST') {
+  const setting = program === 'OpenFAST' ? 'executablePath' : 'turbSimExecutablePath';
   const config = vscode.workspace.getConfiguration('openfast', uri);
-  const { state, key } = pathStore(vscode, context, uri);
+  const { state, key } = pathStore(vscode, context, uri, program);
   // Persist the user's selection even when the current window still has an older
   // configuration contribution registry after an in-place VSIX update.
-  await state.update(key, { path: value, previous: config.get('executablePath', '') });
-  if (config.inspect('executablePath')?.defaultValue === undefined) {
+  await state.update(key, { path: value, previous: config.get(setting, '') });
+  if (config.inspect(setting)?.defaultValue === undefined) {
     return false;
   }
   const folder = uri && vscode.workspace.getWorkspaceFolder(uri);
@@ -68,7 +69,7 @@ async function saveExecutable(vscode, context, uri, value) {
       ? vscode.ConfigurationTarget.Workspace
       : vscode.ConfigurationTarget.Global;
   try {
-    await config.update('executablePath', value, level);
+    await config.update(setting, value, level);
     await state.update(key, undefined);
     return true;
   } catch {
@@ -333,7 +334,11 @@ function registerRunner(vscode, context, workbench = undefined) {
       status.command = 'openfast.configureExecutable';
       status.tooltip = t('runner.statusTooltip');
       const doc = vscode.window.activeTextEditor?.document;
-      if (doc && (doc.languageId === 'openfast' || /\.(fst|fstf)$/i.test(doc.uri.path))) {
+      if (
+        doc &&
+        !isTurbSimInput(doc.uri.path, doc.getText()) &&
+        (doc.languageId === 'openfast' || /\.(fst|fstf)$/i.test(doc.uri.path))
+      ) {
         status.show();
       } else {
         status.hide();
@@ -342,6 +347,9 @@ function registerRunner(vscode, context, workbench = undefined) {
     context.subscriptions.push(
       status,
       vscode.window.onDidChangeActiveTextEditor(refresh),
+      vscode.workspace.onDidChangeTextDocument?.((event) => {
+        if (event.document === vscode.window.activeTextEditor?.document) refresh();
+      }) || { dispose() {} },
       vscode.workspace.onDidChangeConfiguration((event) => {
         if (event.affectsConfiguration('openfast.language')) {
           refresh();

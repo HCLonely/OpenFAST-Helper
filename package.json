@@ -221,6 +221,15 @@
       {
         "command": "openfast.suggestWithExplanation",
         "title": "%openfast.suggestWithExplanation.title%"
+      },
+      {
+        "command": "openfast.configureTurbSimExecutable",
+        "title": "%openfast.configureTurbSimExecutable.title%"
+      },
+      {
+        "command": "openfast.runTurbSim",
+        "title": "%openfast.runTurbSim.title%",
+        "icon": "$(play)"
       }
     ],
     "configuration": {
@@ -507,6 +516,12 @@
           "default": false,
           "description": "%openfast.highlightTableFieldGroups.description%",
           "scope": "resource"
+        },
+        "openfast.turbSimExecutablePath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "%openfast.turbSimExecutablePath.description%"
         }
       }
     },
@@ -676,6 +691,11 @@
           "command": "openfast.createSweep",
           "when": "resourceExtname =~ /\\.(fst|fstf)$/i && isWorkspaceTrusted",
           "group": "navigation@3"
+        },
+        {
+          "command": "openfast.runTurbSim",
+          "when": "openfast.runnableTurbSim && isWorkspaceTrusted",
+          "group": "navigation@1"
         }
       ],
       "explorer/context": [
@@ -698,6 +718,11 @@
           "command": "openfast.previewResults",
           "when": "resourceExtname =~ /\\.(out|outb)$/i",
           "group": "navigation@12"
+        },
+        {
+          "command": "openfast.runTurbSim",
+          "when": "resourceScheme == file && resourceExtname =~ /\\.(inp|in|dat|txt)$/i && isWorkspaceTrusted",
+          "group": "navigation@10"
         }
       ]
     },
@@ -711,6 +736,18 @@
           "input": {
             "type": "string",
             "description": "%task.input%"
+          }
+        }
+      },
+      {
+        "type": "turbsim",
+        "required": [
+          "input"
+        ],
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "%task.turbSimInput%"
           }
         }
       }
