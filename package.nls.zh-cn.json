@@ -23,7 +23,7 @@
   "openfast.dimInactiveParameters.description": "淡化当前控制选项未启用的参数行。",
   "openfast.enableCrossFileChecks.description": "检查工况主文件及引用模块之间的已知模型约束。",
   "openfast.enableOutputSuggestions.description": "输出通道下拉建议：在 OutList 中输入引号或通道前缀显示候选、中文解释及单位，已添加项标记并排在后面。",
-  "openfast.enableTableHints.description": "为正在编辑的表格行显示列名和单位提示。",
+  "openfast.enableTableHints.description": "仅为当前选中的表格单元格显示字段名和单位提示。",
   "openfast.version.description": "所用 OpenFAST 版本；auto 只从明确的 OpenFAST 版本头识别，缺少版本时保留本行选项说明。",
   "openfast.maxReferencedFiles.description": "单个工况最多读取的文本配置文件数；不递归读取风场二进制或 DLL。",
   "openfast.executablePath.description": "OpenFAST 可执行文件的完整路径，例如 D:\\OpenFAST\\openfast_x64.exe；未配置时运行命令会打开文件选择器。",

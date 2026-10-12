@@ -22,7 +22,7 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json points to `https://github.com/HCLonely/OpenFAST-Helper`. Run `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.1/"` to link release documentation to its tag. GitHub Actions supplies a commit-specific content URL.
+package.json points to `https://github.com/HCLonely/OpenFAST-Helper`. Run `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.2/"` to link release documentation to its tag. GitHub Actions supplies a commit-specific content URL.
 
 Run `npm run build:doc-links` to maintain the official section index (network access required). HTML fetch records and build reports are written to `test-results/docs` and excluded from the package. The parameter catalog and section index are stored separately in `data/catalog.json` and `data/doc-links.json`; rebuilding the catalog does not overwrite the link index. Maintain module documentation entry points in catalog sources, `scripts/build_catalog.py` and the English catalog. TurbSim uses the NLR v2.00 PDF and ROSCO uses its latest documentation homepage; neither receives an additional OpenFAST-version documentation link.
 
@@ -88,4 +88,4 @@ Comparison requires matching scenario hashes, report format, Node.js major versi
 
 ## GitHub Releases
 
-For 1.2.1, run the checks and native probe build above, then package with the `v1.2.1` content URL. Commit and push the source, create and push the `v1.2.1` tag, then publish a GitHub Release with `dist/openfast-helper-1.2.1.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.
+For 1.2.2, run the checks and native probe build above, then package with the `v1.2.2` content URL. Commit and push the source, create and push the `v1.2.2` tag, then publish a GitHub Release with `dist/openfast-helper-1.2.2.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.

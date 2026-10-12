@@ -846,6 +846,10 @@ function registerWorkbench(vscode, context) {
           if (line < range.start.line || line > range.end.line) {
             return [];
           }
+          const where = tableColumn(document.getText(), line, editor.selection.active.character);
+          if (!where?.cell) {
+            return [];
+          }
           const table = readTables(document.getText()).find((t) =>
             t.rows.some((r) => r.line === line),
           );
@@ -854,7 +858,8 @@ function registerWorkbench(vscode, context) {
           }
           const row = table.rows.find((r) => r.line === line);
           const fields = expandedFields(table.headers, row.cells, table.units);
-          return row.cells.slice(0, fields.length).map((cell, index) => {
+          return row.cells.slice(0, fields.length).flatMap((cell, index) => {
+            if (cell.start !== where.cell.start || cell.end !== where.cell.end) return [];
             const name =
               fields[index].name +
               (fields[index].element
@@ -881,7 +886,7 @@ function registerWorkbench(vscode, context) {
                 kind: 'header',
               }),
             );
-            return hint;
+            return [hint];
           });
         },
       },

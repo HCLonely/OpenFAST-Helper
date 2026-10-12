@@ -91,8 +91,7 @@ export function registerEditorAssistance(
   register(rowDecoration);
   register(columnDecoration);
   const cellDecoration = vscode.window.createTextEditorDecorationType({
-    backgroundColor: new vscode.ThemeColor('editor.findMatchHighlightBackground'),
-    border: '2px solid',
+    border: '1px solid',
     borderColor: new vscode.ThemeColor('focusBorder'),
   });
   register(cellDecoration);
@@ -335,7 +334,16 @@ export function registerEditorAssistance(
             )
               continue;
             const cell = row.cells[i];
-            if (cell) columns.push(range(row.line, cell.start, cell.end));
+            // The active cell already has the row background and its own focus border.
+            if (
+              cell &&
+              !(
+                row.line === cursor.line &&
+                cell.start === where.cell?.start &&
+                cell.end === where.cell?.end
+              )
+            )
+              columns.push(range(row.line, cell.start, cell.end));
           }
         }
       }

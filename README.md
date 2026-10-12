@@ -8,18 +8,18 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.2.1.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.2.2.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.2.1.vsix"
+code --install-extension "openfast-helper-1.2.2.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.2.1.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.1), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.2.2.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.2), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
 
 ## Supported text formats
 
@@ -81,7 +81,7 @@ In an untrusted workspace, automatic reference checks, document links, and path 
 2. **List summaries**: reference candidates show definition coordinates/field summaries up to 80 characters, retaining full details separately. Outputs show units, quantity categories and cataloged meanings; searching still uses English channel names only.
 3. **Current-value hints**: `openfast.showCurrentValueHint` shows fixed-option meanings and explicitly cataloged units on the active scalar line. Compact density shortens labels; detailed density retains hover descriptions. Unknown units are not guessed. Disabled by default.
 4. **Highlight preview**: **OpenFAST: Preview Highlighting and Hints** opens read-only OpenFAST, HydroDyn, MoorDyn or ElastoDyn samples beside native settings. Samples are not solver templates and do not run simulations or check sample paths. They use current-window settings; verify folder-specific overrides in actual files.
-5. **Table crosshair**: a themed focus border distinguishes the active cell from its row and column. With table highlighting and hints enabled, the status bar shows the physical column, field and unit, including during horizontal scrolling.
+5. **Table crosshair**: a themed focus border distinguishes the active cell from its row and column. The active cell uses only the row background, without additional column or cell background overlays, keeping its value readable. With table highlighting and hints enabled, the status bar shows the physical column, field and unit, including during horizontal scrolling.
 6. **Upstream control sources**: child-file scalar hovers show confirmed upstream reference roles, control fields, values, source files and links from the current case graph. The selected main case takes priority. Hints are omitted for ambiguous roots, duplicate definitions, changed paths or an unavailable graph. They describe reference activation, not every physical applicability condition, and do not change dimming rules.
 7. **Browse output quantities**: on a blank line in an ordinary OutList, **OpenFAST: Browse Output Channels by Quantity** offers motion/attitude, forces/loads, wind/waves, generator/control and other cataloged groups, then lets you select channels. Uses current-module built-in, dynamic and supplemental candidates, excludes existing entries and preserves quoting/indentation. Node lists retain their dedicated completion.
 8. **Stable highlighting**: unchanged document versions and decoration ranges are not resubmitted. Regression tests continue to cover partial numbers, quotes and semantic-token deltas.
@@ -192,7 +192,7 @@ Verified sources: [MoorDyn input](https://moordyn.readthedocs.io/en/latest/input
 - **Reference styling**: recognized paths use semantic type `openfastPath`, inheriting string styling. Customize `editor.semanticTokenColorCustomizations.rules.openfastPath` without changing the theme. Existing diagnostics still mark missing files.
 - **Path suggestions**: enter a quote, `/` or `\` in a recognized reference, or invoke suggestions, to browse files/folders relative to the current configuration. Candidates rank by parameter role; directories keep the cursor inside quotes. Single/double quotes, empty/partial paths, spaces and `!` are supported. `PotFile` candidates for `.hst/.1` insert root names; `FilenameRoot` strips `.wnd`. Recognized AeroDyn `AFNames` continuation lines also offer completion.
 - **Fixed choices**: automatic suggestions filter by typed prefixes; explicit suggestions or the existing fixed-value command show all choices. Details include sources, conditions and known version notes. Blank/partial booleans and recognized ROSCO scalar records with names after `!` are supported; only values are replaced.
-- **Table editing**: highlights the active row and matching header/column, with inline field names and units. Completes defined MoorDyn points, line types and recognized node/property references. Point candidates exclude line IDs; property definitions follow known section types.
+- **Table editing**: highlights the active row and matching header/column, with an inline field name and unit only for the selected cell. The hint follows the cursor when switching cells. Completes defined MoorDyn points, line types and recognized node/property references. Point candidates exclude line IDs; property definitions follow known section types.
 - **Parameter correction**: suggests current-module/common names only in existing value/name records, replacing names without inserting lines. Includes known migration warnings. Use official templates for new configurations; the extension does not reorder fields automatically.
 - **Section folding**: uses parsed section headings and `END` without requiring fixed English heading keywords.
 
@@ -371,7 +371,7 @@ Run **OpenFAST: Open all extension settings**, or search `@ext:hclonely.openfast
 | `openfast.strictPreflight` | `false` | Block errors, warnings and incomplete pre-run checks; disable to confirm ordinary warnings |
 | `openfast.enableCrossFileChecks` | `true` | Known cross-file constraints |
 | `openfast.enableOutputSuggestions` | `true` | Module-specific OutList candidates |
-| `openfast.enableTableHints` | `true` | Active table row field names and units |
+| `openfast.enableTableHints` | `true` | Selected table cell field name and unit |
 | `openfast.version` | `auto` | Explicit version detection or manual selection |
 | `openfast.maxReferencedFiles` | `300` | Text references per case (10–1,000) |
 

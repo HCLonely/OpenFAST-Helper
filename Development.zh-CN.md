@@ -22,7 +22,7 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.1/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
+package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.2/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
 
 维护官方章节索引时运行 `npm run build:doc-links`（需要联网）；HTML 抓取记录与构建报告位于 `test-results/docs`，不进入安装包。参数词典与章节索引分别保存在 `data/catalog.json`、`data/doc-links.json`，构建参数词典不会覆盖链接索引。模块文档入口维护在 catalog 的 sources 中，并同步 `scripts/build_catalog.py` 与英文词典；TurbSim 使用 NLR 的 v2.00 PDF，ROSCO 使用其 latest 文档首页，两者不附加 OpenFAST 版本文档入口。
 
@@ -88,4 +88,4 @@ npm run benchmark:editor -- --baseline test-results/editor-benchmark-baseline.js
 
 ## GitHub Releases 发布
 
-发布 1.2.1 时，先执行上述检查和原生探针构建，再使用 `v1.2.1` 内容 URL 打包。提交并推送源码，创建和推送 `v1.2.1` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.2.1.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
+发布 1.2.2 时，先执行上述检查和原生探针构建，再使用 `v1.2.2` 内容 URL 打包。提交并推送源码，创建和推送 `v1.2.2` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.2.2.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。

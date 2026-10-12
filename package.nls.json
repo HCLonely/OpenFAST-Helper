@@ -23,7 +23,7 @@
   "openfast.dimInactiveParameters.description": "Dim parameter lines disabled by the current model options.",
   "openfast.enableCrossFileChecks.description": "Check known model constraints across the main file and referenced modules.",
   "openfast.enableOutputSuggestions.description": "Suggest output channels in OutList when entering quotes or a channel prefix; include descriptions and units and mark channels already added.",
-  "openfast.enableTableHints.description": "Show column names and units for the table row being edited.",
+  "openfast.enableTableHints.description": "Show the field name and unit only for the selected table cell.",
   "openfast.version.description": "OpenFAST version. Auto detects explicit OpenFAST version headers and preserves file-defined choices when no version is found.",
   "openfast.maxReferencedFiles.description": "Maximum text configuration files read per case. Binary wind fields and DLLs are not traversed.",
   "openfast.executablePath.description": "Full path to the OpenFAST executable, for example D:\\OpenFAST\\openfast_x64.exe. If unset, the run command opens a file picker.",
