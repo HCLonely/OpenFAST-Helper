@@ -16,7 +16,8 @@ import { lineComments } from './comments';
 import type { ConfigToken, ParsedDocument, ParameterExplanation } from './types';
 import * as vscode from 'vscode';
 import { errorMessage } from './errors';
-import { detectModule, lex, tokenAt, explainToken } from './parser';
+import { lex, tokenAt, explainToken } from './parser';
+import { isOpenFASTTextFile } from './file-formats';
 import { catalog, findDocumentation, documentation } from './catalog';
 import { enableFileIcons } from './icon-integration';
 import { optionsFor, valueContext } from './value-options';
@@ -147,13 +148,7 @@ async function autoDetect(document: vscode.TextDocument): Promise<void> {
   if (document.languageId !== 'plaintext') {
     return;
   }
-  if (!/\.(dat|in|txt)$/i.test(document.uri.path)) {
-    return;
-  }
-  if (document.getText().length > 2000000) {
-    return;
-  }
-  if (detectModule(document.getText())) {
+  if (isOpenFASTTextFile(document.uri.path, document.getText())) {
     await vscode.languages.setTextDocumentLanguage(document, 'openfast');
   }
 }

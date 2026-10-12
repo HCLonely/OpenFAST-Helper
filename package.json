@@ -2,7 +2,7 @@
   "name": "openfast-helper",
   "displayName": "OpenFAST Helper",
   "description": "%description%",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "HCLonely",
   "license": "MIT",
   "engines": {
@@ -17,7 +17,9 @@
     "HydroDyn",
     "MoorDyn",
     "ElastoDyn",
-    "中文"
+    "中文",
+    "ROSCO",
+    "TurbSim"
   ],
   "main": "./out/extension.js",
   "activationEvents": [
@@ -38,7 +40,9 @@
         "id": "openfast",
         "aliases": [
           "OpenFAST",
-          "openfast"
+          "openfast",
+          "ROSCO",
+          "TurbSim"
         ],
         "extensions": [
           ".fst",
@@ -761,7 +765,7 @@
     "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.js\"",
     "test": "npm run compile && node --test test/*.test.js",
     "vscode:prepublish": "npm run compile",
-    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.0.0.vsix",
+    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.1.0.vsix",
     "build:doc-links": "node scripts/build-doc-links.mjs",
     "benchmark:editor": "npm run compile && node scripts/editor-benchmark.cjs"
   },

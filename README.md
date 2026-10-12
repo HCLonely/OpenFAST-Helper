@@ -8,18 +8,32 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.0.0.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.1.0.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.0.0.vsix"
+code --install-extension "openfast-helper-1.1.0.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.0.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.0.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.1.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.1.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+
+## Supported text formats
+
+`.fst` and `.fstf` retain their direct OpenFAST association. With `openfast.autoDetect` enabled, plain-text `.dat`, `.in`, `.inp`, `.ipt`, `.ech`, `.wnd`, `.sum`, `.bmi`, `.lin`, `.out` and `.txt` files are recognized from module headers, parameter signatures or supported output headers. This includes ROSCO `DISCON.IN`, TurbSim inputs, BeamDyn blade files, module/driver inputs, echo files, summaries, linearization output and uniform-wind text with a recognized column header. OLAF, ExtPtfm and SimpleElastoDyn input headers are also recognized.
+
+Highlighting retains this project's existing parameter/value/comment separation, semantic tokens and theme colors. It covers ROSCO values and arrays with parameter names after `!`, including records without a trailing description; TurbSim bare string choices; unquoted filenames; known table headers, units rows and output titles.
+
+Generic extensions are not globally reassigned. Explicitly selected languages remain in place. Files without enough content evidence, including headerless numeric wind/output files, can be opened through **OpenFAST: Recognize current file as OpenFAST** or the language-mode picker. Automatic detection retains the 2 MB limit. Binary `.outb`/`.bts`, DLLs and ROSCO YAML are outside this text-highlighting detection. Additional highlighting does not imply complete parameter documentation, validation or support for launching ROSCO/TurbSim executables.
+
+Official-document additions cover ROSCO `.echo/.dbg/.dbg2/.dbg3` and rotor-performance tables; AeroDisk, AeroAcoustics and structural-control input titles; TurbSim user time series, spectra and profiles, plus `.hh/.u/.v/.w/.cts` text and legacy `.ctp` input; and AeroDisk coefficient `.csv` tables with recognized columns. Recognition still requires content evidence. Key-first records in documented key/value modules and compact TurbSim labels such as `AnalysisTime-` receive supplementary editor highlighting. Full-line `#/%` comments and the documented table headers retain existing theme styles. These additions do not extend strict pre-run validation or editing commands to key-first records.
+
+Existing recognition and coloring take precedence when formats overlap. Other language modes remain protected: VS Code normally opens `.hh` as C++ and `.cts` as TypeScript; manually select OpenFAST to highlight these text files. ROSCO tuning YAML keeps YAML highlighting. TurbSim binary `.wnd/.bts/.bin/.twr` files remain outside text detection.
+
+Sources: [ROSCO controller files](https://rosco.readthedocs.io/en/latest/source/rosco.html), [ROSCO input definitions](https://rosco.readthedocs.io/en/latest/source/toolbox_input.html), [OpenFAST input formats](https://openfast.readthedocs.io/en/main/source/user/input_file_overview.html), [AeroDisk](https://openfast.readthedocs.io/en/main/source/user/aerodisk/input_files.html), and [TurbSim v2 manual](https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1), especially Appendix A/H and the output-file sections.
 
 ## Usage
 
@@ -37,7 +51,7 @@ In an untrusted workspace, automatic reference checks, document links, and path 
 - Use the Outline view to navigate sections.
 - If detection fails, run **OpenFAST: Recognize current file as OpenFAST**, or choose OpenFAST from the language-mode selector.
 
-`.fst/.fstf` files are associated automatically. `.dat/.in/.txt` files are recognized from headers and multiple parameter signatures, preserving another explicitly selected programming language. The extension does not globally associate every `.dat` file with OpenFAST.
+`.fst/.fstf` files are associated automatically. Other supported text files are recognized from headers and multiple parameter signatures, preserving another explicitly selected programming language. The extension does not globally associate every `.dat` file with OpenFAST.
 
 ## Formatting, consistency and repeatable verification (0.15.0)
 
@@ -321,7 +335,7 @@ Run **OpenFAST: Open all extension settings**, or search `@ext:hclonely.openfast
 | `openfast.compactTableSignatures` | `true` | Compact long signatures; disable for all fields |
 | `openfast.enableTableFieldDiagnostics` | `true` | Table types, extra cells and repeated fill members |
 | `openfast.language` | `auto` | Automatic / Simplified Chinese / English |
-| `openfast.autoDetect` | `true` | Content-based .dat/.in/.txt detection |
+| `openfast.autoDetect` | `true` | Content-based OpenFAST/ROSCO/TurbSim text-format detection |
 | `openfast.enableHover` | `true` | Localized hover explanations |
 | `openfast.showOriginalDescription` | `true` | Complete line comments |
 | `openfast.enableValueSuggestions` | `true` | Fixed-choice suggestions and lightbulb selector |

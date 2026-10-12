@@ -15,7 +15,7 @@
   "openfast.openSettings.title": "OpenFAST: Open all extension settings",
   "openfast.selectLanguage.title": "OpenFAST: Select display language",
   "configuration.title": "OpenFAST Helper",
-  "openfast.autoDetect.description": "Recognize .dat/.in/.txt files from their contents, preserving explicitly selected languages.",
+  "openfast.autoDetect.description": "Recognize OpenFAST, ROSCO and TurbSim text inputs, performance tables, echo/debug output and formatted wind files from their contents; preserve other selected languages.",
   "openfast.enableHover.description": "Show parameter descriptions on hover.",
   "openfast.showOriginalDescription.description": "Show all original and supplementary line comments, preserving their wording regardless of language or repetition.",
   "openfast.enableValueSuggestions.description": "Suggest fixed parameter values and provide a lightbulb selector.",

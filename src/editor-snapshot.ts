@@ -4,6 +4,7 @@ import { readTables } from './tables';
 import { findEntry } from './catalog';
 import { timed } from './editor-performance';
 import { tableFields } from './table-layout';
+import { officialHighlightTokens } from './official-highlights';
 
 /** Shared by editor providers. Original text is never normalized: offsets are UTF-16. */
 const snapshots = new Map<string, ReturnType<typeof createSnapshot>>();
@@ -56,6 +57,10 @@ function buildDetails(text: string, lines: string[]) {
         });
     });
   }
+  // Official key/value formats also allow full-line # and % comments.
+  // Keep the strict input parser and its records independent of editor styling.
+  parsed.tokens = parsed.tokens.filter((token) => !/^\s*[#%]/.test(lines[token.line]));
+  parsed.tokens.push(...officialHighlightTokens(lines, parsed));
   const tokensByLine = new Map<number, typeof parsed.tokens>();
   const tableByLine = new Map<number, (typeof tables)[number]>();
   for (const token of parsed.tokens) {

@@ -16,7 +16,11 @@
       },
       "patterns": [
         {
-          "match": "!.*$|\\s[-\u2013]\\s.*$",
+          "match": "^\\s*[#%].*$",
+          "name": "comment.line.description.openfast"
+        },
+        {
+          "match": "!.*$|\\s[-–]\\s.*$",
           "name": "comment.line.description.openfast"
         },
         {
@@ -26,15 +30,43 @@
       ]
     },
     {
+      "match": "(?i)^\\s*!?\\s*(?:(?:Predictions|Results|These predictions)[^\\n]*generated[^\\n]*(?:OpenFAST|MoorDyn)|(?:OpenFAST|FAST\\.Farm)[^\\n]*linearization[^\\n]*(?:output|file)|Summary (?:file|of)[^\\n]*(?:OpenFAST|AeroDyn|ElastoDyn|HydroDyn|MoorDyn|BeamDyn|SubDyn|TurbSim)|(?:TurbSim|ROSCO)[^\\n]*(?:input|parameter)[^\\n]*|Controller parameter input file[^\\n]*).*$",
+      "name": "markup.heading.openfast"
+    },
+    {
+      "match": "(?i)^\\s*(?:Simulation time|Azimuth|Rotor speed|Wind speed|Number of (?:continuous states|discrete states|constraint states|inputs|outputs)|Jacobian matrices):.*$",
+      "name": "markup.heading.openfast"
+    },
+    {
+      "match": "^\\s*(?:\\([^()\\r\\n]+\\)\\s*){2,}(?:!.*)?$",
+      "name": "comment.line.description.openfast"
+    },
+    {
+      "match": "^(\\s*(?:Alpha|AttachA|AttachB|Attachment|AxCa|AxCd|AxCoefID|AxCp|BA/\\-zeta|BlAFID|BlChord|BlFract|BlSpn|BlTwist|CA|Ca|CaAx|Cd|CdA|CdAx|Diam|Dpth|DpthAxCa|DpthAxCaMG|DpthAxCd|DpthAxCdMG|DpthAxCp|DpthAxCpMG|DpthCa|DpthCaA|DpthCaAMG|DpthCaB|DpthCaBMG|DpthCaMG|DpthCb|DpthCbMG|DpthCd|DpthCdA|DpthCdAMG|DpthCdB|DpthCdBMG|DpthCdMG|DpthCp|DpthCpMG|EA|EI|FillDens|FillFSLoc|FillMList|FillNumM|GenSpd_TLU|GenTrq_TLU|HtFract|ID|JointAxID|JointID|JointOvrlp|Jointxi|Jointyi|Jointzi|Line|LineType|M|MCoefMod|MDivSize|MGDens|MGDpth|MGThck|MHstLMod|MJointID1|MJointID2|MPropSetID|MPropSetID1|MPropSetID2|MSecGeom|MSpinOrient|MassDen|MemberAxCa1|MemberAxCa2|MemberAxCaMG1|MemberAxCaMG2|MemberAxCd1|MemberAxCd2|MemberAxCdMG1|MemberAxCdMG2|MemberAxCp1|MemberAxCp2|MemberAxCpMG1|MemberAxCpMG2|MemberCa1|MemberCa2|MemberCaA1|MemberCaA2|MemberCaAMG1|MemberCaAMG2|MemberCaB1|MemberCaB2|MemberCaBMG1|MemberCaBMG2|MemberCaMG1|MemberCaMG2|MemberCb1|MemberCb2|MemberCbMG1|MemberCbMG2|MemberCd1|MemberCd2|MemberCdA1|MemberCdA2|MemberCdAMG1|MemberCdAMG2|MemberCdB1|MemberCdB2|MemberCdBMG1|MemberCdBMG2|MemberCdMG1|MemberCdMG2|MemberCp1|MemberCp2|MemberCpMG1|MemberCpMG2|MemberID|MemberID_out|NOutLoc|Name|NodeLocs|NumSegs|Outputs|PropA|PropB|PropD|PropPot|PropSetID|PropThck|SimplAxCa|SimplAxCaMG|SimplAxCd|SimplAxCdMG|SimplAxCp|SimplAxCpMG|SimplCa|SimplCaA|SimplCaAMG|SimplCaB|SimplCaBMG|SimplCaMG|SimplCb|SimplCbMG|SimplCd|SimplCdA|SimplCdAMG|SimplCdB|SimplCdBMG|SimplCdMG|SimplCp|SimplCpMG|Time|TwrCd|TwrDiam|TwrElev|UnstrLen|V|WindSpeed|X|Y|Z)(?:\\s+[A-Za-z][A-Za-z0-9_/.*-]*(?:\\([^)]*\\))?)+\\s*)(?=\\s*(?:!|\\[|$))",
+      "captures": {
+        "1": {
+          "name": "variable.other.property.openfast"
+        }
+      }
+    },
+    {
+      "match": "^(\\s*(?:Pointyi\\s+Pointzi|Elapsed\\s+Time(?:\\s+Point\\d+[uvw])+|Frequency\\s+u-component\\s+PSD\\s+v-component\\s+PSD\\s+w-component\\s+PSD|Height\\s+Wind\\s+Speed\\s+Wind\\s+Direction\\s+Standard\\s+Deviation\\s+Length\\s+Scale|(?:TSR|RtSpd|VRel|Pitch|Skew)(?:[\\s,]+(?:TSR|RtSpd|VRel|Pitch|Skew))*[\\s,]+C_Fx[\\s,]+C_Fy[\\s,]+C_Fz[\\s,]+C_Mx[\\s,]+C_My[\\s,]+C_Mz|LocalVar%Time(?:\\s+AvrSWAP\\(\\s*\\d+\\))+)\\s*)(?=\\s*(?:!|$))",
+      "captures": {
+        "1": {
+          "name": "variable.other.property.openfast"
+        }
+      }
+    },
+    {
       "match": "^\\s*(?:[-=]{3,}.*|![-=]{3,}.*)$",
       "name": "markup.heading.openfast"
     },
     {
-      "match": "^\\s*END\\b.*$",
+      "match": "(?i)^\\s*[\"']?END\\b[\"']?.*$",
       "name": "keyword.control.end.openfast"
     },
     {
-      "match": "^(\\s*)([-+.]|[-+]?\\d+(?:\\.\\d*)?[eEdD][-+]?)(\\s+)([A-Za-z]\\w*(?:\\(\\d+\\))?)(\\s+[-\u2013]\\s.*)$",
+      "match": "^(\\s*)([-+.]|[-+]?\\d+(?:\\.\\d*)?[eEdD][-+]?)(\\s+)([A-Za-z]\\w*(?:\\(\\d+\\))?)(\\s+[-–]\\s.*)$",
       "captures": {
         "2": {
           "name": "constant.numeric.openfast"
@@ -48,7 +80,7 @@
       }
     },
     {
-      "match": "^(\\s*(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*)(?:[\\s,]+(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*))*)(\\s*!\\s*)([A-Za-z][A-Za-z0-9_]*(?:\\([0-9]+\\))?)(\\s*-\\s*.*)$",
+      "match": "^(\\s*(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|[A-Za-z][A-Za-z0-9_.-]*\\.[A-Za-z0-9]+|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*)(?:[\\s,]+(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|[A-Za-z][A-Za-z0-9_.-]*\\.[A-Za-z0-9]+|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*))*)(\\s*!\\s*)([A-Za-z][A-Za-z0-9_]*(?:\\([0-9]+\\))?)(\\s*[-–]\\s*.*|\\s*)$",
       "captures": {
         "1": {
           "patterns": [
@@ -69,7 +101,69 @@
       }
     },
     {
-      "match": "^(\\s*(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*)(?:[\\s,]+(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*))*)(\\s+)([A-Za-z][A-Za-z0-9_]*(?:\\([0-9]+\\))?)(\\s*[-\u2013]\\s.*|\\s*!.*|\\s*)$",
+      "match": "^(\\s*(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*)(?:[\\s,]+(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*))*)(\\s+)([A-Za-z][A-Za-z0-9_]*(?:\\([0-9]+\\))?)(\\s*[-–]\\s.*|\\s*!.*|\\s*)$",
+      "captures": {
+        "1": {
+          "patterns": [
+            {
+              "include": "#values"
+            }
+          ]
+        },
+        "3": {
+          "name": "variable.parameter.openfast"
+        },
+        "4": {
+          "name": "comment.line.description.openfast"
+        }
+      }
+    },
+    {
+      "match": "^(\\s*)([A-Za-z0-9_][A-Za-z0-9_.+:/\\\\-]*)(\\s+)([A-Za-z][A-Za-z0-9_]*(?:\\([0-9]+\\))?)(\\s*[-–]\\s.*|\\s*!.*)$",
+      "captures": {
+        "2": {
+          "name": "string.unquoted.openfast"
+        },
+        "4": {
+          "name": "variable.parameter.openfast"
+        },
+        "5": {
+          "name": "comment.line.description.openfast"
+        }
+      }
+    },
+    {
+      "match": "^(\\s*)((?:AA_InputFile|ADBlFile\\(1\\)|ADBlFile\\(2\\)|ADBlFile\\(3\\)|AFAeroMod|AFNames|AIDrag|AMMod|AbortLevel|AddBLin|AddBQuad|AddCLin|AddF0|AeroFile|AfC_Amp|AfC_Mean|AfC_phase|AfCmode|AirDens|AzimB1Up|Azimuth|BDBldFile|BEM_Mod|BPCutoff|BStCfiles|BlOutNd|BlPitch|BlPitchF|BldEdDmp\\(1\\)|BldFile1|BldFile2|BldFile3|BldFlDmp\\(1\\)|BldFlDmp\\(2\\)|BldGagNd|BldNd_BlOutNd|BldNd_BlOutNd_Str|BldNd_BladesOut|BldNodes|Bld_Kdmp|Buoyancy|CCmode|CalcSteady|CavitCheck|CdScaleIC|ChkptTime|CompAA|CompAero|CompElast|CompHydro|CompIce|CompInflow|CompMooring|CompSeaSt|CompServo|CompSoil|CompSub|ConsiderHubMotion|ConstWaveMod|ConvTol|CrestHmax|CrestTime|CrestXi|CrestYi|CurrDIDir|CurrDIV|CurrMod|CurrNSDir|CurrNSRef|CurrNSV0|CurrSSDir|CurrSSV0|DLL_DT|DLL_FileName|DLL_InFile|DLL_NumTrq|DLL_ProcName|DLL_Ramp|DT|DTAero|DTTorDmp|DTTorSpr|DT_Out|DT_UJac|DecFact|Delta3|DiffQTF|DrTrDOF|EDFile|Echo|EdgeDOF|ExctnCutOff|ExctnDisp|ExctnMod|F_LPFType|F_NotchType|FileName_BTS|FileName_u|FileName_v|FileName_w|FilenameRoot|Filename_Uni|Fl_Mode|FlapDOF1|FlapDOF2|FocalDistanceX|FocalDistanceY|FocalDistanceZ|FurlFile|Furling|GBRatio|GBoxEff|Gain_OM|GenDOF|GenEff|GenIner|GenModel|GenPwr_Dem|GenSpd_Dem|GenSpd_MaxOM|GenSpd_MinOM|GenTiStp|GenTiStr|GenTrq_Dem|Gravity|HDSum|HSSBrDT|HSSBrMode|HSSBrTqF|HWindSpeed|HubCM|HubIner|HubLoss|HubMass|HubRad|HydroFile|IPC_ControlMode|IPDefl|IceFile|IndToler|InflowFile|InterpOrder|JOutLst|KinVisc|LidRadialVel|LinInputs|LinOutJac|LinOutMod|LinOutputs|LinTimes|Linearize|LoggingLevel|MCFD|MHK|MSL2SWL|M_CD|M_CSmax|M_FCD|M_FCSmax|M_MCD|M_MCSmax|MaxConvIter|MaxIter|MeasurementInterval|Method|MirrorRotor|MnDrift|ModCoupling|MooringFile|NAxCoef|NBlGages|NBlInpSt|NBlOuts|NBody|NBodyMod|NCoefDpthCyl|NCoefDpthRec|NCoefMembersCyl|NCoefMembersRec|NExctnHdg|NFillGroups|NJOutputs|NJoints|NLinTimes|NMGDepths|NMOutputs|NMembers|NPropSetsCyl|NPropSetsRec|NRotors|NStCfiles|NTwGages|NTwInpSt|NTwOuts|NWaveElev|NWaveKin|NWindVel|NX|NY|NZ|NacCMxn|NacCMyn|NacCMzn|NacMass|NacYIner|NacYaw|NacYawF|NacYaw_North|NacelleDrag|NcIMUxn|NcIMUyn|NcIMUzn|NewmanApp|NumAFfiles|NumBStC|NumBeam|NumBl|NumCrctn|NumNStC|NumPulseGate|NumSStC|NumTStC|NumTwrNds|OmgCut|OoPDefl|OutAll|OutFile|OutFileFmt|OutFmt|OutList|OutSFmt|OutSwtch|OverHang|PCMode|PC_ControlMode|PC_GS_angles|PC_GS_n|PC_KI|PC_KP|PC_MaxPit|PC_MaxRat|PC_MinPit|PC_MinRat|PLExp_Hawc|PLexp|PS_Mode|Patm|PitManRat|PotFile|PotMod|PreCone|PropagationDir|PtchRate_Max|PtchRate_Min|Ptch_Cntrl|Ptch_Max|Ptch_Min|Ptch_SetPnt|PtfmCMxt|PtfmCMyt|PtfmCMzt|PtfmCOBxt|PtfmCOByt|PtfmHeave|PtfmHvDOF|PtfmMass|PtfmPDOF|PtfmPIner|PtfmPitch|PtfmRDOF|PtfmRIner|PtfmRefY|PtfmRefxt|PtfmRefyt|PtfmRefzt|PtfmRefztRot|PtfmRoll|PtfmSgDOF|PtfmSurge|PtfmSwDOF|PtfmSway|PtfmVol0|PtfmXYIner|PtfmXZIner|PtfmYCutOff|PtfmYDOF|PtfmYIner|PtfmYMod|PtfmYZIner|PtfmYaw|PulseSpacing|Pvap|RdtnDT|RdtnMod|RdtnTMax|RefHt|RefHt_Hawc|RefHt_Uni|RefLength|RhoInf|RotSpeed|RotorApexOffsetPos|SD_Mode|SFx|SFy|SFz|SIG_PORt|SIG_RtTq|SIG_SlPc|SIG_SySp|SS_Mode|SStCfiles|ScaleMethod|SeaStFile|SeaStSum|SensorType|ServoFile|ShftGagL|ShftTilt|SigmaFx|SigmaFy|SigmaFz|SkewMomCorr|SkewRedistrFactor|SkewRedistr_Mod|Skew_Mod|SoilFile|SpdGenOn|SpdSound|SttsTime|SubFile|SumPrint|SumQTF|TD_Mode|TEC_Freq|TEC_MR|TEC_NPol|TEC_RLR|TEC_RRes|TEC_SLR|TEC_SRes|TEC_VLL|THSSBrDp|TIDrag|TMax|TPCOn|TPitManS|TStCfiles|TStart|TTDspFA|TTDspSS|TYCOn|TYawManS|TabDelim|TanInd|TeetCDmp|TeetDOF|TeetDefl|TeetDmp|TeetDmpP|TeetHSSp|TeetHStP|TeetMod|TeetSSSp|TeetSStP|TimGenOf|TimGenOn|TipLoss|TipMass|TipRad|TmaxIC|TowerBsHt|TowerFile|TowerHt|TrimCase|TrimGain|TrimTol|TwFADOF1|TwFADOF2|TwOutNd|TwSSDOF1|TwSSDOF2|Twr2Shft|TwrAero|TwrFADmp\\(1\\)|TwrFADmp\\(2\\)|TwrFile|TwrGagNd|TwrNodes|TwrPotent|TwrSSDmp\\(1\\)|TwrSSDmp\\(2\\)|TwrShadow|Twr_Kdmp|UA_Mod|UJacSclFact|URef|URefLid|UndSling|VFlowAng|VSContrl|VS_ControlMode|VS_Rgn2K|VS_RtGnSp|VS_RtTq|VS_SlPc|VTK_fields|VTK_fps|VTK_type|VelInterpCubic|WAMITULEN|WE_Mode|WakeMod|Wake_Mod|WaveDT|WaveDir|WaveDirMod|WaveDirRange|WaveDirSpread|WaveDisp|WaveElevxi|WaveElevyi|WaveHs|WaveKinxi|WaveKinyi|WaveKinzi|WaveMod|WaveNDAmp|WaveNDir|WavePkShp|WaveSeed\\(1\\)|WaveSeed\\(2\\)|WaveStMod|WaveTMax|WaveTp|WindProfile|WindType|WindVxiList|WindVyiList|WindVziList|WrVTK|WtrDens|WtrDpth|WvCrntMod|WvDiffQTF|WvHiCOff|WvHiCOffD|WvHiCOffS|WvKinFile|WvLowCOff|WvLowCOffD|WvLowCOffS|WvSumQTF|XOffset|X_HalfWidth|YCMode|Y_ControlMode|Y_HalfWidth|YawBrMass|YawDOF|YawDamp|YawFrctMod|YawManRat|YawNeut|YawSpr|Z0|Z_Depth|cbot|dtIC|dtM|dx|dy|dz|kbot|nx|ny|nz|sig_v|sig_v2|threshIC))(\\s+)((?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a))(?:[\\s,]+(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)))*)(\\s*[-–]\\s.*|\\s*!.*|\\s*)$",
+      "captures": {
+        "2": {
+          "name": "variable.parameter.openfast"
+        },
+        "4": {
+          "patterns": [
+            {
+              "include": "#values"
+            }
+          ]
+        },
+        "5": {
+          "name": "comment.line.description.openfast"
+        }
+      }
+    },
+    {
+      "match": "^\\s*@[^\\s!]+\\s*(?:!.*)?$",
+      "name": "string.unquoted.openfast"
+    },
+    {
+      "match": "(?i)^\\s*(?:[#!]\\s*)?(?:ROSCO\\s+ECHO\\s+file\\b|Generated[^\\r\\n]*(?:by|using)\\s+(?:ROSCO|TurbSim)\\b|#?\\s*[- ]*Rotor performance tables\\b|#?\\s*(?:Pitch angle vector|TSR vector|Wind speed vector|Power coefficient|Thrust coefficient|Torque coefficient)\\b).*$",
+      "name": "markup.heading.openfast"
+    },
+    {
+      "match": "^\\s*[#%].*$",
+      "name": "comment.line.description.openfast"
+    },
+    {
+      "match": "^(\\s*(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*)(?:[\\s,]+(?:\"[^\"\\r\\n]*\"|'[^'\\r\\n]*'|[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?|(?i:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)|[^\\s\"']*[\\\\/][^\\s\"']*))*)(\\s+\\|\\s*)([A-Za-z][A-Za-z0-9_]*(?:\\([0-9]+\\))?)(\\s*[-–]\\s.*|\\s*!.*|\\s*)$",
       "captures": {
         "1": {
           "patterns": [
@@ -94,7 +188,7 @@
       "include": "#values"
     },
     {
-      "match": "\\s[-\u2013]\\s.*$",
+      "match": "\\s[-–]\\s.*$",
       "name": "comment.line.description.openfast"
     }
   ],
@@ -114,6 +208,10 @@
         {
           "match": "(?i)\\b(?:true|false|default|mcf|ranlux|none|unused|fixed|vessel|n/a)\\b",
           "name": "constant.language.openfast"
+        },
+        {
+          "match": "(?<!\\S)(?:[^\\s\"'!]*[/\\\\][^\\s\"'!]*|[A-Za-z][\\w.-]*\\.[A-Za-z0-9]+)(?!\\S)",
+          "name": "string.unquoted.openfast"
         },
         {
           "match": "(?<![A-Za-z0-9_])[-+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[EeDd][-+]?[0-9]+)?(?![A-Za-z0-9_])",

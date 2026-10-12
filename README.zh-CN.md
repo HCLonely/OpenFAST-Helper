@@ -8,18 +8,32 @@
 
 1. 打开 VS Code 的扩展面板。
 2. 点击右上角 `…` → **从 VSIX 安装…**。
-3. 选择 `openfast-helper-1.0.0.vsix`；若提示重新加载窗口，按提示操作。
+3. 选择 `openfast-helper-1.1.0.vsix`；若提示重新加载窗口，按提示操作。
 4. 打开 `.fst` 或相应模块 `.dat` 文件，右下角语言模式应为 **OpenFAST**。
 
 也可使用命令行：
 
 ```powershell
-code --install-extension "openfast-helper-1.0.0.vsix"
+code --install-extension "openfast-helper-1.1.0.vsix"
 ```
 
 此扩展尚未发布到扩展市场。最低 VS Code 版本为 1.85。
 
-从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.0.0) 下载 `openfast-helper-1.0.0.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
+从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.1.0) 下载 `openfast-helper-1.1.0.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
+
+## 支持的文本格式
+
+`.fst` 和 `.fstf` 继续直接关联 OpenFAST。启用 `openfast.autoDetect` 后，对纯文本语言模式下的 `.dat`、`.in`、`.inp`、`.ipt`、`.ech`、`.wnd`、`.sum`、`.bmi`、`.lin`、`.out` 和 `.txt`，根据模块标题、参数签名或已识别的输出文件头自动识别。包括 ROSCO `DISCON.IN`、TurbSim 输入、BeamDyn 叶片文件、模块及驱动器输入、回显、汇总、线性化输出，以及具有已知列标题的均匀风文本；另补充 OLAF、ExtPtfm 和 SimpleElastoDyn 输入标题识别。
+
+高亮继续使用本项目的参数/值/注释分离、语义标记和主题配色。补充 ROSCO `!` 后参数名及数组（支持没有尾部说明的记录）、TurbSim 无引号字符串选项、无引号文件名、已知表头、单位行和输出标题。
+
+通用扩展名不做全局关联，保留用户已明确选择的语言。内容依据不足的文件（包括没有标题的纯数字风场/输出文本）可通过语言模式选择器或现有“将当前文件识别为 OpenFAST 配置”命令手动启用。自动识别保留 2 MB 上限。二进制 `.outb/.bts`、DLL 和 ROSCO YAML 不在文本高亮自动识别范围内。新增高亮不代表参数词典或校验规则已完整覆盖，也不增加 ROSCO/TurbSim 程序运行功能。
+
+依据官方资料补充 ROSCO `.echo/.dbg/.dbg2/.dbg3` 和转子性能表、AeroDisk/AeroAcoustics/结构控制输入标题、TurbSim 用户时序/谱/剖面输入及 `.hh/.u/.v/.w/.cts` 文本、旧版 `.ctp` 输入，以及具有已知列名的 AeroDisk 系数 `.csv` 表。自动识别仍需内容依据。对官方支持 key/value 格式的模块，补充参数名在前的编辑器高亮；支持 TurbSim `AnalysisTime-` 等紧贴连字符的参数写法、整行 `#/%` 注释和官方示例表头。新增高亮不扩展运行前严格校验或参数编辑命令对参数名在前记录的支持。
+
+格式重叠时优先保留已有识别和配色。其他语言模式仍受保护：VS Code 通常将 `.hh` 识别为 C++、`.cts` 识别为 TypeScript，需要手动选择 OpenFAST 启用这些文本的高亮。ROSCO 调参 YAML 继续使用 YAML 高亮。TurbSim 二进制 `.wnd/.bts/.bin/.twr` 不作为文本识别。
+
+依据：[ROSCO 控制器文件](https://rosco.readthedocs.io/en/latest/source/rosco.html)、[ROSCO 输入定义](https://rosco.readthedocs.io/en/latest/source/toolbox_input.html)、[OpenFAST 输入格式](https://openfast.readthedocs.io/en/main/source/user/input_file_overview.html)、[AeroDisk](https://openfast.readthedocs.io/en/main/source/user/aerodisk/input_files.html) 及 [TurbSim v2 手册](https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1) 的附录 A/H 和输出文件章节。
 
 ## 使用
 
@@ -37,7 +51,7 @@ code --install-extension "openfast-helper-1.0.0.vsix"
 - 使用“大纲”面板按章节定位参数。
 - 未自动识别时，执行 **OpenFAST: 将当前文件识别为 OpenFAST 配置**，或点击右下角语言模式选择 OpenFAST。
 
-`.fst/.fstf` 自动关联；`.dat/.in/.txt` 根据文件头和多个参数特征识别，保留用户已选择的其他编程语言。插件不会将所有 `.dat` 文件全局关联为 OpenFAST。
+`.fst/.fstf` 自动关联；其他支持的文本格式根据文件头和多个参数特征识别，保留用户已选择的其他编程语言。插件不会将所有 `.dat` 文件全局关联为 OpenFAST。
 
 ## 排版、一致性与可重复验证（0.15.0）
 
@@ -322,7 +336,7 @@ OutList 保持按英文通道名补全，不新增中文搜索。所有建议与
 | `openfast.compactTableSignatures`      | `true`  | 长表格签名精简；关闭可展示完整字段   |
 | `openfast.enableTableFieldDiagnostics` | `true`  | 表格类型、多余单元格及填充组重复反馈 |
 | `openfast.language`                    | `auto`  | 自动 / 简体中文 / English            |
-| `openfast.autoDetect`                  | `true`  | 按内容自动识别 .dat/.in/.txt         |
+| `openfast.autoDetect`                  | `true`  | 按内容识别 OpenFAST/ROSCO/TurbSim 文本         |
 | `openfast.enableHover`                 | `true`  | 启用双语悬停                         |
 | `openfast.showOriginalDescription`     | `true`  | 显示完整行尾注释                     |
 | `openfast.enableValueSuggestions`      | `true`  | 固定选项下拉书写建议和灯泡入口       |

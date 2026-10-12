@@ -22,7 +22,11 @@ function lex(line: string) {
 }
 function detectModule(text: string): string | null {
   const header = text.split(/\r?\n/).slice(0, 15).join('\n');
-  if (/ROSCO|Controller parameter input file/i.test(header)) {
+  if (
+    /Controller parameter input file|^\s*!?[^\n]*\bROSCO\b[^\n]*(?:input|parameter|controller)/im.test(
+      header,
+    )
+  ) {
     return 'ROSCO';
   }
   for (const name of [
@@ -36,6 +40,9 @@ function detectModule(text: string): string | null {
     'BeamDyn',
     'SubDyn',
     'TurbSim',
+    'OLAF',
+    'ExtPtfm',
+    'SimpleElastoDyn',
   ]) {
     if (
       new RegExp(`(?:^|[-!\\s])${name}(?:[^\\n]*(?:INPUT|FILE|PROPERT)|\\s+v[\\d.])`, 'im').test(
@@ -50,11 +57,23 @@ function detectModule(text: string): string | null {
   }
   // Signature requires multiple genuine value-before-label records, not a word in prose.
   const labels = new Set();
+  const keyFirstLabels = new Set<string>();
+  const roscoLabels = new Set<string>();
   for (const line of text.split(/\r?\n/).slice(0, 150)) {
-    const { items } = lex(line);
+    const { items, comment } = lex(line);
+    if (items.length && items.every((item) => VALUE.test(item.text))) {
+      const name = /^([A-Za-z]\w*)\s*(?:[-–].*)?$/.exec(comment)?.[1];
+      if (name) roscoLabels.add(name.toLowerCase());
+    }
     if (items.length >= 2 && VALUE.test(items[0].text) && NAME.test(items[1].text)) {
       labels.add(items[1].text.toLowerCase());
     }
+    if (items.length >= 2 && NAME.test(items[0].text) && VALUE.test(items[1].text)) {
+      keyFirstLabels.add(items[0].text.toLowerCase());
+    }
+  }
+  if (['logginglevel', 'pc_controlmode', 'vs_controlmode'].every((x) => roscoLabels.has(x))) {
+    return 'ROSCO';
   }
   for (const [module, signature] of [
     ['OpenFAST', ['tmax', 'compelast', 'compaero']],
@@ -63,11 +82,32 @@ function detectModule(text: string): string | null {
     ['SeaState', ['wavemod', 'wavehs', 'wavetp']],
     ['HydroDyn', ['potmod', 'rdtnmod', 'nbody']],
     ['ServoDyn', ['pcmode', 'vscontrl', 'genmodel']],
+    ['TurbSim', ['numgrid_z', 'numgrid_y', 'timestep']],
+    ['TurbSim', ['ncomp', 'npoints', 'refptid']],
+    ['TurbSim', ['numusrf', 'specscale1', 'specscale2', 'specscale3']],
+    ['TurbSim', ['numusrz', 'stdscale1', 'stdscale2', 'stdscale3']],
   ] as [string, string[]][]) {
     if (signature.every((x) => labels.has(x))) {
       return module;
     }
   }
+  // Official-format additions follow every existing header/signature rule.
+  for (const [module, signature] of [
+    ['InflowWind', ['windtype', 'propagationdir', 'nwindvel']],
+    ['HydroDyn', ['potmod', 'rdtnmod', 'nbody']],
+    ['ServoDyn', ['pcmode', 'vscontrl', 'genmodel']],
+  ] as [string, string[]][]) {
+    if (signature.every((name) => labels.has(name) || keyFirstLabels.has(name))) return module;
+  }
+  for (const [module, title] of [
+    ['AeroDisk', 'Aero\\s*Disk'],
+    ['AeroAcoustics', 'AeroAcoustics'],
+    ['StC', '(?:STRUCTURAL CONTROL(?:\\s*\\(StC\\))?|StC)'],
+  ]) {
+    if (new RegExp(`(?:^|[-!\\s])${title}[^\\n]*(?:INPUT FILE|PROPERT)`, 'im').test(header))
+      return module;
+  }
+  if (['pc_gs_n', 'pc_gs_kp', 'pc_gs_ki'].every((name) => roscoLabels.has(name))) return 'ROSCO';
   return null;
 }
 function parseDocument(text: string): ParsedDocument {
@@ -117,14 +157,23 @@ function parseDocument(text: string): ParsedDocument {
     if (!items.length || /^\(/.test(trimmed)) {
       continue;
     }
-    if (module === 'ROSCO' && VALUE.test(items[0].text) && scanned.comment) {
-      const match = /^([A-Za-z]\w*(?:\(\d+\))?)\s*(?:-\s*)?(.*)$/.exec(scanned.comment);
+    if (
+      module === 'ROSCO' &&
+      items.every(
+        (item) =>
+          VALUE.test(item.text) ||
+          /[/\\]/.test(item.text) ||
+          /^[\w.-]+\.[A-Za-z0-9]+$/.test(item.text),
+      ) &&
+      scanned.comment
+    ) {
+      const match = /^([A-Za-z]\w*(?:\(\d+\))?)\s*(?:[-–]\s*(.*))?$/.exec(scanned.comment);
       if (match) {
         const start = source.indexOf(match[1], scanned.commentStart + 1);
         const entry = {
           name: match[1],
           value: source.slice(0, scanned.commentStart).trim(),
-          original: match[2],
+          original: match[2] || '',
           comments,
           line,
         };
@@ -134,8 +183,8 @@ function parseDocument(text: string): ParsedDocument {
         for (const item of items) {
           put(item, line, 'value', entry.name, entry);
         }
+        continue;
       }
-      continue;
     }
     if (output) {
       const dash = items.find((x) => x.text === '-' || x.text === '–');
@@ -184,12 +233,15 @@ function parseDocument(text: string): ParsedDocument {
         NAME.test(x.text) &&
         (findEntry(x.text, module) ||
           items[index + 1]?.text === '-' ||
-          items[index + 1]?.text === '–'),
+          items[index + 1]?.text === '–' ||
+          (index === items.length - 1 && scanned.commentStart < source.length)),
     );
     if (
       label > 0 &&
       !table &&
-      (VALUE.test(items[0].text) || items[0].text.includes('/') || items[0].text === 'none')
+      (VALUE.test(items[0].text) ||
+        /[/\\]/.test(items[0].text) ||
+        items.slice(0, label).every((item) => /^[A-Za-z][\w.+:/\\-]*$/.test(item.text)))
     ) {
       const name = items[label].text;
       const value = source.slice(0, items[label].start).trim();

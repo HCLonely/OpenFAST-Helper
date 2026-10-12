@@ -15,7 +15,7 @@
   "openfast.openSettings.title": "OpenFAST: 打开全部插件设置",
   "openfast.selectLanguage.title": "OpenFAST: 选择显示语言",
   "configuration.title": "OpenFAST Helper",
-  "openfast.autoDetect.description": "根据配置文件内容自动识别 .dat/.in/.txt，保留已选的其他编程语言。",
+  "openfast.autoDetect.description": "根据内容识别 OpenFAST、ROSCO 和 TurbSim 文本输入、性能表、回显/调试输出及格式化风文件；保留已选择的其他语言。",
   "openfast.enableHover.description": "显示中文参数悬停解释。",
   "openfast.showOriginalDescription.description": "在“行尾注释”区块中完整显示所有原始和补充注释，不限语言，也不省略重复内容。",
   "openfast.enableValueSuggestions.description": "编辑固定选项参数值时显示下拉建议，并提供灯泡选择入口。",
