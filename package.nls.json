@@ -84,5 +84,6 @@
   "openfast.configureTurbSimExecutable.title": "TurbSim: Configure executable path",
   "openfast.runTurbSim.title": "TurbSim: Run primary input file",
   "openfast.turbSimExecutablePath.description": "Full path to the TurbSim executable. If unset, the first run opens a file picker. Stored separately from the OpenFAST executable.",
-  "task.turbSimInput": "TurbSim primary input file URI."
+  "task.turbSimInput": "TurbSim primary input file URI.",
+  "openfast.strictPreflight.description": "Disabled by default. Enabling strict validation blocks errors, warnings and incomplete checks before running. When disabled, errors and incomplete checks still block execution; ordinary warnings require confirmation. Run checks always include cross-file validation regardless of editor diagnostic settings."
 }

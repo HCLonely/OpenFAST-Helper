@@ -564,5 +564,7 @@
   "turbSimRunner.saveFailed": "TurbSim 输入文件保存失败，已取消运行。",
   "turbSimRunner.exitCode": "TurbSim 任务退出，退出码 {0}。请查看任务终端中的输出。",
   "turbSimRunner.statusPath": "$(gear) TurbSim 路径",
-  "turbSimRunner.statusTooltip": "选择并保存 TurbSim 可执行文件路径。"
+  "turbSimRunner.statusTooltip": "选择并保存 TurbSim 可执行文件路径。",
+  "runChecks.validatorMissing": "严格运行前验证需要可用的工况检查器，请重新加载窗口后重试。",
+  "runChecks.strictBlocked": "严格运行前验证未通过：{0} 个错误、{1} 个警告，或配置读取不完整。请查看“问题”面板。"
 }

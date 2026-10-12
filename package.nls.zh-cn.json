@@ -84,5 +84,6 @@
   "openfast.configureTurbSimExecutable.title": "TurbSim: 配置可执行文件路径",
   "openfast.runTurbSim.title": "TurbSim: 运行主输入文件",
   "openfast.turbSimExecutablePath.description": "TurbSim 可执行文件完整路径；未设置时首次运行会打开程序选择器。与 OpenFAST 程序路径独立保存。",
-  "task.turbSimInput": "TurbSim 主输入文件 URI。"
+  "task.turbSimInput": "TurbSim 主输入文件 URI。",
+  "openfast.strictPreflight.description": "默认关闭。启用严格验证后，运行前阻止错误、警告及不完整检查。关闭时仍阻止错误及不完整检查，一般警告需确认。运行检查始终执行跨文件检查，不受编辑器诊断开关影响。"
 }

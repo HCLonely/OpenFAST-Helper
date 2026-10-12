@@ -22,7 +22,7 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json points to `https://github.com/HCLonely/OpenFAST-Helper`. Run `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.0/"` to link release documentation to its tag. GitHub Actions supplies a commit-specific content URL.
+package.json points to `https://github.com/HCLonely/OpenFAST-Helper`. Run `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.1/"` to link release documentation to its tag. GitHub Actions supplies a commit-specific content URL.
 
 Run `npm run build:doc-links` to maintain the official section index (network access required). HTML fetch records and build reports are written to `test-results/docs` and excluded from the package. The parameter catalog and section index are stored separately in `data/catalog.json` and `data/doc-links.json`; rebuilding the catalog does not overwrite the link index. Maintain module documentation entry points in catalog sources, `scripts/build_catalog.py` and the English catalog. TurbSim uses the NLR v2.00 PDF and ROSCO uses its latest documentation homepage; neither receives an additional OpenFAST-version documentation link.
 
@@ -34,7 +34,7 @@ The core parser is in `src/parser.ts`, the editor adapter in `src/extension.ts`,
 
 For test cases stored elsewhere, set `$env:OPENFAST_TEST_CASE_DIR = "absolute case directory"` before running `npm test` or the host test script. The directory must contain real configurations; its adjacent `_中文注释版` directory is used by existing parser regression tests.
 
-The current `.gitignore` excludes `test/`. JavaScript tests, formatting checks and host tests therefore require that directory to be retained locally; parser regressions also depend on external cases. These tests cannot run directly from a fresh Git checkout. To include them in CI, first track the tests and shareable case fixtures and remove dependencies on local paths.
+The current `.gitignore` excludes most local tests, with exceptions for preflight, runner and shared regression helpers. Fresh checkouts can compile and run the focused run-validation tests below. Full tests and formatting/host checks still require the other local test files; parser regressions also depend on external cases. Tracking the remaining tests in CI requires shareable fixtures and removal of local path dependencies.
 
 ## Documentation languages
 
@@ -63,7 +63,7 @@ Workflow: `.github/workflows/build.yml`, named **Build VSIX**.
 - Checks the VSIX entry point, parameter catalog and native probe, then uploads `dist/*.vsix`. The artifact is named `openfast-helper-windows-x64-<run-number>` and retained for 30 days.
 - Requires only repository read permissions and no additional secrets. Download from **Actions → Build VSIX → selected run → Artifacts**. **Run workflow** is available once the workflow exists on the default branch.
 
-CI currently runs type checking, Rust tests and package-content checks. JavaScript and real VS Code host tests require the local resources described above. The workflow creates a VSIX artifact; it does not publish to the extension marketplace or GitHub Releases. The package contains a Windows x64 probe; see the README for other-platform limitations.
+CI runs type checking, run-validation regression tests, Rust tests and package-content checks. Other JavaScript and real VS Code host tests require the local resources described above. The workflow creates a VSIX artifact; it does not publish to the extension marketplace or GitHub Releases. The package contains a Windows x64 probe; see the README for other-platform limitations.
 
 When releasing a new version, update package.json, package-lock.json and the versioned output path in the `package` script together. The workflow collects VSIX files with a wildcard and needs no version update.
 
@@ -88,12 +88,4 @@ Comparison requires matching scenario hashes, report format, Node.js major versi
 
 ## GitHub Releases
 
-For 1.2.0, run the checks and native probe build above, then package with the `v1.2.0` content URL. Commit and push the source, create and push the `v1.2.0` tag, then publish a GitHub Release with `dist/openfast-helper-1.2.0.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.
-
-## Maintaining TurbSim and result support
-
-`src/turbsim-runner.ts` and `src/run-input.ts` implement TurbSim execution using the separate `openfast.turbSimExecutablePath`. Shared task helpers pass process arguments and the input directory independently. Trust, save results, executable files and duplicate tasks are checked before launch; this path does not enter OpenFAST preflight, queues or monitoring.
-
-`data/module-parameters.json` contains the module-specific bilingual catalog; `data/input-value-rules.json` contains field types and special values, loaded through the catalog and `src/input-value-rules.ts`. Path classification is in `src/parameter-paths.ts`. The result language is registered in package.json and visible-region semantic tokens are in `src/result-highlights.ts`. Run the full checks above after changes. Local focused tests include `test/turbsim-runner.test.js`, `test/format-support.test.js`, `test/module-parameters.test.js` and `test/input-validation.test.js`. Apart from the tracked TurbSim test, these tests remain subject to local ignore rules.
-
-Validation for 1.2.0: with external fixtures configured, 294 of 300 local tests pass. Five preflight tests and one logic-performance test also fail on the unchanged baseline commit `98034b2`, covering strict mode, revalidation during edits and forced cross-file checks. These six existing failures remain unresolved. Focused real VS Code checks for formats, result highlighting and module parameter help pass.
+For 1.2.1, run the checks and native probe build above, then package with the `v1.2.1` content URL. Commit and push the source, create and push the `v1.2.1` tag, then publish a GitHub Release with `dist/openfast-helper-1.2.1.vsix` attached. Verify that the release tag points to the tested commit. Publishing to the VS Code Marketplace is a separate process.

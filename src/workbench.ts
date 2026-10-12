@@ -176,8 +176,8 @@ function registerWorkbench(vscode, context) {
     d.code = issue.url ? { value: issue.code, target: vscode.Uri.parse(issue.url) } : issue.code;
     return d;
   }
-  function flush(uri) {
-    if (!config('enableDiagnostics', vscode.Uri.parse(uri))) {
+  function flush(uri, runChecks = false) {
+    if (!runChecks && !config('enableDiagnostics', vscode.Uri.parse(uri))) {
       diagnostics.delete(vscode.Uri.parse(uri));
       return;
     }
@@ -356,13 +356,13 @@ function registerWorkbench(vscode, context) {
       return graph;
     });
   }
-  async function checkRoot(root, force = false) {
+  async function checkRoot(root, force = false, runChecks = false) {
     const current = selectRoot(root);
     const graph = await graphFor(root, force);
     if (!graph) {
       return undefined;
     }
-    const cross = config('enableCrossFileChecks', root) ? crossIssues(graph) : [];
+    const cross = runChecks || config('enableCrossFileChecks', root) ? crossIssues(graph) : [];
     const nodeIssues = new Map<string, ReturnType<typeof analyze>>();
     for (const node of graph.nodes.values())
       nodeIssues.set(node.uri, analyze(node.text, node.profile, node.parsed, node.tables));
@@ -390,7 +390,7 @@ function registerWorkbench(vscode, context) {
       localIssues.set(node.uri, nodeIssues.get(node.uri));
     }
     for (const key of new Set([...previousKeys, ...localIssues.keys(), ...graphIssues.keys()])) {
-      flush(key);
+      flush(key, runChecks && (graph.nodes.has(key) || graphIssues.has(key)));
     }
     vscode.window.visibleTextEditors.forEach(decorate);
     return result;

@@ -8,18 +8,18 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.2.0.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.2.1.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.2.0.vsix"
+code --install-extension "openfast-helper-1.2.1.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.2.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.2.1.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.1), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
 
 ## Supported text formats
 
@@ -242,7 +242,7 @@ Existing channels are marked as already added and ranked lower; the channel curr
 2. Open the main `.fst/.fstf` and click ▶ in the editor title bar. Alternatively, choose **OpenFAST: Run FST** from the Explorer context menu or use the configuration-tree run button.
 3. The program runs in a VS Code task terminal and enters the run queue. Its working directory is the main file's directory. The terminal shows output directly; OpenFAST writes results according to its inputs. Use **Terminal → Terminate Task** to stop it.
 
-If no executable is configured, the first run opens a picker and saves the path. If the setting is unavailable or cannot be written in the current window, workspace extension storage retains it as a fallback; manual settings.json edits are unnecessary. The same FST cannot start twice concurrently. Pre-run checks cover the main file and enabled references. Relevant unsaved files are listed; choosing to save and check saves them and repeats validation. Known errors, unreadable configurations and reference limits block execution; ordinary warnings require confirmation. Unrelated modified files remain untouched. Separate process arguments support Chinese, spaces and special characters without constructing a shell command. Execution requires a trusted local workspace, has no assigned shortcut and is never triggered by opening or editing a file.
+If no executable is configured, the first run opens a picker and saves the path. If the setting is unavailable or cannot be written in the current window, workspace extension storage retains it as a fallback; manual settings.json edits are unnecessary. The same FST cannot start twice concurrently. Pre-run checks cover the main file and enabled references. Relevant unsaved files are listed; choosing to save and check saves them and repeats validation. Strict pre-run validation is disabled by default (`openfast.strictPreflight = false`): ordinary warnings require confirmation; errors, unreadable configurations and reference limits still block execution. Enabling strict mode also blocks warnings and reveals the Problems panel. Run checks always perform cross-file validation and display diagnostics regardless of editor diagnostic settings. Related document edits (including saved edits), reopened documents and newly discovered references cause revalidation during checks and confirmation. Validation stops after eight attempts if the case remains unstable. Unrelated modified files remain untouched. Separate process arguments support Chinese, spaces and special characters without constructing a shell command. Execution requires a trusted local workspace, has no assigned shortcut and is never triggered by opening or editing a file.
 
 ## Result highlighting and TurbSim diagnostics
 
@@ -368,6 +368,7 @@ Run **OpenFAST: Open all extension settings**, or search `@ext:hclonely.openfast
 | `openfast.runConcurrency` | `1` | Concurrent runs (1–16); applies on next submission |
 | `openfast.enableDiagnostics` | `true` | Live diagnostics |
 | `openfast.dimInactiveParameters` | `true` | Dim inactive parameters |
+| `openfast.strictPreflight` | `false` | Block errors, warnings and incomplete pre-run checks; disable to confirm ordinary warnings |
 | `openfast.enableCrossFileChecks` | `true` | Known cross-file constraints |
 | `openfast.enableOutputSuggestions` | `true` | Module-specific OutList candidates |
 | `openfast.enableTableHints` | `true` | Active table row field names and units |

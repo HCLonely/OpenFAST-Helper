@@ -564,5 +564,7 @@
   "turbSimRunner.saveFailed": "Could not save the TurbSim input; run cancelled.",
   "turbSimRunner.exitCode": "TurbSim exited with code {0}. See the task terminal for details.",
   "turbSimRunner.statusPath": "$(gear) TurbSim path",
-  "turbSimRunner.statusTooltip": "Select and persist the TurbSim executable."
+  "turbSimRunner.statusTooltip": "Select and persist the TurbSim executable.",
+  "runChecks.validatorMissing": "Strict pre-run validation requires an available case validator. Reload the window and retry.",
+  "runChecks.strictBlocked": "Strict pre-run validation failed: {0} errors, {1} warnings, or incomplete configuration reads. See the Problems panel."
 }

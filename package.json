@@ -2,7 +2,7 @@
   "name": "openfast-helper",
   "displayName": "OpenFAST Helper",
   "description": "%description%",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "HCLonely",
   "license": "MIT",
   "engines": {
@@ -277,6 +277,12 @@
           "type": "boolean",
           "default": true,
           "description": "%openfast.enableValueSuggestions.description%",
+          "scope": "resource"
+        },
+        "openfast.strictPreflight": {
+          "type": "boolean",
+          "default": false,
+          "description": "%openfast.strictPreflight.description%",
           "scope": "resource"
         },
         "openfast.enableDiagnostics": {
@@ -867,7 +873,7 @@
     "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.js\"",
     "test": "npm run compile && node --test test/*.test.js",
     "vscode:prepublish": "npm run compile",
-    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.2.0.vsix",
+    "package": "vsce package --no-dependencies --out dist/openfast-helper-1.2.1.vsix",
     "build:doc-links": "node scripts/build-doc-links.mjs",
     "benchmark:editor": "npm run compile && node scripts/editor-benchmark.cjs"
   },

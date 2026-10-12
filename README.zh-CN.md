@@ -8,18 +8,18 @@
 
 1. 打开 VS Code 的扩展面板。
 2. 点击右上角 `…` → **从 VSIX 安装…**。
-3. 选择 `openfast-helper-1.2.0.vsix`；若提示重新加载窗口，按提示操作。
+3. 选择 `openfast-helper-1.2.1.vsix`；若提示重新加载窗口，按提示操作。
 4. 打开 `.fst` 或相应模块 `.dat` 文件，右下角语言模式应为 **OpenFAST**。
 
 也可使用命令行：
 
 ```powershell
-code --install-extension "openfast-helper-1.2.0.vsix"
+code --install-extension "openfast-helper-1.2.1.vsix"
 ```
 
 此扩展尚未发布到扩展市场。最低 VS Code 版本为 1.85。
 
-从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.0) 下载 `openfast-helper-1.2.0.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
+从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.1) 下载 `openfast-helper-1.2.1.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
 
 ## 支持的文本格式
 
@@ -243,7 +243,7 @@ OutList 保持按英文通道名补全，不新增中文搜索。所有建议与
 2. 打开主 .fst / .fstf 文件，点击编辑器右上角 ▶；也可在资源管理器右键主文件选择 **OpenFAST: 运行当前 FST**，或点击配置关系树的运行按钮。
 3. 程序在 VS Code 任务终端中运行，并进入运行队列；工作目录为 FST 所在目录；输出直接显示在终端，计算结果由 OpenFAST 按输入配置写入相应目录。可通过“终端 → 终止任务”停止运行。
 
-第一次运行时若尚未配置路径，会直接打开程序选择器并保存设置。当前窗口未注册该设置或无法写入时，路径会持久保存到插件工作区存储，仍可直接运行；不必手工修改 settings.json。同一 FST 正在运行时阻止重复启动。运行前检查主文件及启用的引用配置；存在未保存修改时列出相关文件，选择“保存相关文件并检查”后保存并重新检查。已知错误、无法读取的配置或达到引用检查上限会阻止运行；一般警告需确认后继续。无关文件的修改保持原样。运行使用独立进程参数，支持含中文、空格及特殊字符的路径，不通过拼接 shell 命令执行。只在受信任的本地工作区运行，不绑定快捷键，也不会因打开或编辑文件自动运行。
+第一次运行时若尚未配置路径，会直接打开程序选择器并保存设置。当前窗口未注册该设置或无法写入时，路径会持久保存到插件工作区存储，仍可直接运行；不必手工修改 settings.json。同一 FST 正在运行时阻止重复启动。运行前检查主文件及启用的引用配置；存在未保存修改时列出相关文件，选择“保存相关文件并检查”后保存并重新检查。严格运行前验证默认关闭（`openfast.strictPreflight = false`），一般警告可确认后继续，错误、无法读取的配置及达到引用检查上限仍阻止运行。手动启用严格模式后，警告也会阻止运行，并显示“问题”面板。运行检查始终执行跨文件检查并显示诊断，不受编辑器诊断开关影响。检查及确认期间相关文件被修改（包括修改后已保存）、重新打开或发现新引用时，会重新保存检查；最多尝试 8 轮，仍不稳定则停止启动。无关文件的修改保持原样。运行使用独立进程参数，支持含中文、空格及特殊字符的路径，不通过拼接 shell 命令执行。只在受信任的本地工作区运行，不绑定快捷键，也不会因打开或编辑文件自动运行。
 
 ## 结果文件高亮与 TurbSim 诊断
 
@@ -370,6 +370,7 @@ TurbSim 的 `WindProfileType`（如 `PL`）和 `CTEventFile`（`LES`、`DNS`、`
 | `openfast.runConcurrency` | `1` | 最大并发运行数（1–16），下次提交工况时生效 |
 | `openfast.enableDiagnostics` | `true` | 实时问题诊断 |
 | `openfast.dimInactiveParameters` | `true` | 淡化未启用参数 |
+| `openfast.strictPreflight` | `false` | 运行前阻止错误、警告及不完整检查；关闭后一般警告需确认 |
 | `openfast.enableCrossFileChecks` | `true` | 跨文件已知约束检查 |
 | `openfast.enableOutputSuggestions` | `true` | OutList 模块通道建议 |
 | `openfast.enableTableHints` | `true` | 表格活动行列名与单位提示 |
