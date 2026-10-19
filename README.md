@@ -8,18 +8,18 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.2.3.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.3.0.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.2.3.vsix"
+code --install-extension "openfast-helper-1.3.0.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.2.3.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.3), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.3.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.3.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
 
 ## Supported text formats
 
@@ -279,17 +279,17 @@ Log analysis uses the last 1,000,000 characters and produces at most 50 diagnost
 
 A waveform **OpenFAST Progress** icon appears by default in the left Activity Bar alongside Explorer, Search and Extensions. It opens the task list. Startup does not open the monitor or scan processes. Scanning occurs every five seconds only while either the sidebar or editor monitor is visible; when both are closed or in the background, scanning and timed UI refresh stop. Showing either refreshes immediately. Stopping monitoring does not stop simulations. **Open in Editor** expands the list; the status bar and queue title also open the monitor. The status bar entry appears only for the active OpenFAST document (including `.fst`/`.fstf` files) and hides for unrelated files or when no text editor is active. After upgrading, run **Developer: Reload Window** once. If you previously hid the icon, re-enable it from the Activity Bar context menu.
 
-The list shows case, status, PID, simulation time/TMax, percentage, elapsed time, monitor-estimated remaining time, OpenFAST remaining time and progress source. Search by name/path/PID; filter running/waiting, all session tasks, finished or failed tasks. The compact sidebar opens case details including paths, working directory, command line, report time and original native ETA, plus case-directory and log-link actions.
+The list shows case, status, PID, simulation time/TMax, percentage, elapsed time, monitor-estimated remaining time, OpenFAST remaining time and progress source. Search by name/path/PID; filter running/waiting, all session tasks, finished or failed tasks. Click any column header to sort ascending; click again for descending. Numeric columns use actual values, case names use natural ordering (2 before 10), and unknown values stay last. Sorting is retained across updates, search and filtering, and restored when the same view is recreated. Click a task name to open its case directory in a new VS Code window. The Details button shows paths, working directory, command line, report time and original native ETA, plus case-directory and log-link actions. Clicking it focuses and scrolls to the details below the task list, with the selected task highlighted.
 
 Progress collection follows the local `OpenFAST_Monitor` Rust implementation:
 
 - In trusted local Windows workspaces, discovers OpenFAST processes every five seconds and refreshes the visible interface every second. The Windows x64 package includes a read-only native probe for command lines, working directories and creation times, including WOW64 processes. Relative `.fst/.fstf` paths resolve against the solver's actual working directory and need not belong to the workspace. If the probe cannot run, CIM fallback resolves relative paths only through a unique workspace match.
 - Extension tasks and external processes are deduplicated by PID; external identities also use creation time. Insufficient argument permissions still show the task with a read issue. The monitor does not guess working directories or terminate solvers.
-- Reads same-root `.log/.stdout.log/.stdout` files updated since the current launch, case-directory logs, `runs/<attempt>/stdout.log`, `stderr.log`, and logs referenced by PID-matching `run_status.json`. Directory logs are used automatically only with one active case in that directory. Multiple processes for the same case require explicit log association. Launch time excludes stale logs/outputs; reads are capped at the last 128 KiB per file.
-- Uses the last complete data row of a same-root text `.out` for simulation time and FST TMax for percentage, ignoring incomplete trailing rows. Logs and text output can both supply progress; the newer simulation time wins. `.outb` alone without logs does not imply live progress.
+- Reads same-root `.log/.stdout.log/.stdout` files updated since the current launch, case-directory logs, and `.log/.stdout/.stderr/.txt` candidates within two subdirectory levels, regardless of directory or log basename. Progress is parsed from actual OpenFAST status text. Scanning is capped at 100 directories, 1,000 entries and 100 candidates; at most 16 fresh candidates are read. Logs elsewhere can be linked manually. Directory logs are used automatically only with one active case in that directory. Multiple processes for the same case require explicit log association. Launch time excludes stale logs/outputs; reads are capped at the last 128 KiB per file.
+- Uses the last complete data row of a same-root text `.out` or case-prefixed module `.out/.dbg/.dbg2` output for simulation time and FST TMax for percentage. Each file must have a leading `Time` column; incomplete rows, stale files, other case prefixes and times beyond TMax are ignored. This can supply progress when the main result file still contains only a header and no logs exist. Up to 32 module files are discovered among 1,000 case-directory entries. Logs and text output can both supply progress; the newer simulation time wins. `.outb` alone without logs does not imply live progress.
 - **Monitor estimated remaining** uses elapsed time and simulation progress. **OpenFAST remaining** independently reads the latest complete `Estimated final completion at ... (in ... days)` report and is never replaced by the monitor estimate. Incomplete new ETA text does not overwrite a previous complete report. Solver days are rounded, so converted durations are approximate. Text-output-only progress can show the monitor estimate while native ETA remains `—`.
 - Native remaining time retains the latest solver report without counting down and becomes `—` after completion. Estimated completion keeps the original local clock text without inventing a date. Details flag reports older than 30 seconds without treating staleness as process termination.
-- Existing processes remain running even when logs contain fatal-error hints. After exit, current-run logs or PID-matching status evidence determine normal/failed completion; without evidence, exit status is unknown. Extension tasks retain queue states. Query failures preserve previous process state.
+- Existing processes remain running even when logs contain fatal-error hints. After exit, current-run solver log evidence determine normal/failed completion; without evidence, exit status is unknown. Extension tasks retain queue states. Query failures preserve previous process state.
 
 Up to 100 finished records are retained and can be cleared. Reload rediscovers processes still running. External discovery is Windows-only; the native probe is x64-only, with CIM fallback on other Windows architectures. On other systems, extension-started tasks still receive console progress. Remote windows and untrusted workspaces do not read local processes. External tasks without logs or text outputs show process state only; previously emitted output from another terminal cannot be recovered.
 

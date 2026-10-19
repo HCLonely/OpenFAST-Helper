@@ -22,7 +22,7 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.3/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
+package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.3.0/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
 
 维护官方章节索引时运行 `npm run build:doc-links`（需要联网）；HTML 抓取记录与构建报告位于 `test-results/docs`，不进入安装包。参数词典与章节索引分别保存在 `data/catalog.json`、`data/doc-links.json`，构建参数词典不会覆盖链接索引。模块文档入口维护在 catalog 的 sources 中，并同步 `scripts/build_catalog.py` 与英文词典；TurbSim 使用 NLR 的 v2.00 PDF，ROSCO 使用其 latest 文档首页，两者不附加 OpenFAST 版本文档入口。
 
@@ -41,6 +41,12 @@ package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发
 `README.md` 与 `Development.md` 为默认英文文档，`README.zh-CN.md` 与 `Development.zh-CN.md` 为对应的简体中文版。功能、命令、环境要求或限制变化时，同步维护两种语言。每份文档顶部提供语言切换入口；用户说明与开发说明之间的链接及章节锚点应保持同一语言。
 
 两份 README 均包含在 VSIX 中；两份开发说明均通过 `.vscodeignore` 排除。README 中指向开发说明的链接在打包时通过内容 URL 转为仓库链接。
+
+## 计算进度监控
+
+`src/monitor-sampler.ts` 扫描工况目录及两层子目录内的 `.log/.stdout/.stderr/.txt` 实际文件，不依赖启动器元数据或固定目录名。整个扫描共用 100 个目录、1,000 个目录项和 100 个候选文件的限制，最多读取最新的 16 个有效候选；跳过符号链接目录、`.git` 和 `node_modules`。启动时间过滤及共享目录歧义检查继续生效。结果回退读取主 `.out` 及最多 32 个以工况名为前缀的模块 `.out/.dbg*` 文件，要求首列 `Time`，完整行列数与表头一致；每个结果文件最多读取 64 KiB 表头及 128 KiB 尾部，排除超过 FST TMax 的时间，独立保留求解器 ETA。`src/run-monitor.ts` 从已保存的任务路径确定项目目录，仅在受信任的本地工作区调用 `vscode.openFolder`，通过 `forceNewWindow` 打开新窗口。任务名称打开项目；显式点击“任务详情”时聚焦并滚动至详情区域，定时刷新仅保留焦点、不触发滚动。详情按钮提供 `aria-controls` 和 `aria-expanded`。监控 Webview 支持八列排序，数值列使用原始值，文本列采用本地化自然排序；未知值在升降序中均置后，同值保持传入顺序。先筛选再排序，通过 Webview state API 保存选择；表头使用原生按钮及 `aria-sort`，刷新后保留键盘焦点。
+
+执行 `npm run compile` 后，在本地测试文件可用时运行 `node --test test/run-progress.test.js test/monitor-sampler.test.js test/run-monitor.test.js test/run-monitor-sort.test.js test/process-discovery.test.js`，覆盖任意子目录与日志名称、自定义状态 JSON 不参与识别、扫描深度限制、旧批次日志、原生发现、打开项目及信任检查、数值与自然排序、未知值及排序持久化。
 
 ## 原生探针
 
@@ -88,4 +94,4 @@ npm run benchmark:editor -- --baseline test-results/editor-benchmark-baseline.js
 
 ## GitHub Releases 发布
 
-发布 1.2.3 时，先执行上述检查和原生探针构建，再使用 `v1.2.3` 内容 URL 打包。提交并推送源码，创建和推送 `v1.2.3` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.2.3.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
+发布 1.3.0 时，先执行上述检查和原生探针构建，再使用 `v1.3.0` 内容 URL 打包。提交并推送源码，创建和推送 `v1.3.0` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.3.0.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。

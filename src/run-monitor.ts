@@ -260,7 +260,7 @@ export class RunMonitor {
             entry.dataSource = undefined;
           }
         }
-        if (entry.input && (!ambiguous || entry.manualLog))
+        if ((entry.input || entry.manualLog) && (!ambiguous || entry.manualLog))
           await this.sampleEntry(entry, !sharedDirectory);
       }
       if (!current()) return;
@@ -303,12 +303,7 @@ export class RunMonitor {
     if (sample.log) entry.log = sample.log;
     entry.logText = sample.logText;
     entry.dataSource = sample.source;
-    entry.note =
-      sample.fatal || sample.stateStatus === 'failed'
-        ? 'fatal'
-        : sample.normal || sample.stateStatus === 'succeeded'
-          ? 'normal'
-          : undefined;
+    entry.note = sample.fatal ? 'fatal' : sample.normal ? 'normal' : undefined;
   }
   private prune() {
     const finished = [...this.entries.values()].filter(
@@ -393,8 +388,10 @@ export class RunMonitor {
         cwd: t('monitor.cwd'),
         command: t('monitor.command'),
         directory: t('monitor.directory'),
+        openProject: t('monitor.openProject'),
         details: t('monitor.details'),
         expand: t('monitor.expand'),
+        sortHint: t('monitor.sortHint'),
       },
     };
   }
@@ -472,7 +469,16 @@ export class RunMonitor {
       try {
         if (message?.action === 'refresh') await this.scan();
         else if (message?.action === 'expand') this.show();
-        else if (message?.action === 'directory' && this.localTrusted()) {
+        else if (message?.action === 'openProject' && this.localTrusted()) {
+          const entry = this.entries.get(message.id);
+          const directory = entry?.input ? path.dirname(entry.input) : entry?.cwd;
+          if (directory && path.isAbsolute(directory))
+            await this.vscode.commands.executeCommand(
+              'vscode.openFolder',
+              this.vscode.Uri.file(directory),
+              { forceNewWindow: true },
+            );
+        } else if (message?.action === 'directory' && this.localTrusted()) {
           const entry = this.entries.get(message.id);
           if (entry?.input)
             await this.vscode.commands.executeCommand(
@@ -528,10 +534,47 @@ export class RunMonitor {
   }
 }
 
-const monitorStyles = `#tasks{max-height:65vh}#tasks table{min-width:1080px}#tasks th{position:sticky;top:0;background:var(--vscode-editor-background);white-space:nowrap}#tasks td{vertical-align:middle}#tasks .name{min-width:180px}#tasks .name button{background:transparent;color:var(--vscode-textLink-foreground);border:0;padding:0;min-height:24px;text-align:left}#tasks progress{width:90px;accent-color:var(--vscode-progressBar-background)}#tasks .selected{background:var(--vscode-list-inactiveSelectionBackground)}#tasks .sub{display:block;font-size:12px;color:var(--vscode-descriptionForeground)}#tasks.compact table{min-width:340px}#tasks.compact .wide{display:none}#tasks.compact td,#tasks.compact th{padding:6px}#detail{margin-top:18px;border-top:1px solid var(--vscode-panel-border)}#detail pre{white-space:pre-wrap;overflow-wrap:anywhere}#detail th{width:30%}#detail h2{overflow-wrap:anywhere}`;
+const monitorStyles = `#tasks{max-height:65vh}#tasks table{min-width:1080px}#tasks th{position:sticky;top:0;background:var(--vscode-editor-background);white-space:nowrap}#tasks td{vertical-align:middle}#tasks th button.sort{background:transparent;color:var(--vscode-foreground);border:0;padding:2px 0;min-height:24px;font:inherit;text-align:left;white-space:nowrap}#tasks th button.sort:hover{color:var(--vscode-textLink-foreground)}#tasks .name{min-width:180px}#tasks .name button{background:transparent;color:var(--vscode-textLink-foreground);border:0;padding:0;min-height:24px;text-align:left}#tasks progress{width:90px;accent-color:var(--vscode-progressBar-background)}#tasks .selected{background:var(--vscode-list-inactiveSelectionBackground)}#tasks .sub{display:block;font-size:12px;color:var(--vscode-descriptionForeground)}#tasks.compact table{min-width:340px}#tasks.compact .wide{display:none}#tasks.compact td,#tasks.compact th{padding:6px}#detail{margin-top:18px;border-top:1px solid var(--vscode-panel-border)}#detail pre{white-space:pre-wrap;overflow-wrap:anywhere}#detail th{width:30%}#detail h2{overflow-wrap:anywhere}`;
 
 export const monitorScript = `
 let latest=initial,selected;const compact=initial.compact;
+const sortKeys=['name','state','pid','progress','elapsed','estimated','remaining','source'];
+const savedSort=api.getState?.()?.monitorSort;
+let sortKey=sortKeys.includes(savedSort?.key)?savedSort.key:undefined;
+let sortDirection=savedSort?.direction===-1?-1:1;
+function sortValue(entry,key,now){
+ switch(key){
+  case 'name':return entry.label;
+  case 'state':return entry.state;
+  case 'pid':return entry.pid;
+  case 'progress':return entry.progress?.percent;
+  case 'elapsed':return entry.startedAt===undefined?undefined:((entry.endedAt??now)-entry.startedAt)/1000;
+  case 'estimated':return entry.monitorEta;
+  case 'remaining':return entry.solverEstimate?.remainingSeconds;
+  case 'source':return entry.dataSource;
+ }
+}
+function compareEntries(a,b,now){
+ const left=sortValue(a,sortKey,now),right=sortValue(b,sortKey,now);
+ const missing=value=>value===undefined||value===null||typeof value==='number'&&!Number.isFinite(value);
+ // 无进度、无 ETA 等未知值始终排在末尾，不随升降序翻转。
+ if(missing(left)||missing(right))return Number(missing(left))-Number(missing(right));
+ return sortDirection*(typeof left==='number'&&typeof right==='number'?left-right:String(left).localeCompare(String(right),undefined,{numeric:true,sensitivity:'base'}));
+}
+function sortHeader(text,cls,key){
+ const th=node('th',undefined,cls),active=sortKey===key;
+ th.setAttribute('aria-sort',active?(sortDirection===1?'ascending':'descending'):'none');
+ const button=node('button',text+' '+(active?(sortDirection===1?'↑':'↓'):'↕'),'sort');
+ button.id='sort-'+key;button.title=latest.labels.sortHint;
+ button.onclick=()=>{
+  sortDirection=sortKey===key?-sortDirection:1;
+  sortKey=key;
+  api.setState?.({...api.getState?.(),monitorSort:{key:sortKey,direction:sortDirection}});
+  render(latest);
+ };
+ th.append(button);
+ return th;
+}
 function node(tag,text,cls){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el}
 function clock(value){return value?new Date(value).toLocaleString():'—'}
 function duration(seconds){if(seconds===undefined||seconds===null)return '—';seconds=Math.max(0,Math.round(seconds));const h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;return h+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
@@ -539,13 +582,14 @@ function render(data){latest=data;const focusId=document.activeElement?.id,l=dat
  document.getElementById('status').textContent=data.error||'';document.getElementById('scan').textContent=data.lastScan?l.lastScan+' · '+clock(data.lastScan):'';
  const query=(document.getElementById('search').value||'').toLowerCase(),filter=document.getElementById('filter').value||'all';
  const entries=data.entries.filter(e=>(e.label+' '+(e.input||'')+' '+(e.pid||'')).toLowerCase().includes(query)&&(filter==='all'||filter==='running'&&['running','waiting'].includes(e.stateCode)||filter==='finished'&&!['running','waiting'].includes(e.stateCode)||filter==='failed'&&e.stateCode==='failed'));
- const table=node('table'),head=node('thead'),heading=node('tr');for(const [text,cls] of [[l.name,'name'],[l.state,'wide'],['PID','wide'],[l.progress,''],[l.elapsed,'wide'],[l.estimated,'wide'],[l.remaining,''],[l.source,'wide']])heading.append(node('th',text,cls));head.append(heading);table.append(head);const body=node('tbody');
- for(const e of entries){const row=node('tr',undefined,e.id===selected?'selected':''),name=node('td',undefined,'name'),button=node('button',e.label);button.id='task-'+e.id;button.onclick=()=>{selected=e.id;render(latest)};name.append(button,node('span',compact?e.state:e.input||e.source,'sub'));row.append(name,node('td',e.state,'wide'),node('td',e.pid||'—','wide'));
+ const now=Date.now();if(sortKey)entries.sort((a,b)=>compareEntries(a,b,now));
+ const table=node('table'),head=node('thead'),heading=node('tr');for(const [text,cls,key] of [[l.name,'name','name'],[l.state,'wide','state'],['PID','wide','pid'],[l.progress,'','progress'],[l.elapsed,'wide','elapsed'],[l.estimated,'wide','estimated'],[l.remaining,'','remaining'],[l.source,'wide','source']])heading.append(sortHeader(text,cls,key));head.append(heading);table.append(head);const body=node('tbody');
+ for(const e of entries){const row=node('tr',undefined,e.id===selected?'selected':''),name=node('td',undefined,'name'),button=node('button',e.label);button.id='task-'+e.id;button.title=l.openProject;button.disabled=!e.input&&!e.cwd;button.onclick=()=>api.postMessage({action:'openProject',id:e.id});const details=node('button',l.details);details.id='details-'+e.id;details.setAttribute('aria-controls','detail');details.setAttribute('aria-expanded',String(e.id===selected));details.onclick=()=>{selected=e.id;render(latest);const region=document.getElementById('detail');region.focus?.({preventScroll:true});region.scrollIntoView?.({behavior:'smooth',block:'start'})};name.append(button,node('span',compact?e.state:e.input||e.source,'sub'),details);row.append(name,node('td',e.state,'wide'),node('td',e.pid||'—','wide'));
  const p=e.progress,cell=node('td');if(p){const bar=node('progress');bar.max=100;bar.value=p.percent;bar.setAttribute('aria-label',l.progress);bar.setAttribute('aria-valuetext',p.percent.toFixed(1)+'%');cell.append(bar,node('span',' '+p.percent.toFixed(1)+'%'),node('span',p.current+' / '+p.total+' '+l.seconds,'sub'))}else cell.textContent=l.unknown;row.append(cell);
  row.append(node('td',e.startedAt?duration(((e.endedAt||Date.now())-e.startedAt)/1000):'—','wide'),node('td',duration(e.monitorEta),'wide'),node('td',duration(e.solverEstimate?.remainingSeconds)),node('td',e.dataSource,'wide'));body.append(row)}table.append(body);root.append(table);if(!entries.length)root.append(node('p',l.empty,'muted'));
- const detail=document.getElementById('detail');detail.replaceChildren();const e=data.entries.find(e=>e.id===selected);if(e){detail.append(node('h2',e.label));const properties=node('table');for(const [key,value] of [[l.state,e.state],[l.source,e.dataSource],[l.cwd,e.cwd],[l.command,e.commandLine],[l.completion,e.solverEstimate?.completionClock],[l.reported,clock(e.progress?.reportedAt)],[l.log,e.log]]){const tr=node('tr');tr.append(node('th',key),node('td',value||'—'));properties.append(tr)}detail.append(properties);if(e.note)detail.append(node('p',e.note,'error'));if(e.logError)detail.append(node('p',e.logError,'error'));if(e.running&&e.progress&&Date.now()-e.progress.reportedAt>30000)detail.append(node('p',l.stale,'muted'));
+ const detail=document.getElementById('detail');detail.tabIndex=-1;detail.setAttribute('role','region');detail.setAttribute('aria-label',l.details);detail.replaceChildren();const e=data.entries.find(e=>e.id===selected);if(e){detail.append(node('h2',e.label));const properties=node('table');for(const [key,value] of [[l.state,e.state],[l.source,e.dataSource],[l.cwd,e.cwd],[l.command,e.commandLine],[l.completion,e.solverEstimate?.completionClock],[l.reported,clock(e.progress?.reportedAt)],[l.log,e.log]]){const tr=node('tr');tr.append(node('th',key),node('td',value||'—'));properties.append(tr)}detail.append(properties);if(e.note)detail.append(node('p',e.note,'error'));if(e.logError)detail.append(node('p',e.logError,'error'));if(e.running&&e.progress&&Date.now()-e.progress.reportedAt>30000)detail.append(node('p',l.stale,'muted'));
  if(!e.progress)detail.append(node('p',e.external?l.noLog:l.waiting,'muted'));if(e.input){const open=node('button',l.directory);open.id='directory-'+e.id;open.onclick=()=>api.postMessage({action:'directory',id:e.id});detail.append(open)}if(e.external&&e.running){const attach=node('button',l.attach);attach.id='attach-'+e.id;attach.onclick=()=>api.postMessage({action:'attach',id:e.id});detail.append(attach)}const raw=e.solverEstimate?.raw||e.progress?.raw;if(raw)detail.append(node('h2',l.raw),node('pre',raw));}
- if(focusId)document.getElementById(focusId)?.focus(); }
+ if(focusId)document.getElementById(focusId)?.focus?.({preventScroll:true}); }
 for(const action of ['refresh','clear','expand'])document.getElementById(action).onclick=()=>api.postMessage({action});
 document.getElementById('search').oninput=()=>render(latest);document.getElementById('filter').onchange=()=>render(latest);
 window.addEventListener('message',event=>{if(event.data.type==='snapshot')render(event.data.data)});render(initial);

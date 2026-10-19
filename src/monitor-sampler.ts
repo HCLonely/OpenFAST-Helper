@@ -24,22 +24,57 @@ export interface ExternalSample {
   modified?: number;
   fatal: boolean;
   normal: boolean;
-  stateStatus?: string;
 }
 const numeric = (value: string) => Number(value.replace(/[dD]/g, 'e'));
-export function outputTime(text: string): number | undefined {
+export function outputTime(text: string, columns?: number): number | undefined {
   // Only complete data rows: the writer may currently be flushing the last row.
-  const complete = text.slice(0, text.lastIndexOf('\n') + 1);
-  for (const line of complete.split(/\r?\n/).reverse()) {
+  const complete = text.slice(0, Math.max(text.lastIndexOf('\n'), text.lastIndexOf('\r')) + 1);
+  for (const line of complete.split(/\r\n|\r|\n/).reverse()) {
     const values = line.trim().split(/\s+/);
     const time = numeric(values[0]);
     if (
       values.length >= 2 &&
+      (columns === undefined || values.length === columns) &&
       Number.isFinite(time) &&
       time >= 0 &&
       (Number.isFinite(numeric(values[1])) || /^\*+$/.test(values[1]))
     )
       return time;
+  }
+}
+/** Only case-root module outputs with an explicit leading Time column are eligible. */
+async function moduleOutputs(stem: string): Promise<string[]> {
+  const results: string[] = [];
+  const prefix = path.basename(stem).toLowerCase() + '.';
+  let count = 0;
+  try {
+    const folder = await opendir(path.dirname(stem));
+    for await (const item of folder) {
+      if (++count > 1000 || results.length >= 32) break;
+      const name = item.name.toLowerCase();
+      if (
+        item.isFile() &&
+        name.startsWith(prefix) &&
+        name !== prefix + 'out' &&
+        /\.(out|dbg\d*)$/.test(name)
+      )
+        results.push(path.join(path.dirname(stem), item.name));
+    }
+  } catch {
+    /* Module output files are optional. */
+  }
+  return results;
+}
+async function timeColumns(filename: string): Promise<number | undefined> {
+  const file = await open(filename, 'r');
+  try {
+    const buffer = Buffer.alloc(65536);
+    const { bytesRead } = await file.read(buffer, 0, buffer.length, 0);
+    const header = buffer.subarray(0, bytesRead).toString('utf8');
+    const match = /^\s*Time[ \t]+([^\r\n]+)[\r\n]/im.exec(header);
+    return match ? 1 + match[1].trim().split(/\s+/).length : undefined;
+  } finally {
+    await file.close();
   }
 }
 async function totalTime(filename: string) {
@@ -58,23 +93,36 @@ async function totalTime(filename: string) {
     await file.close();
   }
 }
-async function listLogs(dir: string, limit = 100): Promise<string[]> {
+async function listLogs(dir: string): Promise<string[]> {
   const results: string[] = [];
+  const folders = [{ directory: dir, depth: 0 }];
   let count = 0;
-  try {
-    const folder = await opendir(dir);
-    for await (const item of folder) {
-      if (++count > 1000 || results.length >= limit) break;
-      if (item.isFile() && /\.(log|stdout)$/i.test(item.name))
-        results.push(path.join(dir, item.name));
+  // 不依赖启动器文件或特定目录名；整个扫描共享数量与深度限制。
+  for (let index = 0; index < folders.length && count < 1000 && results.length < 100; index++) {
+    const { directory, depth } = folders[index];
+    try {
+      const folder = await opendir(directory);
+      for await (const item of folder) {
+        if (++count > 1000 || results.length >= 100) break;
+        const filename = path.join(directory, item.name);
+        if (item.isFile() && /\.(log|stdout|stderr|txt)$/i.test(item.name)) results.push(filename);
+        else if (
+          depth < 2 &&
+          folders.length < 100 &&
+          item.isDirectory() &&
+          !item.isSymbolicLink() &&
+          !['.git', 'node_modules'].includes(item.name.toLowerCase())
+        )
+          folders.push({ directory: filename, depth: depth + 1 });
+      }
+    } catch {
+      /* A log directory is optional or may disappear while scanning. */
     }
-  } catch {
-    /* A log directory is optional. */
   }
   return results;
 }
 
-/** Mirrors OpenFAST_Monitor's fresh-log/text-output sampling; never reads binary .outb. */
+/** Samples solver reports and fresh text result records; never infers progress from file size. */
 export async function sampleExternal(request: SampleInput): Promise<ExternalSample> {
   const result: ExternalSample = { source: 'none', logText: '', fatal: false, normal: false };
   if (!request.input) {
@@ -101,34 +149,8 @@ export async function sampleExternal(request: SampleInput): Promise<ExternalSamp
   const candidates = new Set<string>([stem + '.log', stem + '.stdout.log', stem + '.stdout']);
   if (request.manualLog) candidates.add(request.manualLog);
   if (request.linkedLog) candidates.add(request.linkedLog);
-  try {
-    const stateTail = await readLogTail(path.join(dir, 'run_status.json'));
-    const state = JSON.parse(stateTail.text);
-    if (state.engine_pid === request.pid && fresh(stateTail.modified)) {
-      result.stateStatus = state.status;
-      if (typeof state.stdout_log === 'string')
-        candidates.add(path.resolve(dir, '..', state.stdout_log));
-      if (typeof state.stderr_log === 'string')
-        candidates.add(path.resolve(dir, '..', state.stderr_log));
-    }
-  } catch {
-    /* A state file is optional and may be in the middle of a write. */
-  }
   if (request.allowDirectoryLogs) {
     for (const file of await listLogs(dir)) candidates.add(file);
-    try {
-      const runs = await opendir(path.join(dir, 'runs'));
-      let count = 0;
-      for await (const attempt of runs) {
-        if (++count > 100) break;
-        if (attempt.isDirectory() && !attempt.isSymbolicLink()) {
-          candidates.add(path.join(dir, 'runs', attempt.name, 'stdout.log'));
-          candidates.add(path.join(dir, 'runs', attempt.name, 'stderr.log'));
-        }
-      }
-    } catch {
-      /* Attempt directories are optional. */
-    }
   }
   const ranked: { file: string; modified: number }[] = [];
   for (const file of candidates) {
@@ -173,19 +195,29 @@ export async function sampleExternal(request: SampleInput): Promise<ExternalSamp
     }
   }
   try {
-    const total = await totalTime(request.input),
-      tail = await readLogTail(stem + '.out');
-    if (total && fresh(tail.modified)) {
-      const current = outputTime(tail.text);
-      if (current !== undefined && (!result.progress || current > result.progress.current)) {
+    const total = await totalTime(request.input);
+    const outputs = [stem + '.out', ...(await moduleOutputs(stem))];
+    for (const filename of outputs) {
+      if (!total) break;
+      try {
+        const tail = await readLogTail(filename);
+        if (!fresh(tail.modified)) continue;
+        // 模块输出必须有 Time 列；按表头列数排除正在写入的不完整数据行。
+        const columns = await timeColumns(filename);
+        if (!columns) continue;
+        const current = outputTime(tail.text, columns);
+        if (current === undefined || current > total || current <= (result.progress?.current ?? -1))
+          continue;
         result.progress = {
           current,
           total,
           percent: Math.min(100, (current / total) * 100),
           reportedAt: tail.modified,
-          raw: path.basename(stem + '.out') + ': ' + current + ' / ' + total,
+          raw: path.basename(filename) + ': ' + current + ' / ' + total,
         };
         result.source = 'output';
+      } catch {
+        /* One absent or buffered output must not hide another module's records. */
       }
     }
   } catch {
