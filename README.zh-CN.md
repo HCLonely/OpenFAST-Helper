@@ -8,18 +8,18 @@
 
 1. 打开 VS Code 的扩展面板。
 2. 点击右上角 `…` → **从 VSIX 安装…**。
-3. 选择 `openfast-helper-1.2.2.vsix`；若提示重新加载窗口，按提示操作。
+3. 选择 `openfast-helper-1.2.3.vsix`；若提示重新加载窗口，按提示操作。
 4. 打开 `.fst` 或相应模块 `.dat` 文件，右下角语言模式应为 **OpenFAST**。
 
 也可使用命令行：
 
 ```powershell
-code --install-extension "openfast-helper-1.2.2.vsix"
+code --install-extension "openfast-helper-1.2.3.vsix"
 ```
 
 此扩展尚未发布到扩展市场。最低 VS Code 版本为 1.85。
 
-从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.2) 下载 `openfast-helper-1.2.2.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
+从 [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.3) 下载 `openfast-helper-1.2.3.vsix`，通过 **从 VSIX 安装…** 安装。开发构建也可在 **Actions → Build VSIX → 成功的运行 → Artifacts** 下载并解压。
 
 ## 支持的文本格式
 
@@ -278,7 +278,7 @@ TurbSim 的 `WindProfileType`（如 `PL`）和 `CTEventFile`（`LES`、`DNS`、`
 
 ## 计算进度监控（0.6.1）
 
-最左侧与“资源管理器 / 搜索 / 扩展”并列的竖栏默认提供 **OpenFAST 计算进度** 波形图标。点击后打开任务列表；启动时不主动打开监控页，也不扫描进程。仅当侧边栏监控或编辑区监控至少一个可见时，每 5 秒扫描一次；两者都关闭或切到后台后停止扫描和界面定时刷新，再次显示时立即刷新。停止监控不会停止 OpenFAST 计算。点击 **在编辑区打开** 可展开完整列表；状态栏和运行队列标题栏也可打开监控。升级后需执行一次 **开发人员: 重新加载窗口**；若手动隐藏过图标，可在最左竖栏右键重新勾选。
+最左侧与“资源管理器 / 搜索 / 扩展”并列的竖栏默认提供 **OpenFAST 计算进度** 波形图标。点击后打开任务列表；启动时不主动打开监控页，也不扫描进程。仅当侧边栏监控或编辑区监控至少一个可见时，每 5 秒扫描一次；两者都关闭或切到后台后停止扫描和界面定时刷新，再次显示时立即刷新。停止监控不会停止 OpenFAST 计算。点击 **在编辑区打开** 可展开完整列表；状态栏和运行队列标题栏也可打开监控。底栏入口仅在当前文件为 OpenFAST 文档（含 `.fst`/`.fstf` 文件）时显示；切换到无关文件或没有活动文本编辑器时隐藏。升级后需执行一次 **开发人员: 重新加载窗口**；若手动隐藏过图标，可在最左竖栏右键重新勾选。
 
 列表显示工况、状态、PID、仿真时间 / TMax、百分比、已用时间、监控估算剩余、OpenFAST 剩余及进度来源。支持按工况名、路径、PID 搜索，并筛选运行 / 等待、本次会话全部、已结束或失败任务。侧边栏使用紧凑列表，选择工况可查看路径、工作目录、命令行、报告时间、原生 ETA 原文，也可打开工况目录或关联日志。
 

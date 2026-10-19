@@ -8,18 +8,18 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.2.2.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.2.3.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.2.2.vsix"
+code --install-extension "openfast-helper-1.2.3.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.2.2.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.2), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.2.3.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.2.3), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
 
 ## Supported text formats
 
@@ -277,7 +277,7 @@ Log analysis uses the last 1,000,000 characters and produces at most 50 diagnost
 
 ## Calculation progress monitoring (0.6.1)
 
-A waveform **OpenFAST Progress** icon appears by default in the left Activity Bar alongside Explorer, Search and Extensions. It opens the task list. Startup does not open the monitor or scan processes. Scanning occurs every five seconds only while either the sidebar or editor monitor is visible; when both are closed or in the background, scanning and timed UI refresh stop. Showing either refreshes immediately. Stopping monitoring does not stop simulations. **Open in Editor** expands the list; the status bar and queue title also open the monitor. After upgrading, run **Developer: Reload Window** once. If you previously hid the icon, re-enable it from the Activity Bar context menu.
+A waveform **OpenFAST Progress** icon appears by default in the left Activity Bar alongside Explorer, Search and Extensions. It opens the task list. Startup does not open the monitor or scan processes. Scanning occurs every five seconds only while either the sidebar or editor monitor is visible; when both are closed or in the background, scanning and timed UI refresh stop. Showing either refreshes immediately. Stopping monitoring does not stop simulations. **Open in Editor** expands the list; the status bar and queue title also open the monitor. The status bar entry appears only for the active OpenFAST document (including `.fst`/`.fstf` files) and hides for unrelated files or when no text editor is active. After upgrading, run **Developer: Reload Window** once. If you previously hid the icon, re-enable it from the Activity Bar context menu.
 
 The list shows case, status, PID, simulation time/TMax, percentage, elapsed time, monitor-estimated remaining time, OpenFAST remaining time and progress source. Search by name/path/PID; filter running/waiting, all session tasks, finished or failed tasks. The compact sidebar opens case details including paths, working directory, command line, report time and original native ETA, plus case-directory and log-link actions.
 

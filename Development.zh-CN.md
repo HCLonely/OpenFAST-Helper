@@ -22,7 +22,7 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.2/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
+package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.2.3/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
 
 维护官方章节索引时运行 `npm run build:doc-links`（需要联网）；HTML 抓取记录与构建报告位于 `test-results/docs`，不进入安装包。参数词典与章节索引分别保存在 `data/catalog.json`、`data/doc-links.json`，构建参数词典不会覆盖链接索引。模块文档入口维护在 catalog 的 sources 中，并同步 `scripts/build_catalog.py` 与英文词典；TurbSim 使用 NLR 的 v2.00 PDF，ROSCO 使用其 latest 文档首页，两者不附加 OpenFAST 版本文档入口。
 
@@ -34,7 +34,7 @@ package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发
 
 若测试工况位于独立目录，可先设置 `$env:OPENFAST_TEST_CASE_DIR = "工况绝对路径"`，再执行 `npm test` 或宿主测试脚本；该目录需包含实际配置，其相邻 `_中文注释版` 目录用于既有解析回归。
 
-当前 `.gitignore` 忽略大部分本地测试，运行前检查、运行器及其共享辅助文件通过例外保留。全新 Git 检出可编译并运行下文的运行前检查专项测试；完整测试及格式/宿主检查仍需本地保留其余测试，解析回归还依赖外部工况。将其余测试纳入 CI 前需提供可共享样例并移除本地路径依赖。
+当前 `.gitignore` 忽略 `test/` 下的本地测试，仓库未跟踪测试源码。全新 Git 检出可编译和打包；JavaScript 测试及格式/宿主检查需要本地保留测试文件，解析回归还依赖外部工况。将这些测试纳入 CI 前需提供可共享样例并移除本地路径依赖。
 
 ## 文档语言
 
@@ -63,7 +63,7 @@ Cargo 不在 PATH 时可加 `-CargoPath <cargo路径>`。脚本使用 Cargo.lock
 - 检查 VSIX 内的入口文件、参数词典和原生探针，然后上传 `dist/*.vsix`。产物名称为 `openfast-helper-windows-x64-<运行编号>`，保留 30 天。
 - 只需仓库读取权限，无需配置额外密钥。下载位置为 **Actions → Build VSIX → 对应运行 → Artifacts**；手动运行入口在工作流页 **Run workflow**，该入口要求工作流已存在于默认分支。
 
-CI 当前执行类型检查、运行前检查回归测试、Rust 测试和安装包内容检查；其余 JavaScript 测试及真实 VS Code 宿主测试需上述本地测试资源。工作流生成 VSIX 构建产物，不发布到扩展市场或 GitHub Releases。包中包含 Windows x64 探针，其他平台的功能限制见 README。
+CI 当前执行类型检查、Rust 测试和安装包内容检查；JavaScript 测试及真实 VS Code 宿主测试需上述本地测试资源。工作流生成 VSIX 构建产物，不发布到扩展市场或 GitHub Releases。包中包含 Windows x64 探针，其他平台的功能限制见 README。
 
 发布新版本时，同步 package.json、package-lock.json 和 `package` 脚本的版本化输出路径；工作流通过通配符收集 VSIX，无需修改版本号。
 
@@ -88,4 +88,4 @@ npm run benchmark:editor -- --baseline test-results/editor-benchmark-baseline.js
 
 ## GitHub Releases 发布
 
-发布 1.2.2 时，先执行上述检查和原生探针构建，再使用 `v1.2.2` 内容 URL 打包。提交并推送源码，创建和推送 `v1.2.2` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.2.2.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
+发布 1.2.3 时，先执行上述检查和原生探针构建，再使用 `v1.2.3` 内容 URL 打包。提交并推送源码，创建和推送 `v1.2.3` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.2.3.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。

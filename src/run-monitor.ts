@@ -73,6 +73,13 @@ export class RunMonitor {
       this.status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 29);
       this.status.command = 'openfast.showRunMonitor';
       this.subscriptions.push(this.status);
+      this.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => this.publish()));
+      // Changing a document's language closes and reopens it in VS Code.
+      for (const event of ['onDidOpenTextDocument', 'onDidCloseTextDocument']) {
+        if (vscode.workspace[event]) {
+          this.subscriptions.push(vscode.workspace[event](() => this.publish()));
+        }
+      }
     }
     this.publish();
     // Contributed containers are visible by default; do not open a page at startup.
@@ -397,7 +404,15 @@ export class RunMonitor {
     if (this.status) {
       this.status.text = '$(pulse) ' + t('monitor.status', count);
       this.status.tooltip = t('monitor.title');
-      this.status.show();
+      const document = this.vscode.window.activeTextEditor?.document;
+      if (
+        document &&
+        (document.languageId === 'openfast' || /\.(fst|fstf)$/i.test(document.uri.path))
+      ) {
+        this.status.show();
+      } else {
+        this.status.hide();
+      }
     }
     const views = [this.panel, this.sidebar].filter((view) => view?.visible);
     if (views.length) {
