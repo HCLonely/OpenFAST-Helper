@@ -10,6 +10,8 @@
 
 ## 环境与本地构建
 
+`src/project-context.ts` 为两个资源管理器视图维护 `openfast.project`。在工作区中查找 `.fst/.fstf` 主文件（忽略大小写、最多一个结果），排除 `.git`、`node_modules` 和 `test-results`；创建、删除文件（含重命名）和增减工作区文件夹时重新识别。取消或过期的查询不会覆盖最新状态。执行 `npm run compile` 和 `node --test test/project-context.test.js` 验证显示切换及查询竞争。
+
 以下命令在项目根目录执行。使用 Node.js 24（打包工具要求 Node.js >= 22）及 npm；重建原生探针需要 Windows x64、Rust MSVC 工具链和 Visual Studio C++ 构建工具。扩展运行环境要求见 [README](README.zh-CN.md)。
 
 ```powershell
@@ -22,7 +24,7 @@ npm run format:check
 npm run package -- --baseContentUrl "https://github.com/<owner>/<repo>/blob/<ref>/"
 ```
 
-package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.3.0/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
+package.json 已配置仓库 `https://github.com/HCLonely/OpenFAST-Helper`。发布包使用 `npm run package -- --baseContentUrl "https://github.com/HCLonely/OpenFAST-Helper/blob/v1.4.0/"`，将文档链接固定到发布标签；GitHub Actions 自动使用本次提交的内容 URL。
 
 维护官方章节索引时运行 `npm run build:doc-links`（需要联网）；HTML 抓取记录与构建报告位于 `test-results/docs`，不进入安装包。参数词典与章节索引分别保存在 `data/catalog.json`、`data/doc-links.json`，构建参数词典不会覆盖链接索引。模块文档入口维护在 catalog 的 sources 中，并同步 `scripts/build_catalog.py` 与英文词典；TurbSim 使用 NLR 的 v2.00 PDF，ROSCO 使用其 latest 文档首页，两者不附加 OpenFAST 版本文档入口。
 
@@ -94,4 +96,4 @@ npm run benchmark:editor -- --baseline test-results/editor-benchmark-baseline.js
 
 ## GitHub Releases 发布
 
-发布 1.3.0 时，先执行上述检查和原生探针构建，再使用 `v1.3.0` 内容 URL 打包。提交并推送源码，创建和推送 `v1.3.0` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.3.0.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。
+发布 1.4.0 时，先执行上述检查和原生探针构建，再使用 `v1.4.0` 内容 URL 打包。提交并推送源码，创建和推送 `v1.4.0` 标签，然后发布 GitHub Release，附加 `dist/openfast-helper-1.4.0.vsix`。确认发布标签指向已验证的提交。VS Code 扩展市场发布属于独立流程。

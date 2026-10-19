@@ -348,6 +348,7 @@
   "results.export": "导出统计 CSV",
   "monitor.title": "OpenFAST 计算进度",
   "monitor.status": "OpenFAST：{0} 个运行中",
+  "monitor.runningTotal": "正在运行的任务总数",
   "monitor.windowsOnly": "外部进程自动识别目前支持 Windows；插件启动的任务仍可显示实时进度。",
   "monitor.localTrusted": "自动发现与日志关联需要受信任的本地工作区。",
   "monitor.scanFailed": "进程扫描失败：{0}",

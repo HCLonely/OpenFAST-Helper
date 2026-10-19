@@ -348,6 +348,7 @@
   "results.export": "Export statistics CSV",
   "monitor.title": "OpenFAST calculation progress",
   "monitor.status": "OpenFAST: {0} running",
+  "monitor.runningTotal": "Total running tasks",
   "monitor.windowsOnly": "External process discovery currently supports Windows; tasks started by the extension still report live progress.",
   "monitor.localTrusted": "Process discovery and log linking require a trusted local workspace.",
   "monitor.scanFailed": "Process scan failed: {0}",

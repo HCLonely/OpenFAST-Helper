@@ -360,6 +360,7 @@ export class RunMonitor {
       error: !this.localTrusted() ? t('monitor.localTrusted') : this.scanError,
       lastScan: this.lastScan,
       labels: {
+        runningTotal: t('monitor.runningTotal'),
         empty: t('monitor.empty'),
         progress: t('monitor.progress'),
         remaining: t('monitor.remaining'),
@@ -454,6 +455,7 @@ export class RunMonitor {
     panel.webview.html = webviewHtml(
       t('monitor.title'),
       `<p class="muted intro">${escapeHtml(t('monitor.help'))}</p>
+      <p id="running-total" role="status" aria-live="polite"></p>
       <div class="actions"><button id="refresh">${escapeHtml(t('monitor.refresh'))}</button><button id="clear">${escapeHtml(t('monitor.clear'))}</button><button id="expand">${escapeHtml(t('monitor.expand'))}</button></div>
       <div class="controls"><label>${escapeHtml(t('monitor.search'))}<input id="search" type="search"></label><label>${escapeHtml(t('monitor.filter'))}<select id="filter"><option value="all">${escapeHtml(t('monitor.all'))}</option><option value="running">${escapeHtml(t('monitor.active'))}</option><option value="finished">${escapeHtml(t('monitor.finished'))}</option><option value="failed">${escapeHtml(t('queue.failed'))}</option></select></label></div>
       <p id="status" role="status" aria-live="polite"></p><p id="scan" class="muted"></p><div id="tasks" class="table-wrap"></div><div id="detail"></div>`,
@@ -579,6 +581,7 @@ function node(tag,text,cls){const el=document.createElement(tag);if(text!==undef
 function clock(value){return value?new Date(value).toLocaleString():'—'}
 function duration(seconds){if(seconds===undefined||seconds===null)return '—';seconds=Math.max(0,Math.round(seconds));const h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;return h+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
 function render(data){latest=data;const focusId=document.activeElement?.id,l=data.labels,root=document.getElementById('tasks');root.replaceChildren();root.className=compact?'table-wrap compact':'table-wrap';
+ document.getElementById('running-total').textContent=l.runningTotal+': '+data.entries.filter(e=>e.stateCode==='running').length;
  document.getElementById('status').textContent=data.error||'';document.getElementById('scan').textContent=data.lastScan?l.lastScan+' · '+clock(data.lastScan):'';
  const query=(document.getElementById('search').value||'').toLowerCase(),filter=document.getElementById('filter').value||'all';
  const entries=data.entries.filter(e=>(e.label+' '+(e.input||'')+' '+(e.pid||'')).toLowerCase().includes(query)&&(filter==='all'||filter==='running'&&['running','waiting'].includes(e.stateCode)||filter==='finished'&&!['running','waiting'].includes(e.stateCode)||filter==='failed'&&e.stateCode==='failed'));

@@ -8,18 +8,18 @@ Syntax highlighting and offline English/Chinese explanations for OpenFAST config
 
 1. Open the Extensions view in VS Code.
 2. Select `…` → **Install from VSIX…**.
-3. Choose `openfast-helper-1.3.0.vsix` and reload the window if prompted.
+3. Choose `openfast-helper-1.4.0.vsix` and reload the window if prompted.
 4. Open an `.fst` or module `.dat` file. The language mode in the lower-right corner should be **OpenFAST**.
 
 You can also install from the command line:
 
 ```powershell
-code --install-extension "openfast-helper-1.3.0.vsix"
+code --install-extension "openfast-helper-1.4.0.vsix"
 ```
 
 The extension has not yet been published to the marketplace. VS Code 1.85 or newer is required.
 
-Download `openfast-helper-1.3.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.3.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
+Download `openfast-helper-1.4.0.vsix` from [GitHub Releases](https://github.com/HCLonely/OpenFAST-Helper/releases/tag/v1.4.0), then install it with **Install from VSIX…**. Development builds are also available from **Actions → Build VSIX → successful run → Artifacts**.
 
 ## Supported text formats
 
@@ -36,6 +36,8 @@ Existing recognition and coloring take precedence when formats overlap. Other la
 Sources: [ROSCO controller files](https://rosco.readthedocs.io/en/latest/source/rosco.html), [ROSCO input definitions](https://rosco.readthedocs.io/en/latest/source/toolbox_input.html), [OpenFAST input formats](https://openfast.readthedocs.io/en/main/source/user/input_file_overview.html), [AeroDisk](https://openfast.readthedocs.io/en/main/source/user/aerodisk/input_files.html), and [TurbSim v2 manual](https://www.nlr.gov/docs/libraries/wind-docs/turbsim_v2-00-pdf.pdf?sfvrsn=5a0a30f8_1), especially Appendix A/H and the output-file sections.
 
 ## Usage
+
+The Explorer's **OpenFAST Configuration** and **OpenFAST Run Queue** views appear only when the workspace contains an `.fst` or `.fstf` main input file (case-insensitive). Visibility updates automatically when main files are created, renamed or deleted, or workspace folders change. Unrelated projects and windows without a workspace keep these views hidden.
 
 In an untrusted workspace, automatic reference checks, document links, and path assistance skip UNC/network file references. Local references remain available; trust the workspace to enable network references.
 
@@ -276,6 +278,8 @@ The current primary input is saved before launch; a failed save blocks execution
 Log analysis uses the last 1,000,000 characters and produces at most 50 diagnostics. Raw terminal retention follows its scrollback setting. Common error explanations do not cover every OpenFAST/controller DLL log format. Case-directory actions open the main file's directory. Offline pre-run checks do not replace OpenFAST validation.
 
 ## Calculation progress monitoring (0.6.1)
+
+The top of the monitor shows the total number of running tasks, including extension-launched and externally discovered tasks, excluding waiting and finished tasks. Both sidebar and editor monitors update this total automatically; search and filters do not change its scope.
 
 A waveform **OpenFAST Progress** icon appears by default in the left Activity Bar alongside Explorer, Search and Extensions. It opens the task list. Startup does not open the monitor or scan processes. Scanning occurs every five seconds only while either the sidebar or editor monitor is visible; when both are closed or in the background, scanning and timed UI refresh stop. Showing either refreshes immediately. Stopping monitoring does not stop simulations. **Open in Editor** expands the list; the status bar and queue title also open the monitor. The status bar entry appears only for the active OpenFAST document (including `.fst`/`.fstf` files) and hides for unrelated files or when no text editor is active. After upgrading, run **Developer: Reload Window** once. If you previously hid the icon, re-enable it from the Activity Bar context menu.
 

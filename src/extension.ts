@@ -46,6 +46,7 @@ import {
 import { registerSemanticAssistance } from './editor-semantic';
 import { replacementPaused } from './editor-input-state';
 import { canReadReference } from './reference-access';
+import { registerProjectContext } from './project-context';
 const TYPES = [
   'parameter',
   'property',
@@ -237,6 +238,7 @@ async function provideLinks(document, cancellation) {
   return links;
 }
 function activate(context: vscode.ExtensionContext) {
+  registerProjectContext(vscode, context);
   configureLanguage(() =>
     languageFor(
       vscode.workspace.getConfiguration('openfast').get('language', 'auto'),
